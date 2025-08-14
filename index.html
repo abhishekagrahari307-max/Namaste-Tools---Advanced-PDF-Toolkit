@@ -1,0 +1,1912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Namaste Tools - Advanced PDF Toolkit</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap">
+    <style>
+        :root {
+            --primary: #4a6bff;
+            --primary-dark: #3959e0;
+            --secondary: #6c5ce7;
+            --accent: #00cec9;
+            --accent-dark: #00b8b5;
+            --dark: #2d3436;
+            --light: #f7f9fc;
+            --light-gray: #eef2f7;
+            --medium-gray: #d1d8e0;
+            --text: #4b5563;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #d63031;
+            --card-bg: #ffffff;
+            --shadow: rgba(99, 99, 99, 0.1) 0px 2px 8px 0px;
+            --shadow-hover: rgba(0, 0, 0, 0.1) 0px 10px 25px 0px;
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 1rem;
+            text-align: center;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(120deg, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(120deg, var(--primary-dark), #5d4cd8);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 107, 255, 0.4);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: rgba(74, 107, 255, 0.1);
+        }
+        
+        .btn-accent {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .btn-accent:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+        }
+        
+        /* Header Styles */
+        header {
+            background: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(120deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo-icon i {
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .logo-text {
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: linear-gradient(120deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        nav a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            padding: 8px 0;
+            position: relative;
+        }
+        
+        nav a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--primary);
+            transition: var(--transition);
+            border-radius: 10px;
+        }
+        
+        nav a:hover:after, 
+        nav a.active:after {
+            width: 100%;
+        }
+        
+        nav a:hover, nav a.active {
+            color: var(--primary);
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .mobile-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 100px 0 80px;
+            background: url('https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80') no-repeat center center/cover;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(45,52,54,0.9) 0%, rgba(45,52,54,0.7) 100%);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: white;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            max-width: 600px;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background: white;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-header h2 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+        
+        .section-header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--text);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 40px 30px;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid var(--light-gray);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--medium-gray);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(120deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+        }
+        
+        .feature-icon i {
+            font-size: 2.2rem;
+            color: white;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .feature-card p {
+            color: var(--text);
+        }
+        
+        /* Tools Section */
+        .tools {
+            padding: 100px 0;
+            background: var(--light);
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        .tool-card {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            border: 1px solid var(--light-gray);
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .tool-icon {
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(120deg, var(--primary), var(--secondary));
+        }
+        
+        .tool-icon i {
+            font-size: 3.5rem;
+            color: white;
+        }
+        
+        .tool-content {
+            padding: 25px;
+        }
+        
+        .tool-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+        
+        .tool-content p {
+            color: var(--text);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            min-height: 60px;
+        }
+        
+        .ai-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .tool-btn {
+            width: 100%;
+            padding: 12px;
+            text-align: center;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+            text-decoration: none;
+            display: block;
+            background: var(--primary);
+            color: white;
+            border: none;
+        }
+        
+        .tool-btn:hover {
+            background: var(--primary-dark);
+        }
+        
+        /* Categories Section */
+        .categories {
+            padding: 100px 0;
+            background: white;
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .category-card {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 30px;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid var(--light-gray);
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--medium-gray);
+            background: white;
+        }
+        
+        .category-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(120deg, var(--primary), var(--secondary));
+            border-radius: 18px;
+        }
+        
+        .category-icon i {
+            font-size: 1.8rem;
+            color: white;
+        }
+        
+        .category-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+        
+        .category-card p {
+            color: var(--text);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+        
+        .category-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .category-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 100px 0;
+            background: url('https://images.unsplash.com/photo-1522542550221-31fd19575a2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80') no-repeat center center/cover;
+            position: relative;
+            color: white;
+        }
+        
+        .testimonials::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(45, 52, 54, 0.85);
+        }
+        
+        .section-header.light h2,
+        .section-header.light p {
+            color: white;
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius);
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .testimonial-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .testimonial-name h4 {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .testimonial-name p {
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+        
+        .testimonial-text p {
+            font-style: italic;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+        
+        .testimonial-rating {
+            color: var(--warning);
+            font-size: 1.1rem;
+        }
+        
+        /* CTA Section */
+        .cta {
+            padding: 100px 0;
+            background: linear-gradient(120deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+        }
+        
+        .cta h2 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .cta p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            opacity: 0.9;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 80px 0 30px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 12px;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+        }
+        
+        .footer-col p {
+            color: #bbb;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+        
+        .contact-info {
+            list-style: none;
+        }
+        
+        .contact-info li {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            color: #bbb;
+        }
+        
+        .contact-info i {
+            color: var(--accent);
+            font-size: 1.2rem;
+            min-width: 25px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+        
+        .footer-links a i {
+            font-size: 0.9rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 1.2rem;
+        }
+        
+        .social-links a:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bbb;
+            font-size: 0.95rem;
+        }
+        
+        /* Tool Page */
+        .tool-page-header {
+            padding: 100px 0 50px;
+            background: linear-gradient(120deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+        }
+        
+        .tool-page-header h1 {
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .tool-category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+        
+        .tool-category {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+        
+        .tool-category h2 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light-gray);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .tool-category h2 i {
+            color: var(--primary);
+        }
+        
+        .tool-list {
+            list-style: none;
+        }
+        
+        .tool-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .tool-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .tool-list i {
+            color: var(--accent);
+        }
+        
+        .tool-list a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .tool-list a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+        
+        /* About Page */
+        .about-hero {
+            padding: 100px 0;
+            background: linear-gradient(120deg, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .about-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .about-hero h1 {
+            font-size: 3.5rem;
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .about-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+        
+        .about-content {
+            padding: 100px 0;
+            background: white;
+        }
+        
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+        }
+        
+        .about-text p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .about-image {
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .team {
+            padding: 100px 0;
+            background: var(--light);
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .team-member {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        
+        .team-image {
+            height: 250px;
+            background: linear-gradient(120deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 5rem;
+            font-weight: bold;
+        }
+        
+        .team-info {
+            padding: 25px;
+        }
+        
+        .team-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        
+        .team-info p {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        /* Contact Page */
+        .contact-hero {
+            padding: 100px 0;
+            background: linear-gradient(120deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+        }
+        
+        .contact-hero h1 {
+            font-size: 3.5rem;
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .contact-content {
+            padding: 100px 0;
+            background: white;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+        
+        .contact-info {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 40px;
+        }
+        
+        .contact-info h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+        
+        .contact-details li {
+            margin-bottom: 25px;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+        
+        .contact-details i {
+            font-size: 1.5rem;
+            color: var(--primary);
+            min-width: 30px;
+        }
+        
+        .contact-details h4 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .contact-form {
+            background: white;
+            border-radius: var(--radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+        
+        .contact-form h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(74, 107, 255, 0.1);
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .about-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-image {
+                order: -1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2.3rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero {
+                padding: 80px 0 60px;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Page container */
+        .page-container {
+            display: none;
+        }
+        
+        .page-container.active {
+            display: block;
+        }
+        
+        /* Tool detail page */
+        .tool-detail {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .tool-detail-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .tool-detail-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .tool-detail-header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--text);
+        }
+        
+        .tool-detail-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: flex-start;
+        }
+        
+        .tool-detail-form {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 40px;
+        }
+        
+        .tool-detail-form h2 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+        }
+        
+        .tool-detail-info {
+            background: white;
+            border-radius: var(--radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+        
+        .tool-detail-info h2 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light-gray);
+        }
+        
+        .tool-detail-info ul {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+        
+        .tool-detail-info li {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .tool-detail-info li:last-child {
+            border-bottom: none;
+        }
+        
+        .tool-detail-info i {
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo" onclick="showPage('home')">
+                <div class="logo-icon">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <div class="logo-text">Namaste Tools</div>
+            </a>
+            
+            <nav>
+                <ul>
+                    <li><a href="#" class="active" onclick="showPage('home')">Home</a></li>
+                    <li><a href="#" onclick="showPage('tools')">All Tools</a></li>
+                    <li><a href="#" onclick="showPage('about')">About</a></li>
+                    <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+                </ul>
+            </nav>
+            
+            <div class="header-actions">
+                <a href="#" class="btn btn-outline">Login</a>
+                <a href="#" class="btn btn-primary">Sign Up</a>
+                <div class="mobile-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Home Page -->
+    <div id="home" class="page-container active">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Advanced PDF Toolkit with AI</h1>
+                    <p>All-in-one solution for PDF editing, conversion, compression, and more. Powered by AI for smarter document management.</p>
+                    
+                    <div class="hero-buttons">
+                        <a href="#" class="btn btn-accent" onclick="showPage('tools')">Explore Tools</a>
+                        <a href="#" class="btn btn-outline" style="background: rgba(255,255,255,0.1); color: white; border-color: white;">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Why Choose Namaste Tools?</h2>
+                    <p>Our advanced PDF toolkit offers everything you need to manage your documents efficiently and securely</p>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <h3>Military-Grade Security</h3>
+                        <p>All files are encrypted during processing and automatically deleted after 1 hour</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3>AI-Powered Processing</h3>
+                        <p>Advanced AI algorithms for smarter PDF editing, conversion, and optimization</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-cloud"></i>
+                        </div>
+                        <h3>Cloud-Based Solution</h3>
+                        <p>Access your files from anywhere. No installation required - 100% online</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-infinity"></i>
+                        </div>
+                        <h3>Unlimited Batch Processing</h3>
+                        <p>Process multiple files simultaneously with our premium batch processing feature</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>Mobile Friendly</h3>
+                        <p>Works perfectly on all devices - desktop, tablet, and mobile phones</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <h3>Premium Features</h3>
+                        <p>Advanced OCR, AI content recognition, and priority support for premium users</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tools Section -->
+        <section class="tools">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Popular PDF Tools</h2>
+                    <p>Explore our most frequently used tools powered by advanced AI technology</p>
+                </div>
+                
+                <div class="tools-grid">
+                    <div class="tool-card">
+                        <div class="ai-badge">AI Powered</div>
+                        <div class="tool-icon">
+                            <i class="fas fa-edit"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3>Edit PDF</h3>
+                            <p>Add text, images, shapes to PDFs with AI-powered content suggestions and layout optimization</p>
+                            <a href="#" class="tool-btn" onclick="showTool('edit-pdf')">Use Tool</a>
+                        </div>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <div class="ai-badge">AI Enhanced</div>
+                        <div class="tool-icon">
+                            <i class="fas fa-file-word"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3>PDF to Word</h3>
+                            <p>Convert PDFs to editable DOC/DOCX with AI-preserved formatting and layout</p>
+                            <a href="#" class="tool-btn" onclick="showTool('pdf-to-word')">Use Tool</a>
+                        </div>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <div class="ai-badge">Smart AI</div>
+                        <div class="tool-icon">
+                            <i class="fas fa-compress"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3>Compress PDF</h3>
+                            <p>Reduce PDF file size without quality loss using AI-powered compression algorithms</p>
+                            <a href="#" class="tool-btn" onclick="showTool('compress-pdf')">Use Tool</a>
+                        </div>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <div class="ai-badge">AI OCR</div>
+                        <div class="tool-icon">
+                            <i class="fas fa-text-height"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3>OCR PDF</h3>
+                            <p>Recognize text in scanned documents with AI-powered character recognition</p>
+                            <a href="#" class="tool-btn" onclick="showTool('ocr-pdf')">Use Tool</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 40px;">
+                    <a href="#" class="btn btn-primary" onclick="showPage('tools')">View All Tools</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section class="categories">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Tool Categories</h2>
+                    <p>Organize your document workflow with our specialized tool categories</p>
+                </div>
+                
+                <div class="categories-grid">
+                    <div class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-edit"></i>
+                        </div>
+                        <h3>Editing & Modification</h3>
+                        <p>Tools for editing, organizing, and modifying your PDF documents</p>
+                        <a href="#" class="category-link" onclick="showPage('tools')">
+                            View Tools <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <h3>Conversion Tools</h3>
+                        <p>Convert PDFs to various formats and vice versa with precision</p>
+                        <a href="#" class="category-link" onclick="showPage('tools')">
+                            View Tools <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-file-image"></i>
+                        </div>
+                        <h3>Image & OCR</h3>
+                        <p>Image tools and OCR for scanned documents and image processing</p>
+                        <a href="#" class="category-link" onclick="showPage('tools')">
+                            View Tools <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-file-signature"></i>
+                        </div>
+                        <h3>Signing & Forms</h3>
+                        <p>Tools for digital signatures and working with PDF forms</p>
+                        <a href="#" class="category-link" onclick="showPage('tools')">
+                            View Tools <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="testimonials">
+            <div class="container">
+                <div class="section-header light">
+                    <h2>What Our Users Say</h2>
+                    <p>Thousands of users trust Namaste Tools for their PDF needs</p>
+                </div>
+                
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="testimonial-header">
+                            <div class="testimonial-avatar">S</div>
+                            <div class="testimonial-name">
+                                <h4>Sarah Johnson</h4>
+                                <p>Marketing Director</p>
+                            </div>
+                        </div>
+                        <div class="testimonial-text">
+                            <p>"Namaste Tools has revolutionized how our team handles documents. The AI-powered OCR is incredibly accurate and saves us hours each week."</p>
+                        </div>
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-header">
+                            <div class="testimonial-avatar">R</div>
+                            <div class="testimonial-name">
+                                <h4>Rajesh Kumar</h4>
+                                <p>Software Developer</p>
+                            </div>
+                        </div>
+                        <div class="testimonial-text">
+                            <p>"The batch processing feature is a game-changer. I can convert hundreds of files at once with perfect formatting. Highly recommended!"</p>
+                        </div>
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-header">
+                            <div class="testimonial-avatar">M</div>
+                            <div class="testimonial-name">
+                                <h4>Michael Chen</h4>
+                                <p>Financial Analyst</p>
+                            </div>
+                        </div>
+                        <div class="testimonial-text">
+                            <p>"The PDF to Excel conversion is flawless. It preserves all tables and data perfectly. This tool has become essential for my financial reporting."</p>
+                        </div>
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta">
+            <div class="container">
+                <h2>Ready to Transform Your PDF Workflow?</h2>
+                <p>Join thousands of satisfied users who have streamlined their document processes with Namaste Tools</p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-accent" style="background: white; color: var(--primary);">Get Started Free</a>
+                    <a href="#" class="btn btn-outline" style="background: transparent; color: white; border-color: white;">View Pricing</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Tools Page -->
+    <div id="tools" class="page-container">
+        <section class="tool-page-header">
+            <div class="container">
+                <h1>All PDF Tools</h1>
+                <p>40+ advanced tools for all your PDF needs</p>
+            </div>
+        </section>
+        
+        <section class="tools">
+            <div class="container">
+                <div class="tool-category-grid">
+                    <div class="tool-category">
+                        <h2><i class="fas fa-edit"></i> Editing & Modification</h2>
+                        <ul class="tool-list">
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('edit-pdf')">Edit PDF</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('organize-pdf')">Organize PDF</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('split-pdf')">Split PDF</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('merge-pdf')">Merge PDF</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('compress-pdf')">Compress PDF</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('repair-pdf')">Repair PDF</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('unlock-pdf')">Unlock PDF</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('protect-pdf')">Protect PDF</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('watermark-pdf')">Watermark PDF</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('flatten-pdf')">Flatten PDF</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('crop-pdf')">Crop PDF</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('rotate-pdf')">Rotate PDF</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="tool-category">
+                        <h2><i class="fas fa-exchange-alt"></i> PDF Conversion</h2>
+                        <ul class="tool-list">
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('pdf-to-word')">PDF to Word</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('word-to-pdf')">Word to PDF</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('pdf-to-excel')">PDF to Excel</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('excel-to-pdf')">Excel to PDF</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('pdf-to-powerpoint')">PDF to PowerPoint</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('powerpoint-to-pdf')">PowerPoint to PDF</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('pdf-to-jpg')">PDF to JPG</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('jpg-to-pdf')">JPG to PDF</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('pdf-to-png')">PDF to PNG</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('pdf-to-html')">PDF to HTML</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('pdf-to-txt')">PDF to TXT</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('pdf-to-rtf')">PDF to RTF</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="tool-category">
+                        <h2><i class="fas fa-file-image"></i> Image & OCR Tools</h2>
+                        <ul class="tool-list">
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('ocr-pdf')">OCR PDF</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('image-resizer')">Image Resizer</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('compress-image')">Compress Image</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('convert-image')">Convert Image</a></li>
+                        </ul>
+                        
+                        <h2 style="margin-top: 30px;"><i class="fas fa-file-signature"></i> Signing & Forms</h2>
+                        <ul class="tool-list">
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('sign-pdf')">Sign PDF</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('fill-pdf-forms')">Fill PDF Forms</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="tool-category">
+                        <h2><i class="fas fa-file-alt"></i> File Management</h2>
+                        <ul class="tool-list">
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('delete-pdf-pages')">Delete PDF Pages</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('extract-pdf-pages')">Extract PDF Pages</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('number-pdf-pages')">Number PDF Pages</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('pdf-metadata-editor')">PDF Metadata Editor</a></li>
+                        </ul>
+                        
+                        <h2 style="margin-top: 30px;"><i class="fas fa-tools"></i> Specialized Tools</h2>
+                        <ul class="tool-list">
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('compare-pdfs')">Compare PDFs</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('redact-pdf')">Redact PDF</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('scan-to-pdf')">Scan to PDF</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('pdfa-converter')">PDF/A Converter</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('pdf-booklet')">PDF Booklet</a></li>
+                        </ul>
+                        
+                        <h2 style="margin-top: 30px;"><i class="fas fa-sync"></i> Other Conversions</h2>
+                        <ul class="tool-list">
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('epub-to-pdf')">EPUB to PDF</a></li>
+                            <li><i class="fas fa-check-circle"></i> <a href="#" onclick="showTool('pdf-to-epub')">PDF to EPUB</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- About Page -->
+    <div id="about" class="page-container">
+        <section class="about-hero">
+            <div class="container">
+                <div class="about-hero-content">
+                    <h1>About Namaste Tools</h1>
+                    <p>Learn about our mission to simplify document management for everyone</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="about-content">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-text">
+                        <h2>Our Story</h2>
+                        <p>Namaste Tools was founded in 2023 by Abhishek Agrahari with a vision to create the most advanced, user-friendly PDF toolkit available. Frustrated by the limitations of existing PDF tools, Abhishek set out to build a solution that combined powerful features with an intuitive interface.</p>
+                        <p>Today, Namaste Tools serves millions of users worldwide, helping students, professionals, and businesses streamline their document workflows. Our AI-powered tools save countless hours by automating complex tasks and delivering professional results with just a few clicks.</p>
+                        <p>We're committed to continuous innovation, regularly adding new features and improving existing ones based on user feedback. Our mission is to make PDF management effortless, accessible, and secure for everyone.</p>
+                    </div>
+                    <div class="about-image">
+                        <div style="background: linear-gradient(120deg, var(--primary), var(--secondary)); height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; padding: 40px;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 5rem; margin-bottom: 20px;">📄</div>
+                                <h3>Revolutionizing PDF Management</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="team">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Our Team</h2>
+                    <p>The talented individuals behind Namaste Tools</p>
+                </div>
+                
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="team-image">A</div>
+                        <div class="team-info">
+                            <h3>Abhishek Agrahari</h3>
+                            <p>Founder & CEO</p>
+                            <p>Visionary leader with 10+ years in software development</p>
+                        </div>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="team-image">P</div>
+                        <div class="team-info">
+                            <h3>Priya Sharma</h3>
+                            <p>Lead Developer</p>
+                            <p>Expert in PDF technologies and AI integration</p>
+                        </div>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="team-image">R</div>
+                        <div class="team-info">
+                            <h3>Rahul Verma</h3>
+                            <p>UX/UI Designer</p>
+                            <p>Creates intuitive and beautiful user experiences</p>
+                        </div>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="team-image">S</div>
+                        <div class="team-info">
+                            <h3>Sneha Patel</h3>
+                            <p>Customer Success</p>
+                            <p>Ensures every user has an exceptional experience</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Contact Page -->
+    <div id="contact" class="page-container">
+        <section class="contact-hero">
+            <div class="container">
+                <h1>Contact Us</h1>
+                <p>We'd love to hear from you</p>
+            </div>
+        </section>
+        
+        <section class="contact-content">
+            <div class="container">
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <h2>Get In Touch</h2>
+                        <p>Have questions about our tools? Need assistance with your account? Our team is here to help.</p>
+                        
+                        <ul class="contact-details">
+                            <li>
+                                <i class="fas fa-envelope"></i>
+                                <div>
+                                    <h4>Email</h4>
+                                    <p>abhishekagrahari312@gmail.com</p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fas fa-phone"></i>
+                                <div>
+                                    <h4>Phone</h4>
+                                    <p>+91 705464XXXX</p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div>
+                                    <h4>Location</h4>
+                                    <p>India</p>
+                                </div>
+                            </li>
+                        </ul>
+                        
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-form">
+                        <h2>Send a Message</h2>
+                        <form>
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <input type="text" id="name" placeholder="Enter your name">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" placeholder="Enter your email">
+                            </div>
+                            <div class="form-group">
+                                <label for="subject">Subject</label>
+                                <input type="text" id="subject" placeholder="Enter subject">
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" placeholder="Enter your message"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 15px;">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Tool Detail Page -->
+    <div id="tool-detail" class="page-container">
+        <section class="tool-detail">
+            <div class="container">
+                <div class="tool-detail-header">
+                    <h1 id="tool-title">Edit PDF</h1>
+                    <p id="tool-description">Add text, images, shapes to PDFs with AI-powered content suggestions and layout optimization</p>
+                </div>
+                
+                <div class="tool-detail-content">
+                    <div class="tool-detail-form">
+                        <h2>Edit Your PDF</h2>
+                        <div style="border: 2px dashed var(--medium-gray); border-radius: var(--radius); height: 300px; display: flex; align-items: center; justify-content: center; margin-bottom: 30px; background: var(--light);">
+                            <div style="text-align: center;">
+                                <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: var(--primary); margin-bottom: 15px;"></i>
+                                <h3>Upload PDF File</h3>
+                                <p>Drag & drop your PDF here or click to browse</p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Edit Options</label>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
+                                <button class="btn btn-outline" style="width: 100%;">
+                                    <i class="fas fa-font"></i> Add Text
+                                </button>
+                                <button class="btn btn-outline" style="width: 100%;">
+                                    <i class="fas fa-image"></i> Add Image
+                                </button>
+                                <button class="btn btn-outline" style="width: 100%;">
+                                    <i class="fas fa-shapes"></i> Add Shape
+                                </button>
+                                <button class="btn btn-outline" style="width: 100%;">
+                                    <i class="fas fa-signature"></i> Add Signature
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>AI Enhancement</label>
+                            <select style="width: 100%; padding: 14px; border: 1px solid var(--light-gray); border-radius: 8px; font-size: 1rem;">
+                                <option>Optimize Layout (Recommended)</option>
+                                <option>Improve Readability</option>
+                                <option>Content Suggestions</option>
+                                <option>Design Enhancement</option>
+                            </select>
+                        </div>
+                        
+                        <button class="btn btn-primary" style="width: 100%; padding: 15px; font-size: 1.1rem;">
+                            <i class="fas fa-magic"></i> Process PDF with AI
+                        </button>
+                    </div>
+                    
+                    <div class="tool-detail-info">
+                        <h2>About This Tool</h2>
+                        <ul>
+                            <li><i class="fas fa-check"></i> <strong>AI-Powered Editing</strong> - Intelligent suggestions for text placement and formatting</li>
+                            <li><i class="fas fa-check"></i> <strong>Real-time Preview</strong> - See changes as you make them</li>
+                            <li><i class="fas fa-check"></i> <strong>Element Positioning</strong> - Precise control over every element</li>
+                            <li><i class="fas fa-check"></i> <strong>Multiple Format Support</strong> - Add images in JPG, PNG, SVG formats</li>
+                            <li><i class="fas fa-check"></i> <strong>Font Matching</strong> - AI detects and matches existing fonts</li>
+                        </ul>
+                        
+                        <h2 style="margin-top: 30px;">How to Edit PDFs</h2>
+                        <ol style="padding-left: 20px; margin-top: 15px;">
+                            <li style="margin-bottom: 10px;">Upload your PDF document</li>
+                            <li style="margin-bottom: 10px;">Use the editing tools to add text, images, or shapes</li>
+                            <li style="margin-bottom: 10px;">Position elements where you want them on the page</li>
+                            <li style="margin-bottom: 10px;">Apply AI enhancements for professional results</li>
+                            <li>Download your edited PDF</li>
+                        </ol>
+                        
+                        <div style="margin-top: 30px; background: var(--light); padding: 20px; border-radius: var(--radius);">
+                            <h3><i class="fas fa-lightbulb"></i> Pro Tip</h3>
+                            <p>Use our AI layout optimization to automatically arrange elements for the most professional and readable result.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo" style="margin-bottom: 20px;">
+                        <div class="logo-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <div class="logo-text">Namaste Tools</div>
+                    </div>
+                    <p>Advanced PDF toolkit with AI-powered features for all your document needs. Secure, fast, and reliable.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="showPage('home')"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="#" onclick="showPage('tools')"><i class="fas fa-chevron-right"></i> All Tools</a></li>
+                        <li><a href="#" onclick="showPage('about')"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                        <li><a href="#" onclick="showPage('contact')"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Pricing</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Tool Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="showPage('tools')"><i class="fas fa-chevron-right"></i> PDF Editing</a></li>
+                        <li><a href="#" onclick="showPage('tools')"><i class="fas fa-chevron-right"></i> PDF Conversion</a></li>
+                        <li><a href="#" onclick="showPage('tools')"><i class="fas fa-chevron-right"></i> OCR Tools</a></li>
+                        <li><a href="#" onclick="showPage('tools')"><i class="fas fa-chevron-right"></i> Signing & Forms</a></li>
+                        <li><a href="#" onclick="showPage('tools')"><i class="fas fa-chevron-right"></i> File Management</a></li>
+                        <li><a href="#" onclick="showPage('tools')"><i class="fas fa-chevron-right"></i> Specialized Tools</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact Info</h3>
+                    <ul class="contact-info">
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>abhishekagrahari312@gmail.com</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>+91 705464XXXX</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>India</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Namaste Tools. All rights reserved. Developed by Abhishek Agrahari</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Page navigation
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page-container').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show the requested page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+            
+            // Update active nav link
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            if(pageId !== 'tool-detail') {
+                document.querySelector(`nav a[onclick="showPage('${pageId}')"]`).classList.add('active');
+            }
+        }
+        
+        // Tool detail display
+        function showTool(toolId) {
+            // Set tool details based on toolId
+            let toolTitle, toolDescription;
+            
+            switch(toolId) {
+                case 'edit-pdf':
+                    toolTitle = "Edit PDF";
+                    toolDescription = "Add text, images, shapes to PDFs with AI-powered content suggestions and layout optimization";
+                    break;
+                case 'pdf-to-word':
+                    toolTitle = "PDF to Word";
+                    toolDescription = "Convert PDFs to editable DOC/DOCX with AI-preserved formatting and layout";
+                    break;
+                case 'compress-pdf':
+                    toolTitle = "Compress PDF";
+                    toolDescription = "Reduce PDF file size without quality loss using AI-powered compression algorithms";
+                    break;
+                case 'ocr-pdf':
+                    toolTitle = "OCR PDF";
+                    toolDescription = "Recognize text in scanned documents with AI-powered character recognition";
+                    break;
+                default:
+                    toolTitle = "Advanced PDF Tool";
+                    toolDescription = "AI-powered tool for all your PDF needs";
+            }
+            
+            document.getElementById('tool-title').textContent = toolTitle;
+            document.getElementById('tool-description').textContent = toolDescription;
+            
+            // Show the tool detail page
+            showPage('tool-detail');
+        }
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize animations
+            const animateOnScroll = () => {
+                const elements = document.querySelectorAll('.feature-card, .tool-card, .category-card, .testimonial-card');
+                
+                elements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (elementTop < windowHeight * 0.9) {
+                        element.style.opacity = 1;
+                        element.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+            
+            // Set initial styles for animation
+            document.querySelectorAll('.feature-card, .tool-card, .category-card, .testimonial-card').forEach(el => {
+                el.style.opacity = 0;
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            });
+            
+            // Trigger animations on scroll
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Initial check
+        });
+    </script>
+</body>
+</html>
