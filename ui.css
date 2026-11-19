@@ -110,3 +110,4 @@ summary{cursor:pointer;font-weight:700;color:var(--green2)}
 @media(max-width:700px){.bill-item-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.bill-item{padding:12px}.bill-item-amount{grid-column:span 2}}
 @media(max-width:340px){.bill-item-grid{gap:8px}.bill-item-head button{font-size:11px}.bill-item-grid .field label{line-height:1.3}}
 }
+@media screen{#compareRows tr.best-comparison{background:#e4f6eb} [data-theme="dark"] #compareRows tr.best-comparison{background:#244a37}}
