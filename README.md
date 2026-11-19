@@ -18,10 +18,12 @@
 - 🧾 **Advanced Bill of Supply:** Seller/Buyer details, GSTIN, Auto Bill Number, FY, Due Date, Item Table (HSN, Qty, Unit, Rate, Discount), Auto Calculation, Amount in Words — **Bill of Supply में GST अपने आप नहीं जुड़ता**
 - 🎨 **5 Bill Templates:** Classic · Premium · Modern · Agriculture · Compact — A4 PDF, Print, WhatsApp Share, Logo/Signature
 - 🗂️ **Bill History:** View, Edit, PDF, Print, Duplicate, Cancel, Payment, Search, Paid/Unpaid/Partial, Monthly Report
-- 🏪 **मंडी / आढ़त बिल (नया):** किसान खरीद बिल — आढ़त 2%, मंडी फीस 2%, हम्माली, पल्लेदारी, तुलाई कटौती, शुद्ध देय, बकाया, Print/PDF/WhatsApp
+- 🏪 **मंडी / आढ़त बिल (नया):** किसान खरीद बिल — आढ़त 2%, मंडी फीस 2%, हम्माली, पल्लेदारी, तुलाई कटौती, शुद्ध देय, बकाया, A4 एक-पेज Print/PDF, लाइव Preview और WhatsApp
 - 📄 **Documents:** Delivery Challan, Purchase Receipt, Farmer Slip, Sale Bill, Dispatch Slip, Payment Receipt, Party Ledger
 - 📥📤 **Data Import/Export:** CSV Export (चुनिंदा modules) + JSON Backup + **CSV Import** (Excel से) + Sample Template
 - 🌙 **Dark Mode** · 🇮🇳 **हिंदी/English** · 📱 **Mobile Bottom Navigation** · Green + White + Dark Navy थीम
+
+**A4 प्रिंट:** Bill of Supply, मंडी बिल और Documents के Print/PDF को एक A4 पेज में फिट किया जाता है। बहुत लंबे बिल में पूरी जानकारी रखने के लिए लिखावट छोटी हो सकती है; प्रिंट से पहले जाँच लें।
 
 ## 💾 डेटा
 ब्राउज़र Local Storage में सेव होता है। **Settings → बैकअप डाउनलोड (JSON)** से backup ज़रूर लें। Excel डेटा के लिए **Sample Template → भरें → CSV Import** करें।
