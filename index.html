@@ -25,6 +25,9 @@ a{color:var(--green2)}
 button{font-family:inherit}
 header.topbar{background:linear-gradient(120deg,var(--navy),var(--green));color:#fff;padding:12px 18px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;position:sticky;top:0;z-index:100}
 header.topbar .brand{display:flex;align-items:center;gap:12px}
+body:not(.on-dashboard) header.topbar .brand{display:none}
+#mobileMenuButton{display:none}
+@media(max-width:900px){#mobileMenuButton{display:inline-block} aside.mobile-open{display:block;position:fixed;top:0;bottom:0;left:0;width:min(300px,85vw);z-index:200;overflow-y:auto;box-shadow:0 0 0 100vmax #0008}}
 header.topbar .brand img.logo{width:44px;height:44px;border-radius:10px;background:#fff;object-fit:contain;padding:3px}
 header.topbar .brand .logo-fallback{width:44px;height:44px;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:24px}
 header.topbar h1{font-size:19px;margin:0}
@@ -117,13 +120,14 @@ footer a{color:var(--green2);font-weight:700}
 @media print{header.topbar,aside,.no-print,footer,#toast,.bottomnav{display:none!important}.layout{display:block}main{padding:0}.page{display:none!important}.page.active{display:block!important}.page.active > *{display:none!important}.page.active .panel:has(.bill-box){display:block!important}.page.active .panel:has(.bill-box) > *:not(.bill-wrap){display:none!important}.panel{box-shadow:none;border:0}.bill-box{border:1px solid #000;min-width:0;box-shadow:none}}
 </style>
 </head>
-<body>
+<body class="on-dashboard">
 <header class="topbar">
  <div class="brand">
   <span id="brandLogo"></span>
   <div><h1>🌾 VIJAY KUMAR TRADERS</h1><p data-i18n="tagline">All-in-One Business Management System · धान | गेहूँ | चावल</p></div>
  </div>
  <div class="top-actions">
+  <button class="icon-btn" id="mobileMenuButton" aria-label="मेनू खोलें" aria-expanded="false" onclick="toggleMobileMenu()">☰ मेनू</button>
   <a class="call" href="tel:+919839307042">📞 9839307042</a>
   <a class="wa" href="https://wa.me/919839307042?text=नमस्ते%20Vijay%20Kumar%20Traders" target="_blank" rel="noopener">💬 WhatsApp</a>
   <button class="icon-btn" id="langBtn" onclick="toggleLang()">EN / हिंदी</button>
@@ -134,6 +138,7 @@ footer a{color:var(--green2);font-weight:700}
 <aside class="no-print" id="nav">
  <div class="side-title" data-i18n="menu">मेनू / Menu</div>
  <button class="active" data-page="dashboard"><span class="ic">🏠</span><span data-i18n="dashboard">डैशबोर्ड</span></button>
+ <button data-page="contacts"><span class="ic">📇</span><span>संपर्क डायरेक्टरी</span></button>
  <button data-page="buyers"><span class="ic">📋</span><span data-i18n="buyers">खरीदार डायरेक्टरी</span></button>
  <button data-page="farmers"><span class="ic">👨‍🌾</span><span data-i18n="farmers">किसान रिकॉर्ड</span></button>
  <button data-page="purchase"><span class="ic">⬇️</span><span data-i18n="purchase">खरीद एंट्री</span></button>
@@ -172,6 +177,13 @@ footer a{color:var(--green2);font-weight:700}
  <div class="panel" style="margin-top:14px"><h3 data-i18n="recentActivity">हाल की खरीद-बिक्री</h3><div id="recent">अभी कोई रिकॉर्ड नहीं है।</div></div>
  <div id="stockAlert"></div>
  <div class="notice" data-i18n="notice1">महत्वपूर्ण: यह सिस्टम आंतरिक रिकॉर्ड और गणना के लिए है। यह सरकारी e-Mandi / GST / बैंक पोर्टल से कनेक्ट नहीं है। Bill of Supply और Tax Invoice अलग-अलग दस्तावेज़ हैं — सही दस्तावेज़ अपने अकाउंटेंट से पुष्टि करके चुनें।</div>
+</section>
+
+<section class="page" id="contacts">
+ <h2>📇 संपर्क डायरेक्टरी / Contact Directory</h2>
+ <p class="sub">कैटेगरी के अनुसार खरीदार, किसान और मंडी संपर्क। अपनी डायरेक्टरी में जोड़ने के लिए खरीदार या किसान सेक्शन का उपयोग करें।</p>
+ <div class="notice">v5 फ़ाइल से मिले संपर्क सत्यापित नहीं हैं। कॉल या व्यापार से पहले नंबर और विवरण की पुष्टि करें।</div>
+ <div class="panel"><div class="toolbar"><input id="contactSearch" class="searchbar" placeholder="🔍 नाम, शहर, फोन या फसल खोजें" oninput="renderContacts()" aria-label="संपर्क खोजें"><select id="contactCategory" onchange="renderContacts()" aria-label="कैटेगरी चुनें"><option value="">सभी कैटेगरी</option></select></div><p id="contactCount" aria-live="polite"></p><div id="contactGroups"></div></div>
 </section>
 
 <section class="page" id="buyers">
@@ -488,7 +500,7 @@ footer a{color:var(--green2);font-weight:700}
 
 <nav class="bottomnav no-print" id="bottomNav">
  <button class="active" data-page="dashboard"><span class="bic">🏠</span><span data-i18n="dashboard">डैशबोर्ड</span></button>
- <button data-page="buyers"><span class="bic">📋</span><span data-i18n="buyers">खरीदार</span></button>
+ <button data-page="contacts"><span class="bic">📇</span><span>संपर्क</span></button>
  <button data-page="billing"><span class="bic">🧾</span><span data-i18n="billing">बिल</span></button>
  <button data-page="stock"><span class="bic">📦</span><span data-i18n="stock">स्टॉक</span></button>
  <button data-page="settings"><span class="bic">⚙️</span><span data-i18n="settings">सेटिंग</span></button>
@@ -515,7 +527,8 @@ function fmtDate(d){if(!d)return '—';const p=d.split('-');return p.length===3?
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function todayStr(){return new Date().toISOString().slice(0,10)}
 function fyFromDate(d){if(!d)return '';const y=Number(d.slice(0,4)),m=Number(d.slice(5,7));const s=m>=4?y:y-1;return s+'-'+String(s+1).slice(2)}
-function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));document.querySelectorAll('#bottomNav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));window.scrollTo({top:0,behavior:'smooth'})}
+function toggleMobileMenu(){const nav=$('nav');const open=nav.classList.toggle('mobile-open');$('mobileMenuButton').setAttribute('aria-expanded',String(open))}
+function showPage(id){document.body.classList.toggle('on-dashboard',id==='dashboard');$('nav').classList.remove('mobile-open');$('mobileMenuButton').setAttribute('aria-expanded','false');if(id==='contacts')renderContacts();document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));document.querySelectorAll('#bottomNav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));window.scrollTo({top:0,behavior:'smooth'})}
 document.querySelectorAll('#nav button,#bottomNav button').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
 
 /* ---------- Theme & Language ---------- */
@@ -646,6 +659,12 @@ function confirmImport(){if(!pendingImport)return;const{module,heads,data}=pendi
 /* ---------- Settings / Logo / Backup ---------- */
 function clearData(){if(confirm('क्या आप इस ब्राउज़र का पूरा लोकल डेटा मिटाना चाहते हैं? पहले बैकअप डाउनलोड कर लें।')){localStorage.removeItem(KEY);location.reload()}}
 
+
+
+function contactCategoryName(category){const s=String(category||'').toLowerCase();if(s.includes('rice mill')||s.includes('राइस मिल'))return 'राइस मिल / Rice Mill';if(s.includes('flour mill')||s.includes('फ्लोर मिल'))return 'फ्लोर मिल / Flour Mill';if(s.includes('grain trader')||s.includes('गल्ला व्यापारी'))return 'अनाज व्यापारी / Grain Trader';if(s.includes('agro')||s.includes('एग्रो'))return 'एग्रो / फूड';if(s.includes('broker')||s.includes('ब्रोकर'))return 'ब्रोकर';if(s.includes('fpo'))return 'FPO / किसान कंपनी';return category||'अन्य / Other'}
+function contactLinks(phone){const digits=String(phone||'').replace(/\D/g,'');const n=digits.length===12&&digits.startsWith('91')?digits.slice(2):digits;if(!/^[6-9]\d{9}$/.test(n))return '';return `<br><a href="tel:+91${n}">📞 कॉल</a> · <a href="https://wa.me/91${n}" target="_blank" rel="noopener">WhatsApp</a>`}
+function renderContacts(){const list=[];const names=new Set();for(const b of db.buyers){names.add(String(b.name||'').trim().toLowerCase());list.push({name:b.name,category:contactCategoryName(b.category),place:b.city,phone:b.phone,detail:[b.crop,b.note].filter(Boolean).join(' · '),source:'मेरे खरीदार'})}for(const b of PORTAL_DATA.BUYERS){if(names.has(String(b.firm||'').trim().toLowerCase()))continue;list.push({name:b.firm,category:contactCategoryName(b.category),place:[b.district,b.address].filter(Boolean).join(' · '),phone:b.phone,detail:b.commodities,source:'v5 संदर्भ · सत्यापन आवश्यक'})}for(const f of db.farmers)list.push({name:f.name,category:'किसान / Farmers',place:f.village,phone:f.phone,source:'मेरे किसान'});for(const o of PORTAL_DATA.OFFICIALS)list.push({name:o.role,category:'मंडी संपर्क / Officials',place:o.mandi,phone:o.phone,detail:o.email,source:'v5 संदर्भ · सत्यापन आवश्यक'});
+ const select=$('contactCategory'),selected=select.value;const categories=[...new Set(list.map(x=>x.category))].sort((a,b)=>a.localeCompare(b,'hi'));select.innerHTML='<option value="">सभी कैटेगरी</option>'+categories.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('');if(categories.includes(selected))select.value=selected;const q=val('contactSearch').toLowerCase();const filtered=list.filter(x=>(!select.value||x.category===select.value)&&Object.values(x).join(' ').toLowerCase().includes(q));$('contactCount').textContent=filtered.length+' संपर्क · '+new Set(filtered.map(x=>x.category)).size+' कैटेगरी';const groups=new Map();for(const x of filtered){if(!groups.has(x.category))groups.set(x.category,[]);groups.get(x.category).push(x)}$('contactGroups').innerHTML=[...groups.entries()].sort((a,b)=>a[0].localeCompare(b[0],'hi')).map(([category,contacts])=>`<h3>${esc(category)} (${contacts.length})</h3><div class="tablewrap"><table><thead><tr><th>नाम / फर्म</th><th>जिला / पता</th><th>फोन</th><th>विवरण / स्रोत</th></tr></thead><tbody>${contacts.map(x=>`<tr><td>${esc(x.name)}</td><td>${esc(x.place)}</td><td>${esc(x.phone||'उपलब्ध नहीं')}${contactLinks(x.phone)}</td><td>${esc(x.detail||'')}<br><small>${esc(x.source)}</small></td></tr>`).join('')}</tbody></table></div>`).join('')||'<div class="empty">कोई संपर्क नहीं मिला।</div>';}
 
 function renderPortal(){const q=val('portalSearch').toLowerCase();$('portalBuyers').innerHTML=PORTAL_DATA.BUYERS.filter(b=>Object.values(b).join(' ').toLowerCase().includes(q)).map(b=>`<tr><td>${esc(b.firm)}</td><td>${esc(b.district)}<br>${esc(b.address)}</td><td>${esc(b.commodities)}</td><td>${esc(b.phone)}</td><td>${esc(b.license)}<br>${esc(b.notes)}</td></tr>`).join('');}
 function importPortalBuyers(){if(!confirm('सत्यापित न किए गए v5 खरीदार मौजूदा डायरेक्टरी में जोड़ें? पहले JSON बैकअप लेना उचित है।'))return;let names=new Set(db.buyers.map(b=>String(b.name||'').trim().toLowerCase()));let count=0;for(const b of PORTAL_DATA.BUYERS){if(names.has(b.firm.trim().toLowerCase()))continue;db.buyers.push({name:b.firm,category:b.category,city:b.district,crop:b.commodities,phone:b.phone,license:b.license,note:[b.address,b.notes].filter(Boolean).join(' · ')});names.add(b.firm.trim().toLowerCase());count++}save();toast(count+' खरीदार जोड़े गए');}
