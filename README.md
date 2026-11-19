@@ -15,7 +15,7 @@
 - 📚 **v5 संदर्भ:** अपलोड की गई फ़ाइल के 126 खरीदार, 7 कॉल स्क्रिप्ट, workbook शीट और मंडी संपर्क; खरीदारों को बिना मौजूदा डेटा हटाए वैकल्पिक रूप से जोड़ें। जानकारी, शुल्क और संपर्क सत्यापित नहीं हैं।
 - 🏠 **Dashboard:** आज की खरीद/बिक्री, स्टॉक, बकाया, प्राप्त भुगतान, अनुमानित लाभ, हाल के बिल, Quick Actions
 - 📋 **Buyer Directory** · 👨‍🌾 **किसान रिकॉर्ड** · ⬇️ **खरीद** · ⚖️ **5-मिल रेट तुलना** · 📦 **स्टॉक** · ⬆️ **बिक्री**
-- 🧾 **Advanced Bill of Supply:** Seller/Buyer details, GSTIN, Auto Bill Number, FY, Due Date, Item Table (HSN, Qty, Unit, Rate, Discount), Auto Calculation, Amount in Words — **Bill of Supply में GST अपने आप नहीं जुड़ता**
+- 🧾 **Advanced Bill of Supply:** Seller/Buyer details, GSTIN, Auto Bill Number, FY, Due Date, Item Table (HSN, Bags, Qty, Unit, Rate, Discount), licence/9R-2/gate pass/vehicle references, agreed deduction, auto calculation, amount in words — **Bill of Supply में GST अपने आप नहीं जुड़ता**
 - 🎨 **5 Bill Templates:** Classic · Premium · Modern · Agriculture · Compact — A4 PDF, Print, WhatsApp Share, Logo/Signature
 - 🗂️ **Bill History:** View, Edit, PDF, Print, Duplicate, Cancel, Payment, Search, Paid/Unpaid/Partial, Monthly Report
 - 🏪 **मंडी / आढ़त बिल (नया):** किसान खरीद बिल — आढ़त 2%, मंडी फीस 2%, हम्माली, पल्लेदारी, तुलाई कटौती, शुद्ध देय, बकाया, A4 एक-पेज Print/PDF, लाइव Preview और WhatsApp
@@ -29,7 +29,7 @@
 ब्राउज़र Local Storage में सेव होता है। **Settings → बैकअप डाउनलोड (JSON)** से backup ज़रूर लें। Excel डेटा के लिए **Sample Template → भरें → CSV Import** करें।
 
 ## ⚠️ नोट
-Bill of Supply और Tax Invoice अलग-अलग दस्तावेज़ हैं — सही दस्तावेज़ अपने अकाउंटेंट से पुष्टि करके चुनें। Tax Invoice प्रारूप GST की गणना नहीं करता और उसे कर-अनुपालन इनवॉइस न मानें। यह सिस्टम सरकारी e-Mandi/GST/बैंक पोर्टल से कनेक्ट नहीं है।
+Bill of Supply और Tax Invoice अलग-अलग दस्तावेज़ हैं — सही दस्तावेज़ अपने अकाउंटेंट से पुष्टि करके चुनें। GST छूट या मंडी शुल्क भुगतान की घोषणा अपने आप नहीं जोड़ी जाती; घोषणा लिखने से पहले पुष्टि करें। 9R-2 और gate pass केवल संदर्भ हैं, सरकारी पोर्टल से जारी या सत्यापित नहीं होते। Tax Invoice प्रारूप GST की गणना नहीं करता और उसे कर-अनुपालन इनवॉइस न मानें। यह सिस्टम सरकारी e-Mandi/GST/बैंक पोर्टल से कनेक्ट नहीं है।
 
 ---
 *Vijay Kumar Traders · 📞 9839307042*
