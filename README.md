@@ -1,6 +1,6 @@
 # Vijay Kumar Traders — All-in-One Business Management System
 
-🌾 **धान | गेहूँ | चावल** — खरीद, बिक्री, स्टॉक, बिलिंग, डिस्पैच, भुगतान और रिपोर्ट एक ही जगह।
+🌾 **धान | गेहूँ | चावल** — खरीद, बिक्री, स्टॉक, Bill of Supply, डिस्पैच, भुगतान और रिपोर्ट एक ही जगह।
 
 ## 📞 संपर्क
 - **Mobile:** [9839307042](tel:+919839307042)
@@ -8,32 +8,23 @@
 
 ## 🌐 Live Website (GitHub Pages)
 - **URL:** https://abhishekagrahari307-max.github.io/Namaste-Tools---Advanced-PDF-Toolkit/
-- Render की ज़रूरत नहीं — यह एक ही `index.html` फ़ाइल है, GitHub Pages पर सीधे live चलती है।
+- Render की ज़रूरत नहीं — एक ही `index.html`, GitHub Pages पर सीधे live।
 
-## ✨ Features (13 Modules)
-| Module | काम |
-|---|---|
-| 🏠 Dashboard | कुल खरीद/बिक्री, स्टॉक, अंतर, बकाया (लेना/देना), हाल की गतिविधियाँ |
-| 📋 Buyer Directory | मिल/व्यापारी रिकॉर्ड, खोज, कॉल/WhatsApp लिंक |
-| 👨‍🌾 किसान रिकॉर्ड | किसान जानकारी, खरीद इतिहास |
-| ⬇️ खरीद एंट्री | किसान से खरीद, स्टॉक बढ़ाना |
-| ⚖️ 5-मिल रेट तुलना | नेट रेट व अनुमानित लाभ, सर्वश्रेष्ठ ऑफर हाइलाइट, तुलना सेव |
-| 📦 स्टॉक मैनेजमेंट | फसलवार आवक-जावक-शेष, नेगेटिव स्टॉक अलर्ट |
-| ⬆️ बिक्री एंट्री | खरीदार को बिक्री, स्टॉक घटाना |
-| 🧾 बिल / रसीद | प्रिंट/PDF बिल, राशि शब्दों में, संपर्क नंबर सहित |
-| 🚚 डिस्पैच रिकॉर्ड | वाहन, ड्राइवर, माल भेजने का रिकॉर्ड |
-| 📒 मंडी रजिस्टर | 6R / 9R-2 / Gate Pass संदर्भ रिकॉर्ड |
-| 💰 पेमेंट एवं खर्च | प्राप्त/भुगतान/खर्च, शुद्ध हिसाब |
-| 📊 रिपोर्ट | CSV एक्सपोर्ट (खरीद, बिक्री, हिसाब, खरीदार, किसान आदि) |
-| ⚙️ सेटिंग्स / बैकअप | कंपनी जानकारी, JSON बैकअप डाउनलोड/Restore |
+## ✨ Features
+- 🏠 **Dashboard:** आज की खरीद/बिक्री, स्टॉक, बकाया, प्राप्त भुगतान, अनुमानित लाभ, हाल के बिल, Quick Actions
+- 📋 **Buyer Directory** · 👨‍🌾 **किसान रिकॉर्ड** · ⬇️ **खरीद** · ⚖️ **5-मिल रेट तुलना** · 📦 **स्टॉक** · ⬆️ **बिक्री**
+- 🧾 **Advanced Bill of Supply:** Seller/Buyer details, GSTIN, Auto Bill Number, FY, Due Date, Item Table (HSN, Qty, Unit, Rate, Discount), Auto Calculation, Amount in Words — **Bill of Supply में GST अपने आप नहीं जुड़ता**
+- 🎨 **5 Bill Templates:** Classic · Premium · Modern · Agriculture · Compact — A4 PDF, Print, WhatsApp Share, Logo/Signature
+- 🗂️ **Bill History:** View, Edit, PDF, Print, Duplicate, Cancel, Payment, Search, Paid/Unpaid/Partial, Monthly Report
+- 📄 **Documents:** Delivery Challan, Purchase Receipt, Farmer Slip, Sale Bill, Dispatch Slip, Payment Receipt, Party Ledger
+- 🌙 **Dark Mode** · 🇮🇳 **हिंदी/English** · 📱 **Mobile Bottom Navigation** · Green + White + Dark Navy थीम
+- 💾 **JSON Backup/Restore** · 📊 **CSV Reports**
 
-## 💾 डेटा कैसे सेव होता है?
-- डेटा आपके ब्राउज़र के **Local Storage** में सेव होता है (इसी डिवाइस पर)।
-- **Settings → बैकअप डाउनलोड (JSON)** से समय-समय पर बैकअप ज़रूर लें।
-- डिवाइस बदलने पर बैकअप Restore करें।
+## 💾 डेटा
+ब्राउज़र Local Storage में सेव होता है। **Settings → बैकअप डाउनलोड (JSON)** से backup ज़रूर लें।
 
 ## ⚠️ नोट
-यह सिस्टम आंतरिक रिकॉर्ड और गणना के लिए है। यह सरकारी e-Mandi / GST / बैंक पोर्टल से कनेक्ट नहीं है। आधिकारिक दस्तावेज़ और टैक्स/मंडी नियम संबंधित विभाग से सत्यापित करें।
+Bill of Supply और Tax Invoice अलग-अलग दस्तावेज़ हैं — सही दस्तावेज़ अपने अकाउंटेंट से पुष्टि करके चुनें। यह सिस्टम सरकारी e-Mandi/GST/बैंक पोर्टल से कनेक्ट नहीं है।
 
 ---
-*Vijay Kumar Traders · All-in-One Business Management System · 📞 9839307042*
+*Vijay Kumar Traders · 📞 9839307042*
