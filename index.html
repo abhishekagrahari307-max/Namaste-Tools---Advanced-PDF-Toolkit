@@ -2,7 +2,7 @@
 <html lang="hi" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Vijay Kumar Traders | All-in-One Business Management System</title>
 <meta name="description" content="Vijay Kumar Traders — All-in-One Business Management System: खरीद, बिक्री, स्टॉक, Bill of Supply, डिस्पैच, भुगतान और रिपोर्ट एक ही जगह। संपर्क: 9839307042">
 <meta name="theme-color" content="#0b3d5c">
@@ -36,13 +36,13 @@ header.topbar p{margin:2px 0 0;color:#cfe8dc;font-size:11px}
 .top-actions a.call{background:#fff;color:var(--navy);text-decoration:none;font-weight:800;padding:8px 13px;border-radius:9px;font-size:13px}
 .top-actions a.wa{background:#25d366;color:#fff;text-decoration:none;font-weight:700;padding:8px 13px;border-radius:9px;font-size:13px}
 .icon-btn{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:9px;padding:8px 11px;cursor:pointer;font-size:13px;font-weight:700}
-.layout{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 68px)}
+.layout{display:grid;grid-template-columns:240px minmax(0,1fr);min-height:calc(100vh - 68px)}
 aside{background:var(--sidebar);padding:14px 10px;color:#fff}
 aside .side-title{font-size:11px;color:#9fc6d8;padding:6px 12px;text-transform:uppercase;letter-spacing:.6px}
 aside button{display:flex;align-items:center;gap:10px;width:100%;border:0;background:transparent;color:#d6eaf3;text-align:left;padding:11px 12px;border-radius:10px;margin:2px 0;cursor:pointer;font-size:14px}
 aside button.active,aside button:hover{background:var(--sidebar2);color:#fff}
 aside button .ic{width:22px;text-align:center}
-main{padding:20px;max-width:1500px;width:100%;margin:auto;padding-bottom:90px}
+main{min-width:0;padding:20px;max-width:1500px;width:100%;margin:auto;padding-bottom:90px}
 .page{display:none}.page.active{display:block}
 h2{margin:0 0 4px;font-size:22px}.sub{color:var(--muted);font-size:13px;margin:0 0 16px}
 .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin:14px 0}
@@ -51,7 +51,7 @@ h2{margin:0 0 4px;font-size:22px}.sub{color:var(--muted);font-size:13px;margin:0
 [data-theme="dark"] .card strong{color:#3ddc97}
 .card.warn strong{color:var(--danger)}
 .card .card-ic{font-size:20px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.panel h3{font-size:16px;margin:0 0 12px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.panel h3{font-size:16px;margin:0 0 12px}
 .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0;align-items:center}
 input,select,textarea{padding:10px;border:1px solid var(--line);border-radius:9px;background:var(--input);color:var(--ink);min-width:0;font:inherit;width:100%}
 textarea{min-height:70px}
@@ -117,6 +117,50 @@ footer a{color:var(--green2);font-weight:700}
 .item-row input{padding:8px}
 @media(max-width:900px){.layout{grid-template-columns:1fr}aside{display:none}.cards{grid-template-columns:repeat(2,1fr)}.bottomnav{display:flex}main{padding:14px 12px 96px}}
 @media(max-width:600px){.grid2{grid-template-columns:1fr}.formgrid{grid-template-columns:1fr 1fr}header.topbar h1{font-size:16px}.cards{gap:8px}.card{padding:12px}.card strong{font-size:18px}}
+
+/* Responsive layout and touch-friendly navigation */
+.menu-backdrop,aside .menu-close{display:none}
+.page,.panel,.card,.field,.grid2>*{min-width:0}
+.panel,.card{overflow-wrap:anywhere}
+.tablewrap,.bill-wrap{max-width:100%;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+button,a,summary{touch-action:manipulation}
+button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+@media screen and (max-width:900px){
+ body.menu-open{overflow:hidden}
+ #menuBackdrop:not([hidden]){display:block;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:190}
+ aside.mobile-open{width:min(320px,86vw);height:100dvh;padding-bottom:calc(20px + env(safe-area-inset-bottom));overscroll-behavior:contain;box-shadow:none}
+ aside .menu-close{display:flex;justify-content:flex-end;color:#fff;min-height:44px}
+ .bottomnav{padding-bottom:calc(6px + env(safe-area-inset-bottom))}
+ .bottomnav button{min-height:48px;line-height:1.15}
+ main{padding-bottom:calc(100px + env(safe-area-inset-bottom))}
+ #toast{bottom:calc(86px + env(safe-area-inset-bottom))}
+ .top-actions a,.top-actions button{min-height:42px;display:inline-flex;align-items:center;justify-content:center}
+ .tablewrap table{min-width:560px}
+ .bill-box,.tpl-compact{min-width:0;width:100%;padding:clamp(12px,3vw,26px);overflow-wrap:anywhere}
+ .bill-box table{font-size:12px;table-layout:auto}
+ .bill-box table th,.bill-box table td{padding:6px 4px;overflow-wrap:anywhere}
+}
+@media screen and (max-width:600px){
+ header.topbar{padding:8px 10px;gap:6px;position:relative}
+ header.topbar .brand{width:100%;gap:8px}
+ header.topbar .brand img.logo,header.topbar .brand .logo-fallback{width:36px;height:36px}
+ .top-actions{width:100%;gap:5px}
+ .top-actions a.call,.top-actions a.wa,.icon-btn{padding:7px 8px;font-size:12px}
+ .formgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ input,select,textarea{font-size:16px}
+ .toolbar input,.toolbar select{flex:1 1 180px}
+ .card,.panel{padding:12px}
+ .bill-meta{gap:5px}
+}
+@media screen and (max-width:380px){
+ .formgrid{grid-template-columns:minmax(0,1fr)}
+ .top-actions a.call,.top-actions a.wa,.icon-btn{font-size:11px;padding:6px}
+ .cards{gap:7px}
+ .card strong{font-size:16px}
+ .bill-box table{font-size:10px}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:0.01ms!important;animation-duration:0.01ms!important}}
+
 @media print{header.topbar,aside,.no-print,footer,#toast,.bottomnav{display:none!important}.layout{display:block}main{padding:0}.page{display:none!important}.page.active{display:block!important}.page.active > *{display:none!important}.page.active .panel:has(.bill-box){display:block!important}.page.active .panel:has(.bill-box) > *:not(.bill-wrap){display:none!important}.panel{box-shadow:none;border:0}.bill-box{border:1px solid #000;min-width:0;box-shadow:none}}
 </style>
 </head>
@@ -127,7 +171,7 @@ footer a{color:var(--green2);font-weight:700}
   <div><h1>🌾 VIJAY KUMAR TRADERS</h1><p data-i18n="tagline">All-in-One Business Management System · धान | गेहूँ | चावल</p></div>
  </div>
  <div class="top-actions">
-  <button class="icon-btn" id="mobileMenuButton" aria-label="मेनू खोलें" aria-expanded="false" onclick="toggleMobileMenu()">☰ मेनू</button>
+  <button class="icon-btn" id="mobileMenuButton" aria-label="मेनू खोलें" aria-controls="nav" aria-expanded="false" onclick="toggleMobileMenu()">☰ मेनू</button>
   <a class="call" href="tel:+919839307042">📞 9839307042</a>
   <a class="wa" href="https://wa.me/919839307042?text=नमस्ते%20Vijay%20Kumar%20Traders" target="_blank" rel="noopener">💬 WhatsApp</a>
   <button class="icon-btn" id="langBtn" onclick="toggleLang()">EN / हिंदी</button>
@@ -135,7 +179,9 @@ footer a{color:var(--green2);font-weight:700}
  </div>
 </header>
 <div class="layout">
-<aside class="no-print" id="nav">
+<div id="menuBackdrop" class="menu-backdrop no-print" hidden></div>
+<aside class="no-print" id="nav" aria-label="मुख्य मेनू">
+ <button id="closeMobileMenu" class="menu-close" type="button" onclick="closeMobileMenu()" aria-label="मेनू बंद करें">✕ बंद करें</button>
  <div class="side-title" data-i18n="menu">मेनू / Menu</div>
  <button class="active" data-page="dashboard"><span class="ic">🏠</span><span data-i18n="dashboard">डैशबोर्ड</span></button>
  <button data-page="contacts"><span class="ic">📇</span><span>संपर्क डायरेक्टरी</span></button>
@@ -527,8 +573,12 @@ function fmtDate(d){if(!d)return '—';const p=d.split('-');return p.length===3?
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function todayStr(){return new Date().toISOString().slice(0,10)}
 function fyFromDate(d){if(!d)return '';const y=Number(d.slice(0,4)),m=Number(d.slice(5,7));const s=m>=4?y:y-1;return s+'-'+String(s+1).slice(2)}
-function toggleMobileMenu(){const nav=$('nav');const open=nav.classList.toggle('mobile-open');$('mobileMenuButton').setAttribute('aria-expanded',String(open))}
-function showPage(id){document.body.classList.toggle('on-dashboard',id==='dashboard');$('nav').classList.remove('mobile-open');$('mobileMenuButton').setAttribute('aria-expanded','false');if(id==='contacts')renderContacts();document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));document.querySelectorAll('#bottomNav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));window.scrollTo({top:0,behavior:'smooth'})}
+function closeMobileMenu(){const wasOpen=$('nav').classList.contains('mobile-open');$('nav').classList.remove('mobile-open');$('menuBackdrop').hidden=true;document.body.classList.remove('menu-open');$('mobileMenuButton').setAttribute('aria-expanded','false');if(wasOpen && window.matchMedia('(max-width: 900px)').matches)$('mobileMenuButton').focus()}
+function toggleMobileMenu(){if($('nav').classList.contains('mobile-open'))return closeMobileMenu();$('nav').classList.add('mobile-open');$('menuBackdrop').hidden=false;document.body.classList.add('menu-open');$('mobileMenuButton').setAttribute('aria-expanded','true');$('closeMobileMenu').focus()}
+$('menuBackdrop').addEventListener('click',closeMobileMenu);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('nav').classList.contains('mobile-open'))closeMobileMenu()});
+window.addEventListener('resize',()=>{if(window.innerWidth>900&&$('nav').classList.contains('mobile-open'))closeMobileMenu()});
+function showPage(id){document.body.classList.toggle('on-dashboard',id==='dashboard');closeMobileMenu();if(id==='contacts')renderContacts();document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));document.querySelectorAll('#bottomNav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}
 document.querySelectorAll('#nav button,#bottomNav button').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
 
 /* ---------- Theme & Language ---------- */
