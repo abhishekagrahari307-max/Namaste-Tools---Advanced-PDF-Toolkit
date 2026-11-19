@@ -184,6 +184,7 @@ button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var
  body.printing-directory #printSheet .tablewrap{overflow:visible}
 }
 </style>
+<link rel="stylesheet" href="ui.css">
 </head>
 <body class="on-dashboard">
 <header class="topbar">
@@ -191,6 +192,7 @@ button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var
   <span id="brandLogo"></span>
   <div><h1>🌾 VIJAY KUMAR TRADERS</h1><p data-i18n="tagline">All-in-One Business Management System · धान | गेहूँ | चावल</p></div>
  </div>
+ <div class="page-context" aria-live="polite"><span>WORKSPACE</span><strong id="currentPageLabel">डैशबोर्ड</strong></div>
  <div class="top-actions">
   <button class="icon-btn" id="mobileMenuButton" aria-label="मेनू खोलें" aria-controls="nav" aria-expanded="false" onclick="toggleMobileMenu()">☰ मेनू</button>
   <a class="call" href="tel:+919839307042">📞 9839307042</a>
@@ -205,10 +207,12 @@ button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var
  <button id="closeMobileMenu" class="menu-close" type="button" onclick="closeMobileMenu()" aria-label="मेनू बंद करें">✕ बंद करें</button>
  <div class="side-title" data-i18n="menu">मेनू / Menu</div>
  <button class="active" data-page="dashboard"><span class="ic">🏠</span><span data-i18n="dashboard">डैशबोर्ड</span></button>
+ <div class="nav-group">संपर्क और बाजार</div>
  <button data-page="contacts"><span class="ic">📇</span><span>संपर्क डायरेक्टरी</span></button>
  <button data-page="statebrokers"><span class="ic">🌐</span><span>राज्यवार ब्रोकर</span></button>
  <button data-page="buyers"><span class="ic">📋</span><span data-i18n="buyers">खरीदार डायरेक्टरी</span></button>
  <button data-page="farmers"><span class="ic">👨‍🌾</span><span data-i18n="farmers">किसान रिकॉर्ड</span></button>
+ <div class="nav-group">व्यापार प्रबंधन</div>
  <button data-page="purchase"><span class="ic">⬇️</span><span data-i18n="purchase">खरीद एंट्री</span></button>
  <button data-page="portal"><span class="ic">📚</span><span>v5 संदर्भ / Buyers</span></button>
  <button data-page="mandiweb"><span class="ic">🌾</span><span>UP मंडी डैशबोर्ड</span></button>
@@ -223,12 +227,14 @@ button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var
  <button data-page="accounts"><span class="ic">💰</span><span data-i18n="accounts">पेमेंट एवं खर्च</span></button>
  <button data-page="documents"><span class="ic">📄</span><span data-i18n="documents">दस्तावेज़ / लेजर</span></button>
  <button data-page="reports"><span class="ic">📊</span><span data-i18n="reports">रिपोर्ट</span></button>
+ <div class="nav-group">सिस्टम</div>
  <button data-page="settings"><span class="ic">⚙️</span><span data-i18n="settings">सेटिंग्स / बैकअप</span></button>
 </aside>
 <main>
 
 <section class="page active" id="dashboard">
- <h2 data-i18n="dashboard">व्यापार डैशबोर्ड</h2><p class="sub"><span data-i18n="dashSub">आज की खरीद, बिक्री, स्टॉक और भुगतान का सारांश</span> · <b>9839307042</b></p>
+ <div class="dashboard-hero"><div class="hero-copy"><span class="hero-eyebrow">🌾 BUSINESS OVERVIEW</span><h2 data-i18n="dashboard">व्यापार डैशबोर्ड</h2><p data-i18n="dashSub">आज की खरीद, बिक्री, स्टॉक और भुगतान का सारांश</p><div class="hero-meta"><span id="dashboardDate"></span><span>📞 9839307042</span></div></div><div class="hero-actions"><button class="hero-primary" onclick="showPage('billing')">＋ <span data-i18n="newBill">नया बिल</span></button><button class="hero-secondary" onclick="showPage('mandiweb')">🌾 UP मंडी</button></div></div>
+ <div class="overview-heading"><div><span class="section-kicker">OVERVIEW</span><h3>आज का व्यापार</h3></div><span>आपके सेव रिकॉर्ड के आधार पर</span></div>
  <div class="cards">
   <div class="card"><div class="card-ic">📅⬇️</div><small data-i18n="todayPurchase">आज की खरीद</small><strong id="todayPurchase">₹0</strong></div>
   <div class="card"><div class="card-ic">📅⬆️</div><small data-i18n="todaySales">आज की बिक्री</small><strong id="todaySales">₹0</strong></div>
@@ -629,8 +635,9 @@ $('menuBackdrop').addEventListener('click',closeMobileMenu);
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('nav').classList.contains('mobile-open'))closeMobileMenu()});
 window.addEventListener('resize',()=>{if(window.innerWidth>900&&$('nav').classList.contains('mobile-open'))closeMobileMenu()});
 function loadMandiDashboard(){const frame=$('mandiDashboardFrame');if(!frame.getAttribute('src'))frame.src='https://abhishekagrahari307-max.github.io/mandi/';frame.hidden=false;$('openMandiFrame').textContent='✓ मंडी डैशबोर्ड खुला है'}
-function showPage(id){document.body.classList.toggle('on-dashboard',id==='dashboard');closeMobileMenu();if(id==='contacts')renderContacts();if(id==='statebrokers')renderStateBrokers();if(id==='compare')renderMarketRates();document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));document.querySelectorAll('#bottomNav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}
-document.querySelectorAll('#nav button,#bottomNav button').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
+function updatePageContext(){const active=document.querySelector('#nav button.active span:last-child');$('currentPageLabel').textContent=active?active.textContent:'डैशबोर्ड'}
+function showPage(id){if(!document.getElementById(id))return;document.body.classList.toggle('on-dashboard',id==='dashboard');closeMobileMenu();if(id==='contacts')renderContacts();if(id==='statebrokers')renderStateBrokers();if(id==='compare')renderMarketRates();document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));document.querySelectorAll('#bottomNav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));updatePageContext();window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}
+document.querySelectorAll('#nav button[data-page],#bottomNav button[data-page]').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
 
 /* ---------- Theme & Language ---------- */
 function applyTheme(){const t=localStorage.getItem('vkt_theme')||'light';document.documentElement.dataset.theme=t;$('themeBtn').textContent=t==='dark'?'☀️ Light':'🌙 Dark'}
@@ -640,7 +647,7 @@ const I18N={
  en:{tagline:'All-in-One Business Management System · Paddy | Wheat | Rice',menu:'Menu',dashboard:'Dashboard',buyers:'Buyer Directory',farmers:'Farmer Records',purchase:'Purchase Entry',compare:'5-Mill Rate Comparison',stock:'Stock Management',sales:'Sales Entry',billing:'Bill of Supply',billhistory:'Bill History',dispatch:'Dispatch Records',register:'Mandi Register',accounts:'Payments & Expenses',documents:'Documents / Ledger',reports:'Reports',settings:'Settings / Backup',dashSub:"Today's purchase, sales, stock and payments summary",todayPurchase:"Today's Purchase",todaySales:"Today's Sales",currentStock:'Current Stock',estProfit:'Estimated Profit (Gross Margin)',outstanding:'Total Outstanding (Receivable)',farmerPayable:'Farmer Payable',received:'Payments Received',totalBills:'Total Bills',quick:'Quick Actions',newBill:'New Bill',recentBills:'Recent Bills',recentActivity:'Recent Purchase & Sales',notice1:'Note: This system is for internal records and calculation. Bill of Supply and Tax Invoice are different documents — confirm the correct document with your accountant.',firmName:'Firm / Mill Name *',category:'Category',city:'District / City',crop:'Crop',mobile:'Mobile',license:'License / GSTIN',note:'Note',save:'Save',action:'Action',farmerName:'Farmer Name *',village:'Village',purchaseQty:'Purchase (Qtl)',date:'Date *',qty:'Weight (Quintal) *',rate:'Rate ₹/Qtl *',payStatus:'Payment Status',buyCost:'Purchase Cost ₹/Qtl',totalQty:'Total Qty (Qtl)',otherCost:'Other Cost ₹/Qtl',mill:'Mill / Buyer',cut:'Deduction %',freight:'Freight ₹',netRate:'Net Rate ₹',update:'Update Comparison',saveCompare:'Save Comparison',inward:'Total Inward',outward:'Total Sales',balance:'Balance',buyerName:'Buyer / Mill *',total:'Total',docType:'Document Type',docNote:'Bill of Supply and Tax Invoice are different documents. Choose the correct type as per your actual GST status — confirm with your accountant.',mandiLicence:'Mandi licence number',seller:'Seller Details',address:'Full Address',gstin:'GSTIN (if applicable)',bank:'Bank Details',signature:'Signature (Name)',stamp:'Stamp (Text)',logo:'Upload Logo',billDetails:'Bill Details',billNo:'Bill No. (Auto)',fy:'Financial Year',dueDate:'Due Date',copyType:'Copy Type',terms:'Payment Terms',buyer:'Buyer Details',state:'State',pos:'Place of Supply',items:'Products / Items',item:'Item',unit:'Unit',discount:'Discount ₹',amount:'Amount ₹',addItem:'+ Add Item',otherCharges:'Other Charges ₹',template:'Choose Bill Template',preview:'Preview',saveBill:'Save Bill',print:'Print',download:'Download',billhistorySub:'View, Edit, PDF, Print, Duplicate, Cancel and record payments for all bills.',totalBillAmt:'Total Bill Amount',paid:'Paid',unpaid:'Unpaid',export:'Export CSV',vehicle:'Vehicle No.',driver:'Driver / Contact',recType:'Record Type',refNo:'Reference No.',party:'Party / Details',type:'Type',mode:'Payment Mode',farmerPaid:'Farmer Paid',expense:'Total Expense',net:'Net',quickDoc:'Create Quick Document',ledger:'Party Ledger',view:'View',reportsSub:'View summary and download CSV.',reportsNote:'CSV opens in Excel. Match with original bills and payment records before use.',company:'Company Info',backup:'Download Full Backup (JSON)',restore:'Restore Backup',clear:'Clear All Local Data',settingsNote:'Data stays in this browser Local Storage. Keep JSON backup safe. Contact:',footerNote:'Confirm official tax/mandi compliance with the concerned department.',buyersSub:'Save mill, trader and buyer information.',farmersSub:'Farmer contact info and purchase history.',purchaseSub:'Record of goods purchased from farmers.',compareSub:'Compare net rates using mill offers and costs.',stockSub:'Estimated balance stock from purchase and sales.',salesSub:'Record of goods sold to buyers.',billingSub:'Create professional bills — 5 Templates, A4 PDF, WhatsApp Share. Bill of Supply does not auto-add GST.',dispatchSub:'Goods dispatch and vehicle information.',registerSub:'Internal record of 6R / 9R-2 / Gate Pass references.',accountsSub:'Payments and expenses accounting.',documentsSub:'Delivery Challan, Purchase Receipt, Farmer Slip, Sale Bill, Dispatch Slip, Payment Receipt and Party Ledger.',settingsSub:'Company info, logo, bank details and backup.',search:'🔍 Search',mandi:'Mandi / Aadhat Bill',mandiSub:'Farmer purchase bill with commission, mandi fee, hammali, palledari, tulai deductions.',aadhat:'Aadhat / Firm Details',market:'Mandi / Market',farmer:'Farmer Details',bags:'Bags',deductions:'Deductions',commission:'Commission %',mandiFee:'Mandi Fee %',hammali:'Hammali ₹/Bag',palledari:'Palledari ₹/Bag',tulai:'Tulai ₹/Bag',otherDed:'Other Deduction ₹',paidSoFar:'Paid So Far ₹',mandiHistory:'Saved Mandi Bills',netPayable:'Net Payable',importExport:'Data Import / Export',importTitle:'CSV Import (from Excel)',exportTitle:'Export (CSV / JSON)',importNote:'Save Excel as CSV and import. Download Sample Template first, fill in same format, then import.',importModule:'Select Import Module',chooseFile:'Choose CSV File',confirmImport:'Import',sample:'Sample Template',compareNote:'Initial rates are examples, not current prices. Enter actual buyer offers.'}
 };
 function curLang(){return localStorage.getItem('vkt_lang')||'hi'}
-function applyLang(){const l=curLang();document.documentElement.lang=l;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(I18N[l][k])el.textContent=I18N[l][k]});document.querySelectorAll('[data-i18n-ph]').forEach(el=>{const k=el.dataset.i18nPh;if(I18N[l][k])el.placeholder=I18N[l][k]});$('langBtn').textContent=l==='hi'?'EN / हिंदी':'हिंदी / EN'}
+function applyLang(){const l=curLang();document.documentElement.lang=l;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(I18N[l][k])el.textContent=I18N[l][k]});document.querySelectorAll('[data-i18n-ph]').forEach(el=>{const k=el.dataset.i18nPh;if(I18N[l][k])el.placeholder=I18N[l][k]});$('langBtn').textContent=l==='hi'?'EN / हिंदी':'हिंदी / EN';updatePageContext();$('dashboardDate').textContent=new Intl.DateTimeFormat(l==='hi'?'hi-IN':'en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(new Date())}
 function toggleLang(){localStorage.setItem('vkt_lang',curLang()==='hi'?'en':'hi');applyLang();previewBill()}
 
 /* ---------- CRUD (existing modules) ---------- */
