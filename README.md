@@ -8,7 +8,7 @@
 
 ## 🌐 Live Website (GitHub Pages)
 - **URL:** https://abhishekagrahari307-max.github.io/Namaste-Tools---Advanced-PDF-Toolkit/
-- Render की ज़रूरत नहीं — स्थिर `index.html` और `portal-data.js`, GitHub Pages पर सीधे live। PDF लाइब्रेरी के लिए इंटरनेट चाहिए; उपलब्ध न होने पर Print → Save as PDF का उपयोग करें।
+- Render की ज़रूरत नहीं — स्थिर `index.html` और `portal-data.js`, GitHub Pages पर सीधे live। PDF लाइब्रेरी वेबसाइट के साथ शामिल है; यदि PDF डाउनलोड न हो तो Print → Save as PDF का उपयोग करें।
 
 ## ✨ Features
 - 📇 **संपर्क डायरेक्टरी:** कैटेगरी, खोज, कॉल/WhatsApp; सहेजे खरीदार और किसान, और v5 के सत्यापन-आवश्यक संपर्क एक जगह। मोबाइल में मेनू से सभी सेक्शन उपलब्ध।
