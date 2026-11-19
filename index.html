@@ -1,245 +1,434 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="hi" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vijay Kumar Traders | All-in-One Business Management System</title>
-<meta name="description" content="Vijay Kumar Traders — All-in-One Business Management System: खरीद, बिक्री, स्टॉक, बिलिंग, डिस्पैच, भुगतान और रिपोर्ट एक ही जगह। संपर्क: 9839307042">
-<meta name="theme-color" content="#075e46">
+<meta name="description" content="Vijay Kumar Traders — All-in-One Business Management System: खरीद, बिक्री, स्टॉक, Bill of Supply, डिस्पैच, भुगतान और रिपोर्ट एक ही जगह। संपर्क: 9839307042">
+<meta name="theme-color" content="#0b3d5c">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌾</text></svg>">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
-:root{--green:#075e46;--green2:#0b8060;--green3:#0c7657;--bg:#f3f6f5;--ink:#172b25;--muted:#64756e;--line:#dce6e1;--white:#fff;--gold:#e9ad38;--red:#b93b3b;--radius:12px}
+:root{
+ --green:#075e46;--green2:#0b8060;--navy:#0b3d5c;--navy2:#0e4d73;--gold:#e9ad38;
+ --bg:#f2f5f9;--card:#ffffff;--ink:#14232e;--muted:#5f7280;--line:#dbe4ec;--input:#ffffff;
+ --sidebar:#0b3d5c;--sidebar2:#0e4d73;--shadow:0 4px 18px rgba(11,61,92,.08);--radius:14px;
+ --success:#0b8060;--danger:#c0392b;--warn:#b7791f;
+}
+[data-theme="dark"]{
+ --bg:#0d1620;--card:#15222f;--ink:#e8f0f5;--muted:#9db4c2;--line:#24384a;--input:#0f1c28;
+ --sidebar:#081c2b;--sidebar2:#0b3d5c;--shadow:0 4px 18px rgba(0,0,0,.35);
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,"Noto Sans Devanagari",sans-serif}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,"Noto Sans Devanagari",sans-serif;transition:background .25s,color .25s}
 a{color:var(--green2)}
-header{background:linear-gradient(120deg,#064b39,#0c7657);color:#fff;padding:16px 22px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-header h1{font-size:21px;margin:0 0 4px}
-header p{margin:0;color:#d7eee5;font-size:12px}
-.head-contact{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.head-contact a{display:inline-flex;align-items:center;gap:6px;background:#fff;color:#075e46;text-decoration:none;font-weight:700;padding:9px 14px;border-radius:9px;font-size:14px}
-.head-contact a.wa{background:#25d366;color:#fff}
-.badge{border:1px solid #6eb49a;border-radius:9px;padding:8px 12px;font-size:12px;color:#d7eee5}
-.layout{display:grid;grid-template-columns:235px 1fr;min-height:calc(100vh - 75px)}
-aside{background:#073f31;padding:15px 10px;color:white}
-aside button{display:block;width:100%;border:0;background:transparent;color:#d7eee5;text-align:left;padding:11px 12px;border-radius:8px;margin:2px 0;cursor:pointer;font-size:14px}
-aside button.active,aside button:hover{background:#0c8060;color:white}
-main{padding:22px;max-width:1500px;width:100%;margin:auto}
+button{font-family:inherit}
+header.topbar{background:linear-gradient(120deg,var(--navy),var(--green));color:#fff;padding:12px 18px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;position:sticky;top:0;z-index:100}
+header.topbar .brand{display:flex;align-items:center;gap:12px}
+header.topbar .brand img.logo{width:44px;height:44px;border-radius:10px;background:#fff;object-fit:contain;padding:3px}
+header.topbar .brand .logo-fallback{width:44px;height:44px;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:24px}
+header.topbar h1{font-size:19px;margin:0}
+header.topbar p{margin:2px 0 0;color:#cfe8dc;font-size:11px}
+.top-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.top-actions a.call{background:#fff;color:var(--navy);text-decoration:none;font-weight:800;padding:8px 13px;border-radius:9px;font-size:13px}
+.top-actions a.wa{background:#25d366;color:#fff;text-decoration:none;font-weight:700;padding:8px 13px;border-radius:9px;font-size:13px}
+.icon-btn{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:9px;padding:8px 11px;cursor:pointer;font-size:13px;font-weight:700}
+.layout{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 68px)}
+aside{background:var(--sidebar);padding:14px 10px;color:#fff}
+aside .side-title{font-size:11px;color:#9fc6d8;padding:6px 12px;text-transform:uppercase;letter-spacing:.6px}
+aside button{display:flex;align-items:center;gap:10px;width:100%;border:0;background:transparent;color:#d6eaf3;text-align:left;padding:11px 12px;border-radius:10px;margin:2px 0;cursor:pointer;font-size:14px}
+aside button.active,aside button:hover{background:var(--sidebar2);color:#fff}
+aside button .ic{width:22px;text-align:center}
+main{padding:20px;max-width:1500px;width:100%;margin:auto;padding-bottom:90px}
 .page{display:none}.page.active{display:block}
-h2{margin:0 0 5px;font-size:22px}.sub{color:var(--muted);font-size:13px;margin:0 0 18px}
-.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin:15px 0}
-.card,.panel{background:white;border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:0 2px 7px #163b2b08}
-.card small{color:var(--muted)}.card strong{display:block;font-size:23px;margin-top:9px;color:var(--green)}
-.card.warn strong{color:var(--red)}
+h2{margin:0 0 4px;font-size:22px}.sub{color:var(--muted);font-size:13px;margin:0 0 16px}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin:14px 0}
+.card,.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+.card small{color:var(--muted);font-size:12px}.card strong{display:block;font-size:22px;margin-top:8px;color:var(--green)}
+[data-theme="dark"] .card strong{color:#3ddc97}
+.card.warn strong{color:var(--danger)}
+.card .card-ic{font-size:20px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.panel h3{font-size:16px;margin:0 0 12px}
 .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0;align-items:center}
-input,select,textarea{padding:10px;border:1px solid #cbd8d1;border-radius:7px;background:white;min-width:0;font:inherit}
-input,select{width:100%}textarea{width:100%;min-height:70px}
-button.primary,.btn{background:var(--green2);color:white;border:0;padding:10px 14px;border-radius:7px;cursor:pointer;font-weight:600}
-button.secondary{background:#e8f2ed;color:#075e46;border:1px solid #c8dfd3;padding:9px 12px;border-radius:7px;cursor:pointer}
-button.danger{background:#fff0f0;color:#a22;border:1px solid #efcccc;padding:8px 10px;border-radius:7px;cursor:pointer}
+input,select,textarea{padding:10px;border:1px solid var(--line);border-radius:9px;background:var(--input);color:var(--ink);min-width:0;font:inherit;width:100%}
+textarea{min-height:70px}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--green2);outline-offset:1px}
+button.primary{background:var(--green2);color:#fff;border:0;padding:10px 15px;border-radius:9px;cursor:pointer;font-weight:700}
+button.secondary{background:var(--card);color:var(--green);border:1px solid var(--line);padding:9px 12px;border-radius:9px;cursor:pointer}
+[data-theme="dark"] button.secondary{color:#3ddc97}
+button.danger{background:#fdecec;color:#a22;border:1px solid #efcccc;padding:8px 10px;border-radius:9px;cursor:pointer}
 button.small{padding:6px 10px;font-size:12px}
-table{border-collapse:collapse;width:100%;background:white;font-size:13px}th,td{border-bottom:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}th{background:#edf5f1;color:#174b39}
-.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:10px}
+button.navy{background:var(--navy);color:#fff;border:0;padding:10px 15px;border-radius:9px;cursor:pointer;font-weight:700}
+table{border-collapse:collapse;width:100%;background:var(--card);font-size:13px}th,td{border-bottom:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}th{background:var(--bg);color:var(--navy)}
+[data-theme="dark"] th{color:#9fd8c0}
+.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:12px}
 .formgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.field label{display:block;font-size:12px;color:var(--muted);margin:0 0 5px}
-.notice{background:#fff8e8;border:1px solid #f0d99e;padding:12px;border-radius:9px;font-size:13px;color:#654d17;margin:12px 0}
-.pill{display:inline-block;background:#e7f4ed;color:#126143;border-radius:20px;padding:4px 8px;font-size:11px}
-.pill.red{background:#fdecec;color:#a22}
-footer{text-align:center;color:#77877f;padding:20px;font-size:12px}
+.notice{background:#fff8e8;border:1px solid #f0d99e;padding:12px;border-radius:10px;font-size:13px;color:#654d17;margin:12px 0}
+[data-theme="dark"] .notice{background:#2a2113;color:#f0d99e}
+.pill{display:inline-block;background:#e7f4ed;color:#126143;border-radius:20px;padding:4px 9px;font-size:11px;font-weight:700}
+.pill.red{background:#fdecec;color:#a22}.pill.amber{background:#fff3d6;color:#8a6d1a}
+footer{text-align:center;color:var(--muted);padding:22px;font-size:12px}
 footer a{color:var(--green2);font-weight:700}
-#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#073f31;color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;display:none;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.3);max-width:90vw;text-align:center}
+#toast{position:fixed;bottom:86px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;display:none;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.3);max-width:92vw;text-align:center}
 #toast.show{display:block}
-.bill-box{border:2px solid #075e46;padding:24px;min-height:200px;background:#fff}
-.bill-box h2{text-align:center;color:#075e46}
-.bill-meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:13px;border-bottom:1px solid #dce6e1;padding-bottom:10px;margin-bottom:12px}
+/* Bottom nav (mobile) */
+.bottomnav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--sidebar);z-index:200;padding:6px 4px;box-shadow:0 -2px 12px rgba(0,0,0,.2)}
+.bottomnav button{flex:1;background:transparent;border:0;color:#cfe0ea;font-size:10px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px;cursor:pointer;border-radius:8px}
+.bottomnav button .bic{font-size:18px}
+.bottomnav button.active{color:#fff;background:var(--sidebar2)}
+/* Bill templates */
+.bill-wrap{overflow:auto}
+.bill-box{background:#fff;color:#14232e;border:2px solid var(--navy);padding:26px;min-height:220px;min-width:640px}
+.bill-box h2{text-align:center;color:var(--navy)}
+.bill-box .bill-head{text-align:center;border-bottom:3px double var(--navy);padding-bottom:12px;margin-bottom:14px}
+.bill-box .bill-head img{max-height:64px}
+.bill-meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:13px;border-bottom:1px solid #dbe4ec;padding-bottom:10px;margin-bottom:12px}
 .bill-total{text-align:right;font-size:18px;margin-top:14px}
+.bill-box table th{background:#eef4f8;color:var(--navy)}
+.bill-box table td,.bill-box table th{border:1px solid #dbe4ec}
+.tpl-premium{border:3px solid var(--green);border-radius:6px}
+.tpl-premium .bill-head{border-bottom:4px solid var(--green)}
+.tpl-premium h2{color:var(--green)}
+.tpl-premium table th{background:#e7f4ed;color:var(--green)}
+.tpl-modern{border:0;border-top:10px solid var(--navy);box-shadow:0 0 0 1px #dbe4ec}
+.tpl-modern .bill-head{border-bottom:0;text-align:left}
+.tpl-modern table th{background:var(--navy);color:#fff}
+.tpl-agri{border:2px solid #7a5c00;background:linear-gradient(180deg,#fffdf4,#fff)}
+.tpl-agri .bill-head{border-bottom:3px solid #7a5c00}
+.tpl-agri h2{color:#7a5c00}
+.tpl-agri table th{background:#fdf3d0;color:#7a5c00}
+.tpl-compact{border:1px solid #999;padding:16px;min-width:560px}
+.tpl-compact h2{font-size:18px}
+.tpl-compact .bill-head{border-bottom:1px solid #999;padding-bottom:6px;margin-bottom:8px}
+.tpl-compact table th{background:#f0f0f0}
+.tpl-select{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.tpl-select button{border:2px solid var(--line);background:var(--card);color:var(--ink);padding:9px 13px;border-radius:10px;cursor:pointer;font-weight:700;font-size:13px}
+.tpl-select button.sel{border-color:var(--green2);background:#e7f4ed;color:var(--green)}
+[data-theme="dark"] .tpl-select button.sel{background:#123526;color:#3ddc97}
+.doc-type{display:flex;gap:8px;flex-wrap:wrap}
+.doc-type button{border:2px solid var(--line);background:var(--card);color:var(--ink);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:700;font-size:13px}
+.doc-type button.sel{border-color:var(--navy);background:var(--navy);color:#fff}
 .empty{text-align:center;color:var(--muted);padding:20px;font-size:13px}
-.searchbar{flex:1;min-width:180px}
-@media(max-width:900px){.layout{grid-template-columns:1fr}aside{display:flex;overflow:auto;gap:4px;padding:8px}aside button{white-space:nowrap;width:auto}.cards{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:600px){main{padding:13px}.grid2{grid-template-columns:1fr}.formgrid{grid-template-columns:1fr 1fr}header{padding:15px}.cards{gap:8px}.card{padding:12px}.card strong{font-size:19px}header h1{font-size:18px}}
-@media print{header,aside,.no-print,footer,#toast{display:none!important}.layout{display:block}main{padding:0}.page{display:none!important}#billing.page{display:block!important}.panel{box-shadow:none;border:0}.bill-box{border:0}}
+.searchbar{flex:1;min-width:170px}
+.item-row td{padding:6px}
+.item-row input{padding:8px}
+@media(max-width:900px){.layout{grid-template-columns:1fr}aside{display:none}.cards{grid-template-columns:repeat(2,1fr)}.bottomnav{display:flex}main{padding:14px 12px 96px}}
+@media(max-width:600px){.grid2{grid-template-columns:1fr}.formgrid{grid-template-columns:1fr 1fr}header.topbar h1{font-size:16px}.cards{gap:8px}.card{padding:12px}.card strong{font-size:18px}}
+@media print{header.topbar,aside,.no-print,footer,#toast,.bottomnav{display:none!important}.layout{display:block}main{padding:0}.page{display:none!important}#billing.page,#billhistory.page{display:block!important}.panel{box-shadow:none;border:0}.bill-box{border:1px solid #000;min-width:0;box-shadow:none}}
 </style>
 </head>
 <body>
-<header>
- <div><h1>🌾 VIJAY KUMAR TRADERS</h1><p>All-in-One Business Management System · धान | गेहूँ | चावल</p></div>
- <div class="head-contact">
-  <a href="tel:+919839307042">📞 9839307042</a>
-  <a class="wa" href="https://wa.me/919839307042?text=नमस्ते%20Vijay%20Kumar%20Traders" target="_blank" rel="noopener">💬 WhatsApp</a>
+<header class="topbar">
+ <div class="brand">
+  <span id="brandLogo"></span>
+  <div><h1>🌾 VIJAY KUMAR TRADERS</h1><p data-i18n="tagline">All-in-One Business Management System · धान | गेहूँ | चावल</p></div>
  </div>
- <div class="badge">व्यापार प्रबंधन डैशबोर्ड<br><b>डेटा इसी ब्राउज़र में सेव होगा · GitHub Pages Live</b></div>
+ <div class="top-actions">
+  <a class="call" href="tel:+919839307042">📞 9839307042</a>
+  <a class="wa" href="https://wa.me/919839307042?text=नमस्ते%20Vijay%20Kumar%20Traders" target="_blank" rel="noopener">💬 WhatsApp</a>
+  <button class="icon-btn" id="langBtn" onclick="toggleLang()">EN / हिंदी</button>
+  <button class="icon-btn" id="themeBtn" onclick="toggleTheme()">🌙 Dark</button>
+ </div>
 </header>
 <div class="layout">
 <aside class="no-print" id="nav">
- <button class="active" data-page="dashboard">🏠 डैशबोर्ड</button>
- <button data-page="buyers">📋 खरीदार डायरेक्टरी</button>
- <button data-page="farmers">👨‍🌾 किसान रिकॉर्ड</button>
- <button data-page="purchase">⬇️ खरीद एंट्री</button>
- <button data-page="compare">⚖️ 5-मिल रेट तुलना</button>
- <button data-page="stock">📦 स्टॉक मैनेजमेंट</button>
- <button data-page="sales">⬆️ बिक्री एंट्री</button>
- <button data-page="billing">🧾 बिल / रसीद</button>
- <button data-page="dispatch">🚚 डिस्पैच रिकॉर्ड</button>
- <button data-page="register">📒 मंडी रजिस्टर</button>
- <button data-page="accounts">💰 पेमेंट एवं खर्च</button>
- <button data-page="reports">📊 रिपोर्ट</button>
- <button data-page="settings">⚙️ सेटिंग्स / बैकअप</button>
+ <div class="side-title" data-i18n="menu">मेनू / Menu</div>
+ <button class="active" data-page="dashboard"><span class="ic">🏠</span><span data-i18n="dashboard">डैशबोर्ड</span></button>
+ <button data-page="buyers"><span class="ic">📋</span><span data-i18n="buyers">खरीदार डायरेक्टरी</span></button>
+ <button data-page="farmers"><span class="ic">👨‍🌾</span><span data-i18n="farmers">किसान रिकॉर्ड</span></button>
+ <button data-page="purchase"><span class="ic">⬇️</span><span data-i18n="purchase">खरीद एंट्री</span></button>
+ <button data-page="compare"><span class="ic">⚖️</span><span data-i18n="compare">5-मिल रेट तुलना</span></button>
+ <button data-page="stock"><span class="ic">📦</span><span data-i18n="stock">स्टॉक मैनेजमेंट</span></button>
+ <button data-page="sales"><span class="ic">⬆️</span><span data-i18n="sales">बिक्री एंट्री</span></button>
+ <button data-page="billing"><span class="ic">🧾</span><span data-i18n="billing">Bill of Supply</span></button>
+ <button data-page="billhistory"><span class="ic">🗂️</span><span data-i18n="billhistory">बिल हिस्ट्री</span></button>
+ <button data-page="dispatch"><span class="ic">🚚</span><span data-i18n="dispatch">डिस्पैच रिकॉर्ड</span></button>
+ <button data-page="register"><span class="ic">📒</span><span data-i18n="register">मंडी रजिस्टर</span></button>
+ <button data-page="accounts"><span class="ic">💰</span><span data-i18n="accounts">पेमेंट एवं खर्च</span></button>
+ <button data-page="documents"><span class="ic">📄</span><span data-i18n="documents">दस्तावेज़ / लेजर</span></button>
+ <button data-page="reports"><span class="ic">📊</span><span data-i18n="reports">रिपोर्ट</span></button>
+ <button data-page="settings"><span class="ic">⚙️</span><span data-i18n="settings">सेटिंग्स / बैकअप</span></button>
 </aside>
 <main>
 
 <section class="page active" id="dashboard">
- <h2>व्यापार डैशबोर्ड</h2><p class="sub">आज की खरीद, बिक्री, स्टॉक और भुगतान का सारांश। संपर्क: <b>9839307042</b></p>
+ <h2 data-i18n="dashboard">व्यापार डैशबोर्ड</h2><p class="sub"><span data-i18n="dashSub">आज की खरीद, बिक्री, स्टॉक और भुगतान का सारांश</span> · <b>9839307042</b></p>
  <div class="cards">
-  <div class="card"><small>कुल खरीद</small><strong id="totalPurchase">₹0</strong></div>
-  <div class="card"><small>कुल बिक्री</small><strong id="totalSales">₹0</strong></div>
-  <div class="card"><small>कुल स्टॉक</small><strong id="totalStock">0 क्विं.</strong></div>
-  <div class="card"><small>अनुमानित अंतर</small><strong id="margin">₹0</strong></div>
-  <div class="card"><small>खरीदार से लेना (बकाया)</small><strong id="receivable">₹0</strong></div>
-  <div class="card"><small>किसान को देना (बकाया)</small><strong id="payable">₹0</strong></div>
-  <div class="card"><small>कुल प्राप्त भुगतान</small><strong id="totalReceived">₹0</strong></div>
-  <div class="card"><small>कुल खर्च</small><strong id="totalExpense">₹0</strong></div>
+  <div class="card"><div class="card-ic">📅⬇️</div><small data-i18n="todayPurchase">आज की खरीद</small><strong id="todayPurchase">₹0</strong></div>
+  <div class="card"><div class="card-ic">📅⬆️</div><small data-i18n="todaySales">आज की बिक्री</small><strong id="todaySales">₹0</strong></div>
+  <div class="card"><div class="card-ic">📦</div><small data-i18n="currentStock">वर्तमान स्टॉक</small><strong id="totalStock">0 क्विं.</strong></div>
+  <div class="card"><div class="card-ic">💰</div><small data-i18n="estProfit">अनुमानित लाभ (सकल अंतर)</small><strong id="margin">₹0</strong></div>
+  <div class="card"><div class="card-ic">🧾</div><small data-i18n="outstanding">कुल बकाया (लेना)</small><strong id="receivable">₹0</strong></div>
+  <div class="card"><div class="card-ic">👨‍🌾</div><small data-i18n="farmerPayable">किसानों को देना</small><strong id="payable">₹0</strong></div>
+  <div class="card"><div class="card-ic">✅</div><small data-i18n="received">प्राप्त भुगतान</small><strong id="totalReceived">₹0</strong></div>
+  <div class="card"><div class="card-ic">🧾</div><small data-i18n="totalBills">कुल बिल</small><strong id="totalBills">0</strong></div>
  </div>
  <div class="grid2">
-  <div class="panel"><h3>त्वरित एंट्री</h3><div class="toolbar"><button class="primary" onclick="showPage('purchase')">+ नई खरीद</button><button class="secondary" onclick="showPage('sales')">+ नई बिक्री</button><button class="secondary" onclick="showPage('billing')">नया बिल</button><button class="secondary" onclick="showPage('buyers')">+ खरीदार</button></div><p class="sub">नई एंट्री करते ही संबंधित सूची और डैशबोर्ड अपडेट होंगे।</p></div>
-  <div class="panel"><h3>हाल की गतिविधियाँ</h3><div id="recent">अभी कोई रिकॉर्ड नहीं है।</div></div>
+  <div class="panel"><h3 data-i18n="quick">त्वरित कार्य (Quick Actions)</h3><div class="toolbar"><button class="primary" onclick="showPage('billing')">🧾 <span data-i18n="newBill">नया बिल</span></button><button class="secondary" onclick="showPage('purchase')">+ <span data-i18n="purchase">खरीद</span></button><button class="secondary" onclick="showPage('sales')">+ <span data-i18n="sales">बिक्री</span></button><button class="secondary" onclick="showPage('buyers')">+ <span data-i18n="buyers">खरीदार</span></button><button class="secondary" onclick="showPage('accounts')">💰 <span data-i18n="accounts">पेमेंट</span></button></div></div>
+  <div class="panel"><h3 data-i18n="recentBills">हाल के बिल</h3><div id="recentBills">—</div></div>
  </div>
+ <div class="panel" style="margin-top:14px"><h3 data-i18n="recentActivity">हाल की खरीद-बिक्री</h3><div id="recent">अभी कोई रिकॉर्ड नहीं है।</div></div>
  <div id="stockAlert"></div>
- <div class="notice">महत्वपूर्ण: यह सिस्टम आंतरिक रिकॉर्ड, गणना और दस्तावेज़ प्रबंधन के लिए है। यह सरकारी e-Mandi पोर्टल, GST पोर्टल या बैंक से कनेक्ट नहीं है। आधिकारिक दस्तावेज़ और टैक्स/मंडी नियम अलग से सत्यापित करें।</div>
+ <div class="notice" data-i18n="notice1">महत्वपूर्ण: यह सिस्टम आंतरिक रिकॉर्ड और गणना के लिए है। यह सरकारी e-Mandi / GST / बैंक पोर्टल से कनेक्ट नहीं है। Bill of Supply और Tax Invoice अलग-अलग दस्तावेज़ हैं — सही दस्तावेज़ अपने अकाउंटेंट से पुष्टि करके चुनें।</div>
 </section>
 
 <section class="page" id="buyers">
- <h2>खरीदार डायरेक्टरी</h2><p class="sub">मिल, व्यापारी और खरीदारों की जानकारी सेव करें।</p>
+ <h2 data-i18n="buyers">खरीदार डायरेक्टरी</h2><p class="sub" data-i18n="buyersSub">मिल, व्यापारी और खरीदारों की जानकारी सेव करें।</p>
  <div class="panel"><div class="formgrid">
-  <div class="field"><label>फर्म / मिल का नाम *</label><input id="buyerName" placeholder="फर्म का नाम"></div>
-  <div class="field"><label>कैटेगरी</label><select id="buyerCategory"><option>Rice Mill</option><option>Flour Mill</option><option>Grain Trader</option><option>Rice Wholesaler</option><option>Agro/Food Processor</option><option>Broker</option><option>FPO</option><option>Other</option></select></div>
-  <div class="field"><label>जिला / शहर</label><input id="buyerCity" placeholder="जैसे खलीलाबाद"></div>
-  <div class="field"><label>फसल</label><select id="buyerCrop"><option>धान</option><option>गेहूँ</option><option>चावल</option><option>धान, गेहूँ, चावल</option></select></div>
-  <div class="field"><label>मोबाइल</label><input id="buyerPhone" placeholder="मोबाइल नंबर" inputmode="tel"></div>
-  <div class="field"><label>लाइसेंस / GSTIN</label><input id="buyerLicense" placeholder="यदि उपलब्ध हो"></div>
-  <div class="field"><label>नोट</label><input id="buyerNote" placeholder="रेट / भुगतान शर्त आदि"></div>
- </div><div class="toolbar"><button class="primary" onclick="addBuyer()">खरीदार सेव करें</button><input id="buyerSearch" class="searchbar" placeholder="🔍 नाम / शहर / मोबाइल खोजें" oninput="renderBuyers()"></div></div>
- <div class="tablewrap"><table><thead><tr><th>फर्म</th><th>कैटेगरी</th><th>शहर</th><th>फसल</th><th>मोबाइल</th><th>लाइसेंस</th><th>नोट</th><th>कार्रवाई</th></tr></thead><tbody id="buyerRows"></tbody></table></div>
+  <div class="field"><label data-i18n="firmName">फर्म / मिल का नाम *</label><input id="buyerName"></div>
+  <div class="field"><label data-i18n="category">कैटेगरी</label><select id="buyerCategory"><option>Rice Mill</option><option>Flour Mill</option><option>Grain Trader</option><option>Rice Wholesaler</option><option>Agro/Food Processor</option><option>Broker</option><option>FPO</option><option>Other</option></select></div>
+  <div class="field"><label data-i18n="city">जिला / शहर</label><input id="buyerCity"></div>
+  <div class="field"><label data-i18n="crop">फसल</label><select id="buyerCrop"><option>धान</option><option>गेहूँ</option><option>चावल</option><option>धान, गेहूँ, चावल</option></select></div>
+  <div class="field"><label data-i18n="mobile">मोबाइल</label><input id="buyerPhone" inputmode="tel"></div>
+  <div class="field"><label data-i18n="license">लाइसेंस / GSTIN</label><input id="buyerLicense"></div>
+  <div class="field"><label data-i18n="note">नोट</label><input id="buyerNote"></div>
+ </div><div class="toolbar"><button class="primary" onclick="addBuyer()" data-i18n="save">सेव करें</button><input id="buyerSearch" class="searchbar" data-i18n-ph="search" placeholder="🔍 नाम / शहर / मोबाइल खोजें" oninput="renderBuyers()"></div></div>
+ <div class="tablewrap"><table><thead><tr><th data-i18n="firmName">फर्म</th><th data-i18n="category">कैटेगरी</th><th data-i18n="city">शहर</th><th data-i18n="crop">फसल</th><th data-i18n="mobile">मोबाइल</th><th data-i18n="license">लाइसेंस</th><th data-i18n="note">नोट</th><th data-i18n="action">कार्रवाई</th></tr></thead><tbody id="buyerRows"></tbody></table></div>
 </section>
 
 <section class="page" id="farmers">
- <h2>किसान रिकॉर्ड</h2><p class="sub">किसान की संपर्क जानकारी और खरीद इतिहास के लिए।</p>
+ <h2 data-i18n="farmers">किसान रिकॉर्ड</h2><p class="sub" data-i18n="farmersSub">किसान की संपर्क जानकारी और खरीद इतिहास।</p>
  <div class="panel"><div class="formgrid">
- <div class="field"><label>किसान का नाम *</label><input id="farmerName" placeholder="किसान का नाम"></div><div class="field"><label>गाँव</label><input id="farmerVillage" placeholder="गाँव"></div><div class="field"><label>मोबाइल</label><input id="farmerPhone" placeholder="मोबाइल नंबर" inputmode="tel"></div>
- </div><div class="toolbar"><button class="primary" onclick="addFarmer()">किसान सेव करें</button><input id="farmerSearch" class="searchbar" placeholder="🔍 नाम / गाँव / मोबाइल खोजें" oninput="renderFarmers()"></div></div>
- <div class="tablewrap"><table><thead><tr><th>नाम</th><th>गाँव</th><th>मोबाइल</th><th>खरीद (क्विं.)</th><th>कार्रवाई</th></tr></thead><tbody id="farmerRows"></tbody></table></div>
+ <div class="field"><label data-i18n="farmerName">किसान का नाम *</label><input id="farmerName"></div><div class="field"><label data-i18n="village">गाँव</label><input id="farmerVillage"></div><div class="field"><label data-i18n="mobile">मोबाइल</label><input id="farmerPhone" inputmode="tel"></div>
+ </div><div class="toolbar"><button class="primary" onclick="addFarmer()" data-i18n="save">सेव करें</button><input id="farmerSearch" class="searchbar" placeholder="🔍 नाम / गाँव / मोबाइल" oninput="renderFarmers()"></div></div>
+ <div class="tablewrap"><table><thead><tr><th data-i18n="farmerName">नाम</th><th data-i18n="village">गाँव</th><th data-i18n="mobile">मोबाइल</th><th data-i18n="purchaseQty">खरीद (क्विं.)</th><th data-i18n="action">कार्रवाई</th></tr></thead><tbody id="farmerRows"></tbody></table></div>
 </section>
 
 <section class="page" id="purchase">
- <h2>खरीद एंट्री</h2><p class="sub">किसान से खरीदे गए माल का रिकॉर्ड।</p>
+ <h2 data-i18n="purchase">खरीद एंट्री</h2><p class="sub" data-i18n="purchaseSub">किसान से खरीदे गए माल का रिकॉर्ड।</p>
  <div class="panel"><div class="formgrid">
- <div class="field"><label>किसान का नाम *</label><input id="pFarmer" placeholder="किसान का नाम"></div><div class="field"><label>फसल *</label><select id="pCrop"><option>धान</option><option>गेहूँ</option><option>चावल</option></select></div><div class="field"><label>तारीख *</label><input type="date" id="pDate"></div>
- <div class="field"><label>वजन (क्विंटल) *</label><input type="number" id="pQty" min="0" step=".01" inputmode="decimal"></div><div class="field"><label>खरीद भाव ₹/क्विं. *</label><input type="number" id="pRate" min="0" step=".01" inputmode="decimal"></div><div class="field"><label>भुगतान स्थिति</label><select id="pStatus"><option>भुगतान बाकी</option><option>भुगतान पूरा</option><option>आंशिक भुगतान</option></select></div>
- </div><div class="toolbar"><button class="primary" onclick="addPurchase()">खरीद सेव करें</button><input id="purchaseSearch" class="searchbar" placeholder="🔍 किसान / फसल खोजें" oninput="renderPurchases()"></div></div>
- <div class="tablewrap"><table><thead><tr><th>तारीख</th><th>किसान</th><th>फसल</th><th>वजन</th><th>दर</th><th>कुल</th><th>स्थिति</th><th></th></tr></thead><tbody id="purchaseRows"></tbody></table></div>
+ <div class="field"><label data-i18n="farmerName">किसान का नाम *</label><input id="pFarmer"></div><div class="field"><label data-i18n="crop">फसल *</label><select id="pCrop"><option>धान</option><option>गेहूँ</option><option>चावल</option></select></div><div class="field"><label data-i18n="date">तारीख *</label><input type="date" id="pDate"></div>
+ <div class="field"><label data-i18n="qty">वजन (क्विंटल) *</label><input type="number" id="pQty" min="0" step=".01" inputmode="decimal"></div><div class="field"><label data-i18n="rate">खरीद भाव ₹/क्विं. *</label><input type="number" id="pRate" min="0" step=".01" inputmode="decimal"></div><div class="field"><label data-i18n="payStatus">भुगतान स्थिति</label><select id="pStatus"><option>भुगतान बाकी</option><option>भुगतान पूरा</option><option>आंशिक भुगतान</option></select></div>
+ </div><div class="toolbar"><button class="primary" onclick="addPurchase()" data-i18n="save">सेव करें</button><input id="purchaseSearch" class="searchbar" placeholder="🔍 किसान / फसल" oninput="renderPurchases()"></div></div>
+ <div class="tablewrap"><table><thead><tr><th data-i18n="date">तारीख</th><th data-i18n="farmerName">किसान</th><th data-i18n="crop">फसल</th><th data-i18n="qty">वजन</th><th data-i18n="rate">दर</th><th data-i18n="total">कुल</th><th data-i18n="payStatus">स्थिति</th><th></th></tr></thead><tbody id="purchaseRows"></tbody></table></div>
 </section>
 
 <section class="page" id="compare">
- <h2>5-मिल रेट तुलना</h2><p class="sub">मिल से प्राप्त भाव और अनुमानित खर्च भरकर नेट रेट की तुलना करें।</p>
+ <h2 data-i18n="compare">5-मिल रेट तुलना</h2><p class="sub" data-i18n="compareSub">मिल से प्राप्त भाव और खर्च भरकर नेट रेट की तुलना करें।</p>
  <div class="panel"><div class="formgrid">
- <div class="field"><label>खरीद लागत ₹/क्विं.</label><input type="number" id="cBuy" value="2000" oninput="calcCompare()"></div><div class="field"><label>कुल मात्रा (क्विं.)</label><input type="number" id="cQty" value="100" oninput="calcCompare()"></div><div class="field"><label>अन्य लागत ₹/क्विं.</label><input type="number" id="cOther" value="20" oninput="calcCompare()"></div>
- </div><div class="notice">नीचे अधिकतम पाँच खरीदारों के भाव भरें। नमी/गुणवत्ता कटौती और भाड़ा अपने वास्तविक सौदे के अनुसार डालें। सबसे अच्छा नेट ऑफर हरा दिखेगा।</div>
- <div class="tablewrap"><table><thead><tr><th>मिल / खरीदार</th><th>रेट ₹</th><th>कटौती %</th><th>भाड़ा ₹</th><th>नेट रेट ₹</th><th>अनुमानित लाभ ₹/क्विं.</th></tr></thead><tbody id="compareRows"></tbody></table></div>
- <div class="toolbar"><button class="secondary" onclick="calcCompare()">तुलना अपडेट करें</button><button class="primary" onclick="saveComparison()">तुलना सेव करें</button></div>
+ <div class="field"><label data-i18n="buyCost">खरीद लागत ₹/क्विं.</label><input type="number" id="cBuy" value="2000" oninput="calcCompare()"></div><div class="field"><label data-i18n="totalQty">कुल मात्रा (क्विं.)</label><input type="number" id="cQty" value="100" oninput="calcCompare()"></div><div class="field"><label data-i18n="otherCost">अन्य लागत ₹/क्विं.</label><input type="number" id="cOther" value="20" oninput="calcCompare()"></div>
+ </div><div class="notice" data-i18n="compareNote">नीचे अधिकतम पाँच खरीदारों के भाव भरें। सबसे अच्छा नेट ऑफर हरा दिखेगा।</div>
+ <div class="tablewrap"><table><thead><tr><th data-i18n="mill">मिल / खरीदार</th><th data-i18n="rate">रेट ₹</th><th data-i18n="cut">कटौती %</th><th data-i18n="freight">भाड़ा ₹</th><th data-i18n="netRate">नेट रेट ₹</th><th data-i18n="estProfit">अनुमानित लाभ ₹/क्विं.</th></tr></thead><tbody id="compareRows"></tbody></table></div>
+ <div class="toolbar"><button class="secondary" onclick="calcCompare()" data-i18n="update">तुलना अपडेट करें</button><button class="primary" onclick="saveComparison()" data-i18n="saveCompare">तुलना सेव करें</button></div>
  <div id="compareHistory"></div>
  </div>
 </section>
 
 <section class="page" id="stock">
- <h2>स्टॉक मैनेजमेंट</h2><p class="sub">खरीद और बिक्री एंट्री के आधार पर अनुमानित शेष स्टॉक।</p>
- <div class="cards" id="stockCards"></div><div class="tablewrap"><table><thead><tr><th>फसल</th><th>कुल आवक</th><th>कुल बिक्री</th><th>शेष</th></tr></thead><tbody id="stockRows"></tbody></table></div>
+ <h2 data-i18n="stock">स्टॉक मैनेजमेंट</h2><p class="sub" data-i18n="stockSub">खरीद और बिक्री के आधार पर अनुमानित शेष स्टॉक।</p>
+ <div class="cards" id="stockCards"></div><div class="tablewrap"><table><thead><tr><th data-i18n="crop">फसल</th><th data-i18n="inward">कुल आवक</th><th data-i18n="outward">कुल बिक्री</th><th data-i18n="balance">शेष</th></tr></thead><tbody id="stockRows"></tbody></table></div>
 </section>
 
 <section class="page" id="sales">
- <h2>बिक्री एंट्री</h2><p class="sub">खरीदार को भेजे गए माल और बिक्री राशि का रिकॉर्ड।</p>
+ <h2 data-i18n="sales">बिक्री एंट्री</h2><p class="sub" data-i18n="salesSub">खरीदार को भेजे गए माल और बिक्री राशि का रिकॉर्ड।</p>
  <div class="panel"><div class="formgrid">
- <div class="field"><label>खरीदार / मिल *</label><input id="sBuyer" placeholder="खरीदार का नाम"></div><div class="field"><label>फसल *</label><select id="sCrop"><option>धान</option><option>गेहूँ</option><option>चावल</option></select></div><div class="field"><label>तारीख *</label><input type="date" id="sDate"></div>
- <div class="field"><label>वजन (क्विंटल) *</label><input type="number" id="sQty" min="0" step=".01" inputmode="decimal"></div><div class="field"><label>बिक्री भाव ₹/क्विं. *</label><input type="number" id="sRate" min="0" step=".01" inputmode="decimal"></div><div class="field"><label>भुगतान स्थिति</label><select id="sStatus"><option>भुगतान बाकी</option><option>भुगतान पूरा</option><option>आंशिक भुगतान</option></select></div>
- </div><div class="toolbar"><button class="primary" onclick="addSale()">बिक्री सेव करें</button><input id="salesSearch" class="searchbar" placeholder="🔍 खरीदार / फसल खोजें" oninput="renderSales()"></div></div>
- <div class="tablewrap"><table><thead><tr><th>तारीख</th><th>खरीदार</th><th>फसल</th><th>वजन</th><th>दर</th><th>कुल</th><th>स्थिति</th><th></th></tr></thead><tbody id="salesRows"></tbody></table></div>
+ <div class="field"><label data-i18n="buyerName">खरीदार / मिल *</label><input id="sBuyer"></div><div class="field"><label data-i18n="crop">फसल *</label><select id="sCrop"><option>धान</option><option>गेहूँ</option><option>चावल</option></select></div><div class="field"><label data-i18n="date">तारीख *</label><input type="date" id="sDate"></div>
+ <div class="field"><label data-i18n="qty">वजन (क्विंटल) *</label><input type="number" id="sQty" min="0" step=".01" inputmode="decimal"></div><div class="field"><label data-i18n="rate">बिक्री भाव ₹/क्विं. *</label><input type="number" id="sRate" min="0" step=".01" inputmode="decimal"></div><div class="field"><label data-i18n="payStatus">भुगतान स्थिति</label><select id="sStatus"><option>भुगतान बाकी</option><option>भुगतान पूरा</option><option>आंशिक भुगतान</option></select></div>
+ </div><div class="toolbar"><button class="primary" onclick="addSale()" data-i18n="save">सेव करें</button><input id="salesSearch" class="searchbar" placeholder="🔍 खरीदार / फसल" oninput="renderSales()"></div></div>
+ <div class="tablewrap"><table><thead><tr><th data-i18n="date">तारीख</th><th data-i18n="buyerName">खरीदार</th><th data-i18n="crop">फसल</th><th data-i18n="qty">वजन</th><th data-i18n="rate">दर</th><th data-i18n="total">कुल</th><th data-i18n="payStatus">स्थिति</th><th></th></tr></thead><tbody id="salesRows"></tbody></table></div>
 </section>
 
 <section class="page" id="billing">
- <h2>बिल / रसीद</h2><p class="sub">प्रिंट या PDF के लिए सरल बिल तैयार करें।</p>
+ <h2 data-i18n="billing">Bill of Supply / Tax Invoice</h2><p class="sub" data-i18n="billingSub">Professional बिल बनाएँ — 5 Template, A4 PDF, WhatsApp Share। Bill of Supply में GST अपने आप नहीं जुड़ता।</p>
+
  <div class="panel">
- <div class="formgrid">
- <div class="field"><label>फर्म का नाम</label><input id="billFirm" value="VIJAY KUMAR TRADERS"></div><div class="field"><label>बिल नंबर</label><input id="billNo" value="VKT-001"></div><div class="field"><label>तारीख</label><input type="date" id="billDate"></div>
- <div class="field"><label>खरीदार / किसान</label><input id="billParty" placeholder="पार्टी का नाम"></div><div class="field"><label>फसल / विवरण</label><input id="billItem" placeholder="धान / गेहूँ / चावल"></div><div class="field"><label>वजन (क्विं.)</label><input type="number" id="billQty" step=".01" inputmode="decimal"></div>
- <div class="field"><label>दर ₹/क्विं.</label><input type="number" id="billRate" step=".01" inputmode="decimal"></div><div class="field"><label>अन्य राशि ₹</label><input type="number" id="billExtra" value="0"></div><div class="field"><label>नोट</label><input id="billNote"></div>
- </div><div class="toolbar no-print"><button class="primary" onclick="previewBill()">बिल तैयार करें</button><button class="secondary" onclick="window.print()">🖨️ प्रिंट / PDF सेव करें</button></div>
- <div id="billPreview" class="bill-box"><h2>VIJAY KUMAR TRADERS</h2><p style="text-align:center">बिल / रसीद</p><p style="text-align:center">📞 संपर्क: 9839307042</p><hr><p>बिल तैयार करने के लिए ऊपर विवरण भरें।</p></div>
+  <h3>1️⃣ <span data-i18n="docType">दस्तावेज़ प्रकार (Document Type)</span></h3>
+  <div class="doc-type" id="docTypeBtns">
+   <button class="sel" data-doc="Bill of Supply" onclick="setDocType('Bill of Supply')">🧾 Bill of Supply</button>
+   <button data-doc="Tax Invoice" onclick="setDocType('Tax Invoice')">🏛️ Tax Invoice</button>
+  </div>
+  <div class="notice" data-i18n="docNote">Bill of Supply और Tax Invoice अलग-अलग दस्तावेज़ हैं। अपनी वास्तविक GST स्थिति के अनुसार सही प्रकार चुनें — पुष्टि अपने अकाउंटेंट से करें।</div>
  </div>
+
+ <div class="panel">
+  <h3>2️⃣ <span data-i18n="seller">विक्रेता विवरण (Seller Details)</span></h3>
+  <div class="formgrid">
+   <div class="field"><label data-i18n="firmName">फर्म का नाम</label><input id="sFirm"></div>
+   <div class="field"><label data-i18n="address">पूरा पता</label><input id="sAddress"></div>
+   <div class="field"><label data-i18n="mobile">मोबाइल नंबर</label><input id="sPhone" inputmode="tel"></div>
+   <div class="field"><label data-i18n="gstin">GSTIN (यदि लागू हो)</label><input id="sGstin" placeholder="जैसे 09ABCDE1234F1Z5"></div>
+   <div class="field"><label data-i18n="bank">बैंक विवरण</label><input id="sBank" placeholder="बैंक / A/c / IFSC"></div>
+   <div class="field"><label data-i18n="signature">हस्ताक्षर (नाम)</label><input id="sSign" placeholder="हस्ताक्षरकर्ता का नाम"></div>
+   <div class="field"><label data-i18n="stamp">स्टाम्प (टेक्स्ट)</label><input id="sStamp" placeholder="जैसे VIJAY KUMAR TRADERS"></div>
+   <div class="field"><label data-i18n="logo">लोगो अपलोड</label><input type="file" id="sLogo" accept="image/*" onchange="uploadLogo(event)"></div>
+  </div>
+ </div>
+
+ <div class="panel">
+  <h3>3️⃣ <span data-i18n="billDetails">बिल विवरण (Bill Details)</span></h3>
+  <div class="formgrid">
+   <div class="field"><label data-i18n="billNo">बिल नंबर (Auto)</label><input id="bNo"></div>
+   <div class="field"><label data-i18n="fy">वित्तीय वर्ष</label><input id="bFy" readonly></div>
+   <div class="field"><label data-i18n="date">बिल तारीख</label><input type="date" id="bDate" onchange="onBillDate()"></div>
+   <div class="field"><label data-i18n="dueDate">देय तारीख (Due Date)</label><input type="date" id="bDue"></div>
+   <div class="field"><label data-i18n="copyType">कॉपी प्रकार</label><select id="bCopy"><option>Original</option><option>Duplicate</option><option>Triplicate</option></select></div>
+   <div class="field"><label data-i18n="terms">भुगतान शर्त</label><input id="bTerms" placeholder="जैसे 15 दिन में भुगतान"></div>
+  </div>
+ </div>
+
+ <div class="panel">
+  <h3>4️⃣ <span data-i18n="buyer">खरीदार विवरण (Buyer Details)</span></h3>
+  <div class="formgrid">
+   <div class="field"><label data-i18n="buyerName">खरीदार का नाम *</label><input id="byName" list="buyerList"><datalist id="buyerList"></datalist></div>
+   <div class="field"><label data-i18n="address">पूरा पता</label><input id="byAddress"></div>
+   <div class="field"><label data-i18n="mobile">मोबाइल नंबर</label><input id="byPhone" inputmode="tel"></div>
+   <div class="field"><label data-i18n="gstin">GSTIN (यदि उपलब्ध हो)</label><input id="byGstin"></div>
+   <div class="field"><label data-i18n="state">राज्य</label><input id="byState"></div>
+   <div class="field"><label data-i18n="pos">Place of Supply</label><input id="byPos"></div>
+  </div>
+ </div>
+
+ <div class="panel">
+  <h3>5️⃣ <span data-i18n="items">उत्पाद / आइटम (Items)</span></h3>
+  <div class="tablewrap"><table><thead><tr><th data-i18n="item">आइटम</th><th>HSN</th><th data-i18n="qty">मात्रा</th><th data-i18n="unit">इकाई</th><th data-i18n="rate">दर ₹</th><th data-i18n="discount">छूट ₹</th><th data-i18n="amount">राशि ₹</th><th></th></tr></thead><tbody id="itemRows"></tbody></table></div>
+  <div class="toolbar"><button class="secondary" onclick="addItemRow()" data-i18n="addItem">+ आइटम जोड़ें</button></div>
+  <div class="formgrid">
+   <div class="field"><label data-i18n="otherCharges">अन्य शुल्क ₹</label><input type="number" id="bOther" value="0" oninput="calcBill()"></div>
+   <div class="field"><label data-i18n="note">नोट</label><input id="bNote"></div>
+  </div>
+  <div class="bill-total" id="billTotals" style="text-align:right"></div>
+ </div>
+
+ <div class="panel">
+  <h3>6️⃣ <span data-i18n="template">बिल Template चुनें</span></h3>
+  <div class="tpl-select" id="tplBtns">
+   <button class="sel" data-tpl="classic" onclick="setTemplate('classic')">1. Classic</button>
+   <button data-tpl="premium" onclick="setTemplate('premium')">2. Premium</button>
+   <button data-tpl="modern" onclick="setTemplate('modern')">3. Modern</button>
+   <button data-tpl="agri" onclick="setTemplate('agri')">4. Agriculture 🌾</button>
+   <button data-tpl="compact" onclick="setTemplate('compact')">5. Compact</button>
+  </div>
+  <div class="toolbar no-print">
+   <button class="primary" onclick="previewBill()">👁️ <span data-i18n="preview">Preview</span></button>
+   <button class="navy" onclick="saveBill()">💾 <span data-i18n="saveBill">बिल सेव करें</span></button>
+   <button class="secondary" onclick="window.print()">🖨️ <span data-i18n="print">Print</span></button>
+   <button class="secondary" onclick="downloadPDF()">⬇️ PDF <span data-i18n="download">डाउनलोड</span></button>
+   <button class="secondary" onclick="shareWhatsApp()">💬 WhatsApp Share</button>
+  </div>
+  <div class="bill-wrap"><div id="billPreview" class="bill-box tpl-classic"></div></div>
+ </div>
+</section>
+
+<section class="page" id="billhistory">
+ <h2 data-i18n="billhistory">बिल हिस्ट्री (Bill Management)</h2><p class="sub" data-i18n="billhistorySub">सभी बिल देखें, Edit, PDF, Print, Duplicate, Cancel और भुगतान दर्ज करें।</p>
+ <div class="cards">
+  <div class="card"><small data-i18n="totalBills">कुल बिल</small><strong id="bhTotal">0</strong></div>
+  <div class="card"><small data-i18n="totalBillAmt">कुल बिल राशि</small><strong id="bhAmt">₹0</strong></div>
+  <div class="card"><small data-i18n="paid">भुगतान पूरा</small><strong id="bhPaid">0</strong></div>
+  <div class="card"><small data-i18n="unpaid">भुगतान बाकी</small><strong id="bhUnpaid">0</strong></div>
+ </div>
+ <div class="panel"><div class="toolbar">
+  <input id="billSearch" class="searchbar" placeholder="🔍 बिल नंबर / पार्टी खोजें" oninput="renderBillHistory()">
+  <select id="billStatusFilter" onchange="renderBillHistory()" style="width:auto"><option value="">सभी स्थितियाँ</option><option>Paid</option><option>Unpaid</option><option>Partial</option><option>Cancelled</option></select>
+  <input type="month" id="billMonth" onchange="renderBillHistory()" style="width:auto">
+  <button class="secondary" onclick="exportBillsCSV()">⬇️ <span data-i18n="export">CSV एक्सपोर्ट</span></button>
+ </div></div>
+ <div class="tablewrap"><table><thead><tr><th data-i18n="billNo">बिल नंबर</th><th data-i18n="date">तारीख</th><th data-i18n="buyerName">पार्टी</th><th data-i18n="docType">प्रकार</th><th data-i18n="total">कुल</th><th data-i18n="payStatus">स्थिति</th><th data-i18n="action">कार्रवाई</th></tr></thead><tbody id="billRows"></tbody></table></div>
 </section>
 
 <section class="page" id="dispatch">
- <h2>डिस्पैच रिकॉर्ड</h2><p class="sub">माल भेजने और वाहन की जानकारी का आंतरिक रिकॉर्ड।</p>
+ <h2 data-i18n="dispatch">डिस्पैच रिकॉर्ड</h2><p class="sub" data-i18n="dispatchSub">माल भेजने और वाहन की जानकारी।</p>
  <div class="panel"><div class="formgrid">
- <div class="field"><label>डिस्पैच तारीख</label><input type="date" id="dDate"></div><div class="field"><label>खरीदार</label><input id="dBuyer"></div><div class="field"><label>फसल</label><select id="dCrop"><option>धान</option><option>गेहूँ</option><option>चावल</option></select></div>
- <div class="field"><label>वजन क्विंटल</label><input type="number" id="dQty" inputmode="decimal"></div><div class="field"><label>वाहन नंबर</label><input id="dVehicle"></div><div class="field"><label>ड्राइवर / संपर्क</label><input id="dDriver"></div>
- </div><div class="toolbar"><button class="primary" onclick="addDispatch()">डिस्पैच सेव करें</button></div></div>
- <div class="tablewrap"><table><thead><tr><th>तारीख</th><th>खरीदार</th><th>फसल</th><th>वजन</th><th>वाहन</th><th>ड्राइवर</th><th></th></tr></thead><tbody id="dispatchRows"></tbody></table></div>
+ <div class="field"><label data-i18n="date">डिस्पैच तारीख</label><input type="date" id="dDate"></div><div class="field"><label data-i18n="buyerName">खरीदार</label><input id="dBuyer"></div><div class="field"><label data-i18n="crop">फसल</label><select id="dCrop"><option>धान</option><option>गेहूँ</option><option>चावल</option></select></div>
+ <div class="field"><label data-i18n="qty">वजन क्विंटल</label><input type="number" id="dQty" inputmode="decimal"></div><div class="field"><label data-i18n="vehicle">वाहन नंबर</label><input id="dVehicle"></div><div class="field"><label data-i18n="driver">ड्राइवर / संपर्क</label><input id="dDriver"></div>
+ </div><div class="toolbar"><button class="primary" onclick="addDispatch()" data-i18n="save">सेव करें</button></div></div>
+ <div class="tablewrap"><table><thead><tr><th data-i18n="date">तारीख</th><th data-i18n="buyerName">खरीदार</th><th data-i18n="crop">फसल</th><th data-i18n="qty">वजन</th><th data-i18n="vehicle">वाहन</th><th data-i18n="driver">ड्राइवर</th><th></th></tr></thead><tbody id="dispatchRows"></tbody></table></div>
 </section>
 
 <section class="page" id="register">
- <h2>मंडी रजिस्टर रिकॉर्ड</h2><p class="sub">आधिकारिक पोर्टल से प्राप्त संदर्भ नंबरों का आंतरिक रिकॉर्ड रखें।</p>
+ <h2 data-i18n="register">मंडी रजिस्टर रिकॉर्ड</h2><p class="sub" data-i18n="registerSub">6R / 9R-2 / Gate Pass संदर्भों का आंतरिक रिकॉर्ड।</p>
  <div class="panel"><div class="formgrid">
- <div class="field"><label>तारीख</label><input type="date" id="rDate"></div><div class="field"><label>रिकॉर्ड प्रकार</label><select id="rType"><option>6R खरीद संदर्भ</option><option>9R-2 बिक्री संदर्भ</option><option>Gate Pass संदर्भ</option><option>अन्य</option></select></div><div class="field"><label>संदर्भ नंबर</label><input id="rNumber"></div>
- <div class="field"><label>पार्टी का नाम</label><input id="rParty"></div><div class="field"><label>फसल</label><input id="rCrop"></div><div class="field"><label>वजन क्विंटल</label><input type="number" id="rQty" inputmode="decimal"></div>
- </div><div class="toolbar"><button class="primary" onclick="addRegister()">रिकॉर्ड सेव करें</button></div></div>
- <div class="tablewrap"><table><thead><tr><th>तारीख</th><th>प्रकार</th><th>संदर्भ नं.</th><th>पार्टी</th><th>फसल</th><th>वजन</th><th></th></tr></thead><tbody id="registerRows"></tbody></table></div>
+ <div class="field"><label data-i18n="date">तारीख</label><input type="date" id="rDate"></div><div class="field"><label data-i18n="recType">रिकॉर्ड प्रकार</label><select id="rType"><option>6R खरीद संदर्भ</option><option>9R-2 बिक्री संदर्भ</option><option>Gate Pass संदर्भ</option><option>अन्य</option></select></div><div class="field"><label data-i18n="refNo">संदर्भ नंबर</label><input id="rNumber"></div>
+ <div class="field"><label data-i18n="party">पार्टी का नाम</label><input id="rParty"></div><div class="field"><label data-i18n="crop">फसल</label><input id="rCrop"></div><div class="field"><label data-i18n="qty">वजन क्विंटल</label><input type="number" id="rQty" inputmode="decimal"></div>
+ </div><div class="toolbar"><button class="primary" onclick="addRegister()" data-i18n="save">सेव करें</button></div></div>
+ <div class="tablewrap"><table><thead><tr><th data-i18n="date">तारीख</th><th data-i18n="recType">प्रकार</th><th data-i18n="refNo">संदर्भ नं.</th><th data-i18n="party">पार्टी</th><th data-i18n="crop">फसल</th><th data-i18n="qty">वजन</th><th></th></tr></thead><tbody id="registerRows"></tbody></table></div>
 </section>
 
 <section class="page" id="accounts">
- <h2>पेमेंट एवं खर्च</h2><p class="sub">भुगतान और अन्य खर्चों का हिसाब रखें।</p>
+ <h2 data-i18n="accounts">पेमेंट एवं खर्च</h2><p class="sub" data-i18n="accountsSub">भुगतान और अन्य खर्चों का हिसाब।</p>
  <div class="cards">
-  <div class="card"><small>कुल प्राप्त</small><strong id="accReceived">₹0</strong></div>
-  <div class="card"><small>किसान भुगतान</small><strong id="accPaid">₹0</strong></div>
-  <div class="card"><small>कुल खर्च</small><strong id="accExpense">₹0</strong></div>
-  <div class="card"><small>शुद्ध (प्राप्त − भुगतान − खर्च)</small><strong id="accNet">₹0</strong></div>
+  <div class="card"><small data-i18n="received">कुल प्राप्त</small><strong id="accReceived">₹0</strong></div>
+  <div class="card"><small data-i18n="farmerPaid">किसान भुगतान</small><strong id="accPaid">₹0</strong></div>
+  <div class="card"><small data-i18n="expense">कुल खर्च</small><strong id="accExpense">₹0</strong></div>
+  <div class="card"><small data-i18n="net">शुद्ध</small><strong id="accNet">₹0</strong></div>
  </div>
  <div class="panel"><div class="formgrid">
- <div class="field"><label>तारीख</label><input type="date" id="aDate"></div><div class="field"><label>प्रकार</label><select id="aType"><option>प्राप्त भुगतान</option><option>किसान भुगतान</option><option>ट्रांसपोर्ट खर्च</option><option>लोडिंग खर्च</option><option>अन्य खर्च</option></select></div><div class="field"><label>पार्टी / विवरण</label><input id="aParty"></div>
- <div class="field"><label>राशि ₹</label><input type="number" id="aAmount" inputmode="decimal"></div><div class="field"><label>भुगतान माध्यम</label><select id="aMode"><option>बैंक</option><option>नकद</option><option>UPI</option><option>अन्य</option></select></div><div class="field"><label>नोट</label><input id="aNote"></div>
- </div><div class="toolbar"><button class="primary" onclick="addAccount()">एंट्री सेव करें</button></div></div>
- <div class="tablewrap"><table><thead><tr><th>तारीख</th><th>प्रकार</th><th>पार्टी / विवरण</th><th>राशि</th><th>माध्यम</th><th>नोट</th><th></th></tr></thead><tbody id="accountRows"></tbody></table></div>
+ <div class="field"><label data-i18n="date">तारीख</label><input type="date" id="aDate"></div><div class="field"><label data-i18n="type">प्रकार</label><select id="aType"><option>प्राप्त भुगतान</option><option>किसान भुगतान</option><option>ट्रांसपोर्ट खर्च</option><option>लोडिंग खर्च</option><option>अन्य खर्च</option></select></div><div class="field"><label data-i18n="party">पार्टी / विवरण</label><input id="aParty"></div>
+ <div class="field"><label data-i18n="amount">राशि ₹</label><input type="number" id="aAmount" inputmode="decimal"></div><div class="field"><label data-i18n="mode">भुगतान माध्यम</label><select id="aMode"><option>बैंक</option><option>नकद</option><option>UPI</option><option>अन्य</option></select></div><div class="field"><label data-i18n="note">नोट</label><input id="aNote"></div>
+ </div><div class="toolbar"><button class="primary" onclick="addAccount()" data-i18n="save">सेव करें</button></div></div>
+ <div class="tablewrap"><table><thead><tr><th data-i18n="date">तारीख</th><th data-i18n="type">प्रकार</th><th data-i18n="party">पार्टी / विवरण</th><th data-i18n="amount">राशि</th><th data-i18n="mode">माध्यम</th><th data-i18n="note">नोट</th><th></th></tr></thead><tbody id="accountRows"></tbody></table></div>
+</section>
+
+<section class="page" id="documents">
+ <h2 data-i18n="documents">दस्तावेज़ / पार्टी लेजर</h2><p class="sub" data-i18n="documentsSub">Delivery Challan, Purchase Receipt, Farmer Slip, Sale Bill, Dispatch Slip, Payment Receipt और Party Ledger।</p>
+ <div class="panel"><h3 data-i18n="quickDoc">त्वरित दस्तावेज़ बनाएँ</h3>
+  <div class="formgrid">
+   <div class="field"><label data-i18n="docType">दस्तावेज़ प्रकार</label><select id="docKind"><option>Delivery Challan</option><option>Purchase Receipt</option><option>Farmer Purchase Slip</option><option>Sale Bill</option><option>Transport / Dispatch Slip</option><option>Payment Receipt</option></select></div>
+   <div class="field"><label data-i18n="party">पार्टी</label><input id="docParty"></div>
+   <div class="field"><label data-i18n="date">तारीख</label><input type="date" id="docDate"></div>
+   <div class="field"><label data-i18n="item">विवरण / फसल</label><input id="docItem"></div>
+   <div class="field"><label data-i18n="qty">मात्रा (क्विं.)</label><input type="number" id="docQty" step=".01"></div>
+   <div class="field"><label data-i18n="rate">दर ₹/क्विं.</label><input type="number" id="docRate" step=".01"></div>
+  </div>
+  <div class="toolbar"><button class="primary" onclick="previewDoc()">👁️ <span data-i18n="preview">Preview</span></button><button class="secondary" onclick="window.print()">🖨️ <span data-i18n="print">Print</span></button><button class="secondary" onclick="downloadDocPDF()">⬇️ PDF</button></div>
+  <div class="bill-wrap"><div id="docPreview" class="bill-box tpl-classic"><p>ऊपर विवरण भरकर Preview दबाएँ।</p></div></div>
+ </div>
+ <div class="panel"><h3 data-i18n="ledger">Party Ledger (खाता)</h3>
+  <div class="toolbar"><input id="ledgerParty" class="searchbar" placeholder="पार्टी का नाम लिखें"><button class="primary" onclick="renderLedger()" data-i18n="view">देखें</button></div>
+  <div id="ledgerOut"></div>
+ </div>
 </section>
 
 <section class="page" id="reports">
- <h2>रिपोर्ट एवं एक्सपोर्ट</h2><p class="sub">रिकॉर्ड का सारांश देखें और CSV फाइल डाउनलोड करें।</p>
- <div class="cards"><div class="card"><small>खरीद एंट्री</small><strong id="rPurchase">0</strong></div><div class="card"><small>बिक्री एंट्री</small><strong id="rSales">0</strong></div><div class="card"><small>खरीदार</small><strong id="rBuyers">0</strong></div><div class="card"><small>किसान</small><strong id="rFarmers">0</strong></div></div>
+ <h2 data-i18n="reports">रिपोर्ट एवं एक्सपोर्ट</h2><p class="sub" data-i18n="reportsSub">सारांश देखें और CSV डाउनलोड करें।</p>
+ <div class="cards"><div class="card"><small data-i18n="purchase">खरीद एंट्री</small><strong id="rPurchase">0</strong></div><div class="card"><small data-i18n="sales">बिक्री एंट्री</small><strong id="rSales">0</strong></div><div class="card"><small data-i18n="buyers">खरीदार</small><strong id="rBuyers">0</strong></div><div class="card"><small data-i18n="farmers">किसान</small><strong id="rFarmers">0</strong></div></div>
  <div class="toolbar">
-  <button class="primary" onclick="exportCSV('purchases')">खरीद CSV</button>
-  <button class="secondary" onclick="exportCSV('sales')">बिक्री CSV</button>
-  <button class="secondary" onclick="exportCSV('accounts')">हिसाब CSV</button>
-  <button class="secondary" onclick="exportCSV('buyers')">खरीदार CSV</button>
-  <button class="secondary" onclick="exportCSV('farmers')">किसान CSV</button>
-  <button class="secondary" onclick="exportCSV('dispatch')">डिस्पैच CSV</button>
-  <button class="secondary" onclick="exportCSV('register')">मंडी रजिस्टर CSV</button>
+  <button class="primary" onclick="exportCSV('purchases')">⬇️ <span data-i18n="purchase">खरीद</span> CSV</button>
+  <button class="secondary" onclick="exportCSV('sales')">⬇️ <span data-i18n="sales">बिक्री</span> CSV</button>
+  <button class="secondary" onclick="exportCSV('accounts')">⬇️ <span data-i18n="accounts">हिसाब</span> CSV</button>
+  <button class="secondary" onclick="exportCSV('buyers')">⬇️ <span data-i18n="buyers">खरीदार</span> CSV</button>
+  <button class="secondary" onclick="exportCSV('farmers')">⬇️ <span data-i18n="farmers">किसान</span> CSV</button>
+  <button class="secondary" onclick="exportBillsCSV()">⬇️ <span data-i18n="billhistory">बिल</span> CSV</button>
  </div>
- <div class="notice">CSV फाइल Excel में खुल सकती है। रिपोर्ट का उपयोग करने से पहले मूल बिल, वजन पर्ची और भुगतान रिकॉर्ड से मिलान करें।</div>
+ <div class="notice" data-i18n="reportsNote">CSV फाइल Excel में खुल सकती है। रिपोर्ट से पहले मूल बिल और भुगतान रिकॉर्ड से मिलान करें।</div>
 </section>
 
 <section class="page" id="settings">
- <h2>सेटिंग्स एवं बैकअप</h2><p class="sub">अपना डेटा सुरक्षित रखने के लिए समय-समय पर बैकअप डाउनलोड करें।</p>
- <div class="panel"><h3>कंपनी जानकारी</h3><div class="formgrid"><div class="field"><label>व्यापार नाम</label><input id="setFirm" value="Vijay Kumar Traders"></div><div class="field"><label>पता</label><input id="setAddress" placeholder="व्यापार का पता"></div><div class="field"><label>संपर्क नंबर</label><input id="setPhone" value="9839307042" inputmode="tel"></div></div>
- <div class="toolbar"><button class="primary" onclick="saveSettings()">सेटिंग सेव करें</button><button class="secondary" onclick="backup()">💾 पूरा बैकअप डाउनलोड (JSON)</button><label class="secondary" style="cursor:pointer;padding:9px 12px;border-radius:7px;display:inline-block">बैकअप Restore<input type="file" id="restoreFile" accept=".json" style="display:none" onchange="restoreBackup(event)"></label><button class="danger" onclick="clearData()">सारा लोकल डेटा मिटाएँ</button></div>
- <div class="notice">डेटा इसी डिवाइस और ब्राउज़र के Local Storage में रहता है। ब्राउज़र डेटा साफ करने या डिवाइस बदलने पर डेटा खो सकता है; JSON बैकअप सुरक्षित रखें। संपर्क नंबर: <b>9839307042</b></div></div>
+ <h2 data-i18n="settings">सेटिंग्स एवं बैकअप</h2><p class="sub" data-i18n="settingsSub">कंपनी जानकारी, लोगो, बैंक विवरण और बैकअप।</p>
+ <div class="panel"><h3 data-i18n="company">कंपनी जानकारी</h3><div class="formgrid">
+  <div class="field"><label data-i18n="firmName">व्यापार नाम</label><input id="setFirm" value="Vijay Kumar Traders"></div>
+  <div class="field"><label data-i18n="address">पता</label><input id="setAddress"></div>
+  <div class="field"><label data-i18n="mobile">संपर्क नंबर</label><input id="setPhone" value="9839307042" inputmode="tel"></div>
+  <div class="field"><label data-i18n="gstin">GSTIN (यदि लागू हो)</label><input id="setGstin"></div>
+  <div class="field"><label data-i18n="bank">बैंक विवरण</label><input id="setBank"></div>
+  <div class="field"><label data-i18n="signature">हस्ताक्षर (नाम)</label><input id="setSign"></div>
+  <div class="field"><label data-i18n="stamp">स्टाम्प (टेक्स्ट)</label><input id="setStamp"></div>
+  <div class="field"><label data-i18n="logo">लोगो अपलोड</label><input type="file" id="setLogo" accept="image/*" onchange="uploadLogo(event)"></div>
+ </div>
+ <div class="toolbar"><button class="primary" onclick="saveSettings()">💾 <span data-i18n="save">सेटिंग सेव करें</span></button><button class="secondary" onclick="backup()">💾 <span data-i18n="backup">पूरा बैकअप डाउनलोड (JSON)</span></button><label class="secondary" style="cursor:pointer;padding:9px 12px;border-radius:9px;display:inline-block"><span data-i18n="restore">बैकअप Restore</span><input type="file" id="restoreFile" accept=".json" style="display:none" onchange="restoreBackup(event)"></label><button class="danger" onclick="clearData()" data-i18n="clear">सारा लोकल डेटा मिटाएँ</button></div>
+ <div class="notice" data-i18n="settingsNote">डेटा इसी ब्राउज़र के Local Storage में रहता है। JSON बैकअप सुरक्षित रखें। संपर्क नंबर: <b>9839307042</b></div></div>
 </section>
 
-<footer>Vijay Kumar Traders · All-in-One Business Management System · 📞 <a href="tel:+919839307042">9839307042</a> · <a href="https://wa.me/919839307042" target="_blank" rel="noopener">WhatsApp</a><br>आधिकारिक कर/मंडी अनुपालन की पुष्टि संबंधित विभाग से करें।</footer>
+<footer>Vijay Kumar Traders · All-in-One Business Management System · 📞 <a href="tel:+919839307042">9839307042</a> · <a href="https://wa.me/919839307042" target="_blank" rel="noopener">WhatsApp</a><br><span data-i18n="footerNote">आधिकारिक कर/मंडी अनुपालन की पुष्टि संबंधित विभाग से करें।</span></footer>
 </main>
 </div>
+
+<nav class="bottomnav no-print" id="bottomNav">
+ <button class="active" data-page="dashboard"><span class="bic">🏠</span><span data-i18n="dashboard">डैशबोर्ड</span></button>
+ <button data-page="buyers"><span class="bic">📋</span><span data-i18n="buyers">खरीदार</span></button>
+ <button data-page="billing"><span class="bic">🧾</span><span data-i18n="billing">बिल</span></button>
+ <button data-page="stock"><span class="bic">📦</span><span data-i18n="stock">स्टॉक</span></button>
+ <button data-page="settings"><span class="bic">⚙️</span><span data-i18n="settings">सेटिंग</span></button>
+</nav>
 <div id="toast"></div>
+
 <script>
 const KEY='vkt_allinone_v1';
 const DEFAULT_PHONE='9839307042';
 let db;
 try{ db=JSON.parse(localStorage.getItem(KEY)||'null')||{} }catch(e){ db={} }
 db.buyers=db.buyers||[]; db.farmers=db.farmers||[]; db.purchases=db.purchases||[]; db.sales=db.sales||[];
-db.dispatch=db.dispatch||[]; db.register=db.register||[]; db.accounts=db.accounts||[]; db.comparisons=db.comparisons||[];
+db.dispatch=db.dispatch||[]; db.register=db.register||[]; db.accounts=db.accounts||[]; db.comparisons=db.comparisons||[]; db.bills=db.bills||[];
 db.settings=db.settings||{};
 if(!db.settings.phone) db.settings.phone=DEFAULT_PHONE;
 if(!db.settings.firm) db.settings.firm='Vijay Kumar Traders';
@@ -250,9 +439,23 @@ function save(){localStorage.setItem(KEY,JSON.stringify(db));renderAll()}
 function money(n){return '₹'+(Number(n)||0).toLocaleString('en-IN',{maximumFractionDigits:2})}
 function fmtDate(d){if(!d)return '—';const p=d.split('-');return p.length===3?p[2]+'-'+p[1]+'-'+p[0]:d}
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));window.scrollTo({top:0,behavior:'smooth'})}
-document.querySelectorAll('#nav button').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
+function todayStr(){return new Date().toISOString().slice(0,10)}
+function fyFromDate(d){if(!d)return '';const y=Number(d.slice(0,4)),m=Number(d.slice(5,7));const s=m>=4?y:y-1;return s+'-'+String(s+1).slice(2)}
+function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));document.querySelectorAll('#bottomNav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('#nav button,#bottomNav button').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
 
+/* ---------- Theme & Language ---------- */
+function applyTheme(){const t=localStorage.getItem('vkt_theme')||'light';document.documentElement.dataset.theme=t;$('themeBtn').textContent=t==='dark'?'☀️ Light':'🌙 Dark'}
+function toggleTheme(){const t=document.documentElement.dataset.theme==='dark'?'light':'dark';localStorage.setItem('vkt_theme',t);applyTheme()}
+const I18N={
+ hi:{tagline:'All-in-One Business Management System · धान | गेहूँ | चावल',menu:'मेनू',dashboard:'डैशबोर्ड',buyers:'खरीदार डायरेक्टरी',farmers:'किसान रिकॉर्ड',purchase:'खरीद एंट्री',compare:'5-मिल रेट तुलना',stock:'स्टॉक मैनेजमेंट',sales:'बिक्री एंट्री',billing:'Bill of Supply',billhistory:'बिल हिस्ट्री',dispatch:'डिस्पैच रिकॉर्ड',register:'मंडी रजिस्टर',accounts:'पेमेंट एवं खर्च',documents:'दस्तावेज़ / लेजर',reports:'रिपोर्ट',settings:'सेटिंग्स / बैकअप',dashSub:'आज की खरीद, बिक्री, स्टॉक और भुगतान का सारांश',todayPurchase:'आज की खरीद',todaySales:'आज की बिक्री',currentStock:'वर्तमान स्टॉक',estProfit:'अनुमानित लाभ (सकल अंतर)',outstanding:'कुल बकाया (लेना)',farmerPayable:'किसानों को देना',received:'प्राप्त भुगतान',totalBills:'कुल बिल',quick:'त्वरित कार्य (Quick Actions)',newBill:'नया बिल',recentBills:'हाल के बिल',recentActivity:'हाल की खरीद-बिक्री',notice1:'महत्वपूर्ण: यह सिस्टम आंतरिक रिकॉर्ड और गणना के लिए है। Bill of Supply और Tax Invoice अलग-अलग दस्तावेज़ हैं — सही दस्तावेज़ अपने अकाउंटेंट से पुष्टि करके चुनें।',firmName:'फर्म / मिल का नाम *',category:'कैटेगरी',city:'जिला / शहर',crop:'फसल',mobile:'मोबाइल',license:'लाइसेंस / GSTIN',note:'नोट',save:'सेव करें',action:'कार्रवाई',farmerName:'किसान का नाम *',village:'गाँव',purchaseQty:'खरीद (क्विं.)',date:'तारीख *',qty:'वजन (क्विंटल) *',rate:'खरीद भाव ₹/क्विं. *',payStatus:'भुगतान स्थिति',buyCost:'खरीद लागत ₹/क्विं.',totalQty:'कुल मात्रा (क्विं.)',otherCost:'अन्य लागत ₹/क्विं.',mill:'मिल / खरीदार',cut:'कटौती %',freight:'भाड़ा ₹',netRate:'नेट रेट ₹',update:'तुलना अपडेट करें',saveCompare:'तुलना सेव करें',inward:'कुल आवक',outward:'कुल बिक्री',balance:'शेष',buyerName:'खरीदार / मिल *',total:'कुल',docType:'दस्तावेज़ प्रकार (Document Type)',docNote:'Bill of Supply और Tax Invoice अलग-अलग दस्तावेज़ हैं। अपनी वास्तविक GST स्थिति के अनुसार सही प्रकार चुनें — पुष्टि अपने अकाउंटेंट से करें।',seller:'विक्रेता विवरण (Seller Details)',address:'पूरा पता',gstin:'GSTIN (यदि लागू हो)',bank:'बैंक विवरण',signature:'हस्ताक्षर (नाम)',stamp:'स्टाम्प (टेक्स्ट)',logo:'लोगो अपलोड',billDetails:'बिल विवरण (Bill Details)',billNo:'बिल नंबर (Auto)',fy:'वित्तीय वर्ष',dueDate:'देय तारीख (Due Date)',copyType:'कॉपी प्रकार',terms:'भुगतान शर्त',buyer:'खरीदार विवरण (Buyer Details)',state:'राज्य',pos:'Place of Supply',items:'उत्पाद / आइटम (Items)',item:'आइटम',unit:'इकाई',discount:'छूट ₹',amount:'राशि ₹',addItem:'+ आइटम जोड़ें',otherCharges:'अन्य शुल्क ₹',template:'बिल Template चुनें',preview:'Preview',saveBill:'बिल सेव करें',print:'Print',download:'डाउनलोड',billhistorySub:'सभी बिल देखें, Edit, PDF, Print, Duplicate, Cancel और भुगतान दर्ज करें।',totalBillAmt:'कुल बिल राशि',paid:'भुगतान पूरा',unpaid:'भुगतान बाकी',export:'CSV एक्सपोर्ट',vehicle:'वाहन नंबर',driver:'ड्राइवर / संपर्क',recType:'रिकॉर्ड प्रकार',refNo:'संदर्भ नंबर',party:'पार्टी / विवरण',type:'प्रकार',mode:'भुगतान माध्यम',farmerPaid:'किसान भुगतान',expense:'कुल खर्च',net:'शुद्ध',quickDoc:'त्वरित दस्तावेज़ बनाएँ',ledger:'Party Ledger (खाता)',view:'देखें',reportsSub:'सारांश देखें और CSV डाउनलोड करें।',reportsNote:'CSV फाइल Excel में खुल सकती है। रिपोर्ट से पहले मूल बिल और भुगतान रिकॉर्ड से मिलान करें।',company:'कंपनी जानकारी',backup:'पूरा बैकअप डाउनलोड (JSON)',restore:'बैकअप Restore',clear:'सारा लोकल डेटा मिटाएँ',settingsNote:'डेटा इसी ब्राउज़र के Local Storage में रहता है। JSON बैकअप सुरक्षित रखें। संपर्क नंबर:',footerNote:'आधिकारिक कर/मंडी अनुपालन की पुष्टि संबंधित विभाग से करें।',buyersSub:'मिल, व्यापारी और खरीदारों की जानकारी सेव करें।',farmersSub:'किसान की संपर्क जानकारी और खरीद इतिहास।',purchaseSub:'किसान से खरीदे गए माल का रिकॉर्ड।',compareSub:'मिल से प्राप्त भाव और खर्च भरकर नेट रेट की तुलना करें।',stockSub:'खरीद और बिक्री के आधार पर अनुमानित शेष स्टॉक।',salesSub:'खरीदार को भेजे गए माल और बिक्री राशि का रिकॉर्ड।',billingSub:'Professional बिल बनाएँ — 5 Template, A4 PDF, WhatsApp Share। Bill of Supply में GST अपने आप नहीं जुड़ता।',dispatchSub:'माल भेजने और वाहन की जानकारी।',registerSub:'6R / 9R-2 / Gate Pass संदर्भों का आंतरिक रिकॉर्ड।',accountsSub:'भुगतान और अन्य खर्चों का हिसाब।',documentsSub:'Delivery Challan, Purchase Receipt, Farmer Slip, Sale Bill, Dispatch Slip, Payment Receipt और Party Ledger।',settingsSub:'कंपनी जानकारी, लोगो, बैंक विवरण और बैकअप।',search:'🔍 खोजें',compareNote:'नीचे अधिकतम पाँच खरीदारों के भाव भरें। सबसे अच्छा नेट ऑफर हरा दिखेगा।'},
+ en:{tagline:'All-in-One Business Management System · Paddy | Wheat | Rice',menu:'Menu',dashboard:'Dashboard',buyers:'Buyer Directory',farmers:'Farmer Records',purchase:'Purchase Entry',compare:'5-Mill Rate Comparison',stock:'Stock Management',sales:'Sales Entry',billing:'Bill of Supply',billhistory:'Bill History',dispatch:'Dispatch Records',register:'Mandi Register',accounts:'Payments & Expenses',documents:'Documents / Ledger',reports:'Reports',settings:'Settings / Backup',dashSub:"Today's purchase, sales, stock and payments summary",todayPurchase:"Today's Purchase",todaySales:"Today's Sales",currentStock:'Current Stock',estProfit:'Estimated Profit (Gross Margin)',outstanding:'Total Outstanding (Receivable)',farmerPayable:'Farmer Payable',received:'Payments Received',totalBills:'Total Bills',quick:'Quick Actions',newBill:'New Bill',recentBills:'Recent Bills',recentActivity:'Recent Purchase & Sales',notice1:'Note: This system is for internal records and calculation. Bill of Supply and Tax Invoice are different documents — confirm the correct document with your accountant.',firmName:'Firm / Mill Name *',category:'Category',city:'District / City',crop:'Crop',mobile:'Mobile',license:'License / GSTIN',note:'Note',save:'Save',action:'Action',farmerName:'Farmer Name *',village:'Village',purchaseQty:'Purchase (Qtl)',date:'Date *',qty:'Weight (Quintal) *',rate:'Rate ₹/Qtl *',payStatus:'Payment Status',buyCost:'Purchase Cost ₹/Qtl',totalQty:'Total Qty (Qtl)',otherCost:'Other Cost ₹/Qtl',mill:'Mill / Buyer',cut:'Deduction %',freight:'Freight ₹',netRate:'Net Rate ₹',update:'Update Comparison',saveCompare:'Save Comparison',inward:'Total Inward',outward:'Total Sales',balance:'Balance',buyerName:'Buyer / Mill *',total:'Total',docType:'Document Type',docNote:'Bill of Supply and Tax Invoice are different documents. Choose the correct type as per your actual GST status — confirm with your accountant.',seller:'Seller Details',address:'Full Address',gstin:'GSTIN (if applicable)',bank:'Bank Details',signature:'Signature (Name)',stamp:'Stamp (Text)',logo:'Upload Logo',billDetails:'Bill Details',billNo:'Bill No. (Auto)',fy:'Financial Year',dueDate:'Due Date',copyType:'Copy Type',terms:'Payment Terms',buyer:'Buyer Details',state:'State',pos:'Place of Supply',items:'Products / Items',item:'Item',unit:'Unit',discount:'Discount ₹',amount:'Amount ₹',addItem:'+ Add Item',otherCharges:'Other Charges ₹',template:'Choose Bill Template',preview:'Preview',saveBill:'Save Bill',print:'Print',download:'Download',billhistorySub:'View, Edit, PDF, Print, Duplicate, Cancel and record payments for all bills.',totalBillAmt:'Total Bill Amount',paid:'Paid',unpaid:'Unpaid',export:'Export CSV',vehicle:'Vehicle No.',driver:'Driver / Contact',recType:'Record Type',refNo:'Reference No.',party:'Party / Details',type:'Type',mode:'Payment Mode',farmerPaid:'Farmer Paid',expense:'Total Expense',net:'Net',quickDoc:'Create Quick Document',ledger:'Party Ledger',view:'View',reportsSub:'View summary and download CSV.',reportsNote:'CSV opens in Excel. Match with original bills and payment records before use.',company:'Company Info',backup:'Download Full Backup (JSON)',restore:'Restore Backup',clear:'Clear All Local Data',settingsNote:'Data stays in this browser Local Storage. Keep JSON backup safe. Contact:',footerNote:'Confirm official tax/mandi compliance with the concerned department.',buyersSub:'Save mill, trader and buyer information.',farmersSub:'Farmer contact info and purchase history.',purchaseSub:'Record of goods purchased from farmers.',compareSub:'Compare net rates using mill offers and costs.',stockSub:'Estimated balance stock from purchase and sales.',salesSub:'Record of goods sold to buyers.',billingSub:'Create professional bills — 5 Templates, A4 PDF, WhatsApp Share. Bill of Supply does not auto-add GST.',dispatchSub:'Goods dispatch and vehicle information.',registerSub:'Internal record of 6R / 9R-2 / Gate Pass references.',accountsSub:'Payments and expenses accounting.',documentsSub:'Delivery Challan, Purchase Receipt, Farmer Slip, Sale Bill, Dispatch Slip, Payment Receipt and Party Ledger.',settingsSub:'Company info, logo, bank details and backup.',search:'🔍 Search',compareNote:'Enter offers of up to five buyers below. Best net offer is highlighted green.'}
+};
+function curLang(){return localStorage.getItem('vkt_lang')||'hi'}
+function applyLang(){const l=curLang();document.documentElement.lang=l;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(I18N[l][k])el.textContent=I18N[l][k]});document.querySelectorAll('[data-i18n-ph]').forEach(el=>{const k=el.dataset.i18nPh;if(I18N[l][k])el.placeholder=I18N[l][k]});$('langBtn').textContent=l==='hi'?'EN / हिंदी':'हिंदी / EN'}
+function toggleLang(){localStorage.setItem('vkt_lang',curLang()==='hi'?'en':'hi');applyLang();previewBill()}
+
+/* ---------- CRUD (existing modules) ---------- */
 function addBuyer(){if(!val('buyerName'))return toast('फर्म का नाम भरें');db.buyers.push({name:val('buyerName'),category:val('buyerCategory'),city:val('buyerCity'),crop:val('buyerCrop'),phone:val('buyerPhone'),license:val('buyerLicense'),note:val('buyerNote')});['buyerName','buyerCity','buyerPhone','buyerLicense','buyerNote'].forEach(x=>$(x).value='');save();toast('खरीदार सेव हो गया')}
 function addFarmer(){if(!val('farmerName'))return toast('किसान का नाम भरें');db.farmers.push({name:val('farmerName'),village:val('farmerVillage'),phone:val('farmerPhone')});['farmerName','farmerVillage','farmerPhone'].forEach(x=>$(x).value='');save();toast('किसान सेव हो गया')}
 function addPurchase(){let q=num('pQty'),r=num('pRate');if(!val('pFarmer')||q<=0||r<=0)return toast('किसान, वजन और सही दर भरें');db.purchases.push({farmer:val('pFarmer'),crop:val('pCrop'),date:val('pDate'),qty:q,rate:r,status:val('pStatus'),total:q*r});save();toast('खरीद सेव हो गई')}
@@ -261,13 +464,50 @@ function addDispatch(){db.dispatch.push({date:val('dDate'),buyer:val('dBuyer'),c
 function addRegister(){db.register.push({date:val('rDate'),type:val('rType'),number:val('rNumber'),party:val('rParty'),crop:val('rCrop'),qty:num('rQty')});save();toast('रजिस्टर रिकॉर्ड सेव हो गया')}
 function addAccount(){if(num('aAmount')<=0)return toast('राशि भरें');db.accounts.push({date:val('aDate'),type:val('aType'),party:val('aParty'),amount:num('aAmount'),mode:val('aMode'),note:val('aNote')});save();toast('एंट्री सेव हो गई')}
 function delItem(list,idx){if(!confirm('क्या आप वाकई यह रिकॉर्ड हटाना चाहते हैं?'))return;db[list].splice(idx,1);save();toast('रिकॉर्ड हटा दिया गया')}
-
 function rows(id,data,cols,list){$(id).innerHTML=data.length?data.map((x,i)=>'<tr>'+cols.map(c=>'<td>'+esc(x[c]??'')+'</td>').join('')+(list?'<td><button class="danger small" onclick="delItem(\''+list+'\','+i+')">हटाएँ</button></td>':'')+'</tr>').join(''):'<tr><td colspan="'+(cols.length+(list?1:0))+'"><div class="empty">अभी कोई रिकॉर्ड नहीं है।</div></td></tr>'}
-function renderBuyers(){let q=(val('buyerSearch')||'').toLowerCase(),d=db.buyers.filter(x=>Object.values(x).join(' ').toLowerCase().includes(q));$('buyerRows').innerHTML=d.length?d.map(x=>{let i=db.buyers.indexOf(x);let ph=esc(x.phone);let links=ph?`<a href="tel:+91${ph.replace(/\D/g,'')}">📞 कॉल</a> · <a href="https://wa.me/91${ph.replace(/\D/g,'')}" target="_blank" rel="noopener">WhatsApp</a>`:'—';return `<tr><td><b>${esc(x.name)}</b></td><td>${esc(x.category||'—')}</td><td>${esc(x.city)}</td><td>${esc(x.crop)}</td><td>${ph}<br>${links}</td><td>${esc(x.license)}</td><td>${esc(x.note)}</td><td><button class="danger small" onclick="delItem('buyers',${i})">हटाएँ</button></td></tr>`}).join(''):'<tr><td colspan="8"><div class="empty">कोई खरीदार नहीं है। नया खरीदार जोड़ें।</div></td></tr>'}
-function renderFarmers(){let q=(val('farmerSearch')||'').toLowerCase(),d=db.farmers.filter(x=>Object.values(x).join(' ').toLowerCase().includes(q));$('farmerRows').innerHTML=d.length?d.map(x=>{let i=db.farmers.indexOf(x);let qty=db.purchases.filter(p=>p.farmer===x.name).reduce((a,p)=>a+p.qty,0);return `<tr><td><b>${esc(x.name)}</b></td><td>${esc(x.village)}</td><td>${esc(x.phone)}</td><td>${qty.toFixed(2)} क्विं.</td><td><button class="danger small" onclick="delItem('farmers',${i})">हटाएँ</button></td></tr>`}).join(''):'<tr><td colspan="5"><div class="empty">कोई किसान नहीं है। नया किसान जोड़ें।</div></td></tr>'}
+function renderBuyers(){let q=(val('buyerSearch')||'').toLowerCase(),d=db.buyers.filter(x=>Object.values(x).join(' ').toLowerCase().includes(q));$('buyerRows').innerHTML=d.length?d.map(x=>{let i=db.buyers.indexOf(x);let ph=esc(x.phone);let links=ph?`<a href="tel:+91${ph.replace(/\D/g,'')}">📞 कॉल</a> · <a href="https://wa.me/91${ph.replace(/\D/g,'')}" target="_blank" rel="noopener">WhatsApp</a>`:'—';return `<tr><td><b>${esc(x.name)}</b></td><td>${esc(x.category||'—')}</td><td>${esc(x.city)}</td><td>${esc(x.crop)}</td><td>${ph}<br>${links}</td><td>${esc(x.license)}</td><td>${esc(x.note)}</td><td><button class="danger small" onclick="delItem('buyers',${i})">हटाएँ</button></td></tr>`}).join(''):'<tr><td colspan="8"><div class="empty">कोई खरीदार नहीं है।</div></td></tr>'}
+function renderFarmers(){let q=(val('farmerSearch')||'').toLowerCase(),d=db.farmers.filter(x=>Object.values(x).join(' ').toLowerCase().includes(q));$('farmerRows').innerHTML=d.length?d.map(x=>{let i=db.farmers.indexOf(x);let qty=db.purchases.filter(p=>p.farmer===x.name).reduce((a,p)=>a+p.qty,0);return `<tr><td><b>${esc(x.name)}</b></td><td>${esc(x.village)}</td><td>${esc(x.phone)}</td><td>${qty.toFixed(2)} क्विं.</td><td><button class="danger small" onclick="delItem('farmers',${i})">हटाएँ</button></td></tr>`}).join(''):'<tr><td colspan="5"><div class="empty">कोई किसान नहीं है।</div></td></tr>'}
 function renderPurchases(){let q=(val('purchaseSearch')||'').toLowerCase(),d=db.purchases.filter(x=>Object.values(x).join(' ').toLowerCase().includes(q));rows('purchaseRows',d,['date','farmer','crop','qty','rate','total','status'],'purchases')}
 function renderSales(){let q=(val('salesSearch')||'').toLowerCase(),d=db.sales.filter(x=>Object.values(x).join(' ').toLowerCase().includes(q));rows('salesRows',d,['date','buyer','crop','qty','rate','total','status'],'sales')}
+function stockByCrop(){let o={धान:0,गेहूँ:0,चावल:0};db.purchases.forEach(x=>o[x.crop]=(o[x.crop]||0)+x.qty);db.sales.forEach(x=>o[x.crop]=(o[x.crop]||0)-x.qty);return o}
+function calcCompare(){let body=$('compareRows');if(!body.dataset.ready){body.innerHTML=Array.from({length:5},(_,i)=>`<tr><td><input placeholder="मिल ${i+1}" class="cn"></td><td><input type="number" class="cr" value="${[2250,2230,2210,2200,2180][i]}" oninput="calcCompare()"></td><td><input type="number" class="cd" value="0" oninput="calcCompare()"></td><td><input type="number" class="cf" value="20" oninput="calcCompare()"></td><td class="net">—</td><td class="profit">—</td></tr>`).join('');body.dataset.ready='1'}let best=-Infinity;[...body.rows].forEach(row=>{let rate=Number(row.querySelector('.cr').value)||0,cut=Number(row.querySelector('.cd').value)||0,freight=Number(row.querySelector('.cf').value)||0,net=rate*(1-cut/100)-freight,profit=net-num('cBuy')-num('cOther');row.querySelector('.net').textContent=net.toFixed(2);row.querySelector('.profit').textContent=profit.toFixed(2);row.style.background=profit>best?'#effaf3':'';best=Math.max(best,profit)})}
+function saveComparison(){let rws=[...$('compareRows').rows].map(r=>({mill:r.querySelector('.cn').value||'—',rate:Number(r.querySelector('.cr').value)||0,cut:Number(r.querySelector('.cd').value)||0,freight:Number(r.querySelector('.cf').value)||0,net:r.querySelector('.net').textContent,profit:r.querySelector('.profit').textContent}));db.comparisons.push({date:todayStr(),buy:num('cBuy'),qty:num('cQty'),other:num('cOther'),rows:rws});save();toast('तुलना सेव हो गई')}
+function renderCompareHistory(){let el=$('compareHistory');if(!el)return;el.innerHTML=db.comparisons.length?'<h3 style="margin-top:18px">सेव की गई तुलनाएँ</h3>'+db.comparisons.slice(-5).reverse().map(c=>`<div class="notice">${fmtDate(c.date)} · लागत ₹${c.buy}/क्विं. · मात्रा ${c.qty} क्विं. — ${c.rows.map(r=>esc(r.mill)+': नेट ₹'+esc(r.net)).join(' | ')}</div>`).join(''):''}
 
+/* ---------- Bill of Supply System ---------- */
+let billState={docType:'Bill of Supply',template:'classic',editingId:null};
+function setDocType(t){billState.docType=t;document.querySelectorAll('#docTypeBtns button').forEach(b=>b.classList.toggle('sel',b.dataset.doc===t));previewBill()}
+function setTemplate(t){billState.template=t;document.querySelectorAll('#tplBtns button').forEach(b=>b.classList.toggle('sel',b.dataset.tpl===t));previewBill()}
+function nextBillNo(){const fy=fyFromDate(val('bDate')||todayStr());const prefix='VKT-'+fy.replace('-','')+'-';let max=0;db.bills.forEach(b=>{if(b.billNo&&b.billNo.startsWith(prefix)){const n=Number(b.billNo.split('-').pop());if(n>max)max=n}});return prefix+String(max+1).padStart(4,'0')}
+function onBillDate(){$('bFy').value=fyFromDate(val('bDate'));if(!billState.editingId)$('bNo').value=nextBillNo()}
+function addItemRow(item){const tb=$('itemRows');const tr=document.createElement('tr');tr.className='item-row';tr.innerHTML=`<td><input class="it-name" list="cropList" placeholder="धान / गेहूँ / चावल" value="${esc(item?.name||'धान')}"></td><td><input class="it-hsn" placeholder="HSN" value="${esc(item?.hsn||'')}"></td><td><input class="it-qty" type="number" step=".01" min="0" value="${item?.qty||''}" oninput="calcBill()"></td><td><select class="it-unit"><option ${item?.unit==='किलो'?'selected':''}>क्विंटल</option><option ${item?.unit==='किलो'?'selected':''}>किलो</option></select></td><td><input class="it-rate" type="number" step=".01" min="0" value="${item?.rate||''}" oninput="calcBill()"></td><td><input class="it-disc" type="number" step=".01" min="0" value="${item?.discount||0}" oninput="calcBill()"></td><td class="it-amt">₹0</td><td><button class="danger small" onclick="this.closest('tr').remove();calcBill()">✕</button></td>`;tb.appendChild(tr);calcBill()}
+function getItems(){return [...$('itemRows').rows].map(r=>({name:r.querySelector('.it-name').value.trim(),hsn:r.querySelector('.it-hsn').value.trim(),qty:Number(r.querySelector('.it-qty').value)||0,unit:r.querySelector('.it-unit').value,rate:Number(r.querySelector('.it-rate').value)||0,discount:Number(r.querySelector('.it-disc').value)||0}))}
+function calcBill(){let items=getItems();let sub=0,disc=0,wt=0;[...$('itemRows').rows].forEach((r,i)=>{const it=items[i];const amt=it.qty*it.rate-it.discount;r.querySelector('.it-amt').textContent=money(amt);sub+=amt;disc+=it.discount;wt+=it.unit==='किलो'?it.qty/100:it.qty});let other=num('bOther');let total=sub+other;$('billTotals').innerHTML=`कुल वजन: <b>${wt.toFixed(2)} क्विं.</b> · उप-योग: <b>${money(sub)}</b> · छूट: <b>${money(disc)}</b> · अन्य शुल्क: <b>${money(other)}</b><br>अंतिम देय राशि: <b style="font-size:20px">${money(total)}</b>`;return{items,sub,disc,wt,other,total}}
+function numWords(n){if(n===0)return 'Zero';const a=['','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen','Eighteen','Nineteen'],b=['','','Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety'];function two(x){return x<20?a[x]:b[Math.floor(x/10)]+(x%10?' '+a[x%10]:'')}function three(x){return (x>=100?a[Math.floor(x/100)]+' Hundred'+(x%100?' ':''):'')+(x%100?two(x%100):'')}let s='';if(n>=10000000)s+=three(Math.floor(n/10000000))+' Crore ';n%=10000000;if(n>=100000)s+=two(Math.floor(n/100000))+' Lakh ';n%=100000;if(n>=1000)s+=two(Math.floor(n/1000))+' Thousand ';n%=1000;if(n>0)s+=three(n);return s.trim()}
+function sellerData(){return{firm:val('sFirm')||db.settings.firm||'VIJAY KUMAR TRADERS',address:val('sAddress')||db.settings.address||'',phone:val('sPhone')||db.settings.phone||DEFAULT_PHONE,gstin:val('sGstin')||db.settings.gstin||'',bank:val('sBank')||db.settings.bank||'',sign:val('sSign')||db.settings.sign||'',stamp:val('sStamp')||db.settings.stamp||'',logo:db.settings.logo||''}}
+function buyerData(){return{name:val('byName'),address:val('byAddress'),phone:val('byPhone'),gstin:val('byGstin'),state:val('byState'),pos:val('byPos')}}
+function billHTML(b,calc){const L=curLang();const lbl={seller:L==='hi'?'विक्रेता':'Seller',buyer:L==='hi'?'खरीदार':'Buyer',billNo:L==='hi'?'बिल नंबर':'Bill No.',date:L==='hi'?'तारीख':'Date',due:L==='hi'?'देय तारीख':'Due Date',terms:L==='hi'?'भुगतान शर्त':'Payment Terms',item:L==='hi'?'विवरण':'Description',hsn:'HSN',qty:L==='hi'?'मात्रा':'Qty',unit:L==='hi'?'इकाई':'Unit',rate:L==='hi'?'दर':'Rate',disc:L==='hi'?'छूट':'Discount',amt:L==='hi'?'राशि':'Amount',total:L==='hi'?'कुल देय राशि':'Total Payable',words:L==='hi'?'शब्दों में':'In Words',sign:L==='hi'?'हस्ताक्षर':'Signature',bank:L==='hi'?'बैंक':'Bank',copy:L==='hi'?'कॉपी':'Copy'};const logo=b.seller.logo?`<img src="${b.seller.logo}" alt="logo">`:'';const rows=b.items.map((it,i)=>`<tr><td>${i+1}. ${esc(it.name)}${it.hsn?'<br><small>HSN: '+esc(it.hsn)+'</small>':''}</td><td>${it.qty} ${esc(it.unit)}</td><td>${money(it.rate)}</td><td>${money(it.discount)}</td><td>${money(it.qty*it.rate-it.discount)}</td></tr>`).join('');return `<div class="bill-head">${logo}<h2>${esc(b.seller.firm)}</h2><p>${esc(b.seller.address)}<br>📞 ${esc(b.seller.phone)}${b.seller.gstin?' · GSTIN: '+esc(b.seller.gstin):''}${b.seller.bank?'<br>'+lbl.bank+': '+esc(b.seller.bank):''}</p></div><p style="text-align:center;font-size:18px"><b>${esc(b.docType)}</b> <span class="pill">${esc(b.copy)}</span></p><div class="bill-meta"><span>${lbl.billNo}: <b>${esc(b.billNo)}</b></span><span>FY: ${esc(b.fy)}</span><span>${lbl.date}: ${fmtDate(b.date)}</span><span>${lbl.due}: ${fmtDate(b.dueDate)}</span></div><p><b>${lbl.buyer}:</b> ${esc(b.buyer.name)}${b.buyer.address?' · '+esc(b.buyer.address):''}${b.buyer.phone?' · 📞 '+esc(b.buyer.phone):''}${b.buyer.gstin?' · GSTIN: '+esc(b.buyer.gstin):''}${b.buyer.state?' · '+esc(b.buyer.state):''}${b.buyer.pos?' · POS: '+esc(b.buyer.pos):''}</p><table><thead><tr><th>${lbl.item}</th><th>${lbl.qty} (${lbl.unit})</th><th>${lbl.rate}</th><th>${lbl.disc}</th><th>${lbl.amt}</th></tr></thead><tbody>${rows}</tbody></table><p style="margin-top:10px">${lbl.words}: <b>${numWords(Math.round(b.total))} Rupees Only</b></p><div class="bill-total">${lbl.total}: ${money(b.total)}</div><p>${lbl.terms}: ${esc(b.terms||'—')}</p><p>${esc(b.note||'')}</p><br><p style="text-align:right">${b.seller.stamp?'<b>'+esc(b.seller.stamp)+'</b><br>':''}${lbl.sign}: __________________<br><small>${esc(b.seller.sign||'')}</small></p>`}
+function previewBill(){const c=calcBill();const b={docType:billState.docType,copy:val('bCopy'),billNo:val('bNo'),fy:val('bFy'),date:val('bDate'),dueDate:val('bDue'),terms:val('bTerms'),note:val('bNote'),seller:sellerData(),buyer:buyerData(),items:c.items,total:c.total};const box=$('billPreview');box.className='bill-box tpl-'+billState.template;box.innerHTML=billHTML(b,c)}
+function saveBill(){const c=calcBill();if(!val('byName'))return toast('खरीदार का नाम भरें');if(!c.items.length||c.total<=0)return toast('कम से कम एक आइटम और राशि भरें');const billNo=val('bNo');if(db.bills.some(b=>b.billNo===billNo&&b.id!==billState.editingId))return toast('यह बिल नंबर पहले से मौजूद है — Duplicate बिल नंबर नहीं चलेगा');const data={docType:billState.docType,template:billState.template,copy:val('bCopy'),billNo,fy:val('bFy'),date:val('bDate'),dueDate:val('bDue'),terms:val('bTerms'),note:val('bNote'),seller:sellerData(),buyer:buyerData(),items:c.items,other:c.other,total:c.total,wt:c.wt,status:'Unpaid',payments:[],createdAt:new Date().toISOString()};if(billState.editingId){const i=db.bills.findIndex(b=>b.id===billState.editingId);if(i>=0){data.id=billState.editingId;data.status=db.bills[i].status;data.payments=db.bills[i].payments||[];db.bills[i]=data;toast('बिल अपडेट हो गया')}}else{data.id=Date.now();db.bills.push(data);toast('बिल सेव हो गया: '+billNo)}$('bNo').value=nextBillNo();save();renderBillHistory()}
+function billStatus(b){if(b.status==='Cancelled')return 'Cancelled';const paid=(b.payments||[]).reduce((a,p)=>a+p.amount,0);if(paid>=b.total)return 'Paid';if(paid>0)return 'Partial';return 'Unpaid'}
+function renderBillHistory(){const q=(val('billSearch')||'').toLowerCase(),st=val('billStatusFilter'),mo=val('billMonth');let d=db.bills.filter(b=>{if(q&&!(b.billNo+' '+b.buyer.name).toLowerCase().includes(q))return false;if(st&&billStatus(b)!==st)return false;if(mo&&!(b.date||'').startsWith(mo))return false;return true});$('billRows').innerHTML=d.length?d.slice().reverse().map(b=>{const s=billStatus(b);const pill=s==='Paid'?'<span class="pill">Paid</span>':s==='Partial'?'<span class="pill amber">Partial</span>':s==='Cancelled'?'<span class="pill red">Cancelled</span>':'<span class="pill red">Unpaid</span>';return `<tr><td><b>${esc(b.billNo)}</b></td><td>${fmtDate(b.date)}</td><td>${esc(b.buyer.name)}</td><td>${esc(b.docType)}</td><td>${money(b.total)}</td><td>${pill}</td><td style="white-space:nowrap"><button class="secondary small" onclick="viewBill(${b.id})">View</button> <button class="secondary small" onclick="editBill(${b.id})">Edit</button> <button class="secondary small" onclick="printBill(${b.id})">Print</button> <button class="secondary small" onclick="duplicateBill(${b.id})">Duplicate</button> <button class="secondary small" onclick="payBill(${b.id})">Payment</button> ${s!=='Cancelled'?`<button class="danger small" onclick="cancelBill(${b.id})">Cancel</button>`:''}</td></tr>`}).join(''):'<tr><td colspan="7"><div class="empty">कोई बिल नहीं है। नया बिल बनाएँ।</div></td></tr>';const act=db.bills.filter(b=>b.status!=='Cancelled');$('bhTotal').textContent=act.length;$('bhAmt').textContent=money(act.reduce((a,b)=>a+b.total,0));$('bhPaid').textContent=act.filter(b=>billStatus(b)==='Paid').length;$('bhUnpaid').textContent=act.filter(b=>billStatus(b)!=='Paid').length}
+function fillBillForm(b){billState.editingId=b.id;setDocType(b.docType);setTemplate(b.template||'classic');$('sFirm').value=b.seller.firm;$('sAddress').value=b.seller.address;$('sPhone').value=b.seller.phone;$('sGstin').value=b.seller.gstin;$('sBank').value=b.seller.bank;$('sSign').value=b.seller.sign;$('sStamp').value=b.seller.stamp;$('bNo').value=b.billNo;$('bFy').value=b.fy;$('bDate').value=b.date;$('bDue').value=b.dueDate||'';$('bCopy').value=b.copy;$('bTerms').value=b.terms||'';$('byName').value=b.buyer.name;$('byAddress').value=b.buyer.address||'';$('byPhone').value=b.buyer.phone||'';$('byGstin').value=b.buyer.gstin||'';$('byState').value=b.buyer.state||'';$('byPos').value=b.buyer.pos||'';$('bOther').value=b.other||0;$('bNote').value=b.note||'';$('itemRows').innerHTML='';b.items.forEach(it=>addItemRow(it));previewBill()}
+function viewBill(id){const b=db.bills.find(x=>x.id===id);if(!b)return;fillBillForm(b);showPage('billing');toast('बिल लोड हो गया: '+b.billNo)}
+function editBill(id){viewBill(id)}
+function printBill(id){const b=db.bills.find(x=>x.id===id);if(!b)return;fillBillForm(b);showPage('billing');setTimeout(()=>window.print(),300)}
+function duplicateBill(id){const b=db.bills.find(x=>x.id===id);if(!b)return;fillBillForm(b);billState.editingId=null;$('bCopy').value='Duplicate';$('bNo').value=nextBillNo();showPage('billing');toast('Duplicate बिल तैयार है — सेव करें')}
+function cancelBill(id){if(!confirm('यह बिल Cancel हो जाएगा। क्या आप निश्चित हैं?'))return;const b=db.bills.find(x=>x.id===id);if(b){b.status='Cancelled';save();toast('बिल Cancel हो गया')}}
+function payBill(id){const b=db.bills.find(x=>x.id===id);if(!b)return;const paid=(b.payments||[]).reduce((a,p)=>a+p.amount,0);const due=b.total-paid;const amt=prompt('भुगतान राशि (बकाया: '+money(due)+')',due);if(amt===null)return;const a=Number(amt);if(a<=0)return toast('सही राशि भरें');b.payments=b.payments||[];b.payments.push({date:todayStr(),amount:a,mode:'नकद'});db.accounts.push({date:todayStr(),type:'प्राप्त भुगतान',party:b.buyer.name,amount:a,mode:'नकद',note:'बिल '+b.billNo});save();toast('भुगतान दर्ज हो गया')}
+function downloadPDF(){previewBill();const el=$('billPreview');if(window.html2pdf){html2pdf().set({margin:10,filename:(val('bNo')||'Bill')+'.pdf',image:{type:'jpeg',quality:0.98},html2canvas:{scale:2},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}}).from(el).save().then(()=>toast('PDF डाउनलोड हो गया'))}else{toast('PDF के लिए Print → Save as PDF चुनें');window.print()}}
+function shareWhatsApp(){const c=calcBill();const txt=`*${billState.docType}* ${val('bNo')}\n${val('sFirm')||'Vijay Kumar Traders'} · 📞 ${val('sPhone')||DEFAULT_PHONE}\nपार्टी: ${val('byName')}\nकुल राशि: ${money(c.total)}\nतारीख: ${fmtDate(val('bDate'))}`;window.open('https://wa.me/?text='+encodeURIComponent(txt),'_blank')}
+function exportBillsCSV(){if(!db.bills.length)return toast('डाउनलोड करने के लिए बिल नहीं हैं');const rows=[['BillNo','Date','DocType','Party','Total','Status'],...db.bills.map(b=>[b.billNo,b.date,b.docType,b.buyer.name,b.total,billStatus(b)])];const csv=rows.map(r=>r.map(x=>'"'+String(x??'').replace(/"/g,'""')+'"').join(',')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));a.download='bills_report.csv';a.click();URL.revokeObjectURL(a.href);toast('CSV डाउनलोड हो गया')}
+
+/* ---------- Documents & Ledger ---------- */
+function previewDoc(){const kind=val('docKind'),party=val('docParty'),date=val('docDate'),item=val('docItem'),qty=num('docQty'),rate=num('docRate');const total=qty*rate;const s=sellerData();$('docPreview').innerHTML=`<div class="bill-head"><h2>${esc(s.firm)}</h2><p>${esc(s.address)}<br>📞 ${esc(s.phone)}${s.gstin?' · GSTIN: '+esc(s.gstin):''}</p></div><p style="text-align:center;font-size:18px"><b>${esc(kind)}</b></p><div class="bill-meta"><span>तारीख: ${fmtDate(date)}</span><span>पार्टी: <b>${esc(party)}</b></span></div><table><thead><tr><th>विवरण</th><th>मात्रा</th><th>दर</th><th>राशि</th></tr></thead><tbody><tr><td>${esc(item)}</td><td>${qty} क्विं.</td><td>${money(rate)}</td><td>${money(total)}</td></tr></tbody></table><div class="bill-total">कुल: ${money(total)}</div><p>शब्दों में: <b>${numWords(Math.round(total))} Rupees Only</b></p><br><p style="text-align:right">हस्ताक्षर: __________________</p>`}
+function downloadDocPDF(){if(window.html2pdf){html2pdf().set({margin:10,filename:'Document.pdf',jsPDF:{unit:'mm',format:'a4'}}).from($('docPreview')).save()}else window.print()}
+function renderLedger(){const p=val('ledgerParty');if(!p)return toast('पार्टी का नाम लिखें');const pur=db.purchases.filter(x=>x.farmer===p),sal=db.sales.filter(x=>x.buyer===p),acc=db.accounts.filter(x=>x.party===p),bills=db.bills.filter(x=>x.buyer.name===p);const pt=pur.reduce((a,x)=>a+x.total,0),st=sal.reduce((a,x)=>a+x.total,0);$('ledgerOut').innerHTML=`<div class="cards"><div class="card"><small>खरीद (किसान से)</small><strong>${money(pt)}</strong></div><div class="card"><small>बिक्री (खरीदार को)</small><strong>${money(st)}</strong></div><div class="card"><small>बिल (${bills.length})</small><strong>${money(bills.reduce((a,b)=>a+b.total,0))}</strong></div><div class="card"><small>भुगतान एंट्री</small><strong>${money(acc.reduce((a,x)=>a+x.amount,0))}</strong></div></div><div class="tablewrap"><table><thead><tr><th>तारीख</th><th>प्रकार</th><th>विवरण</th><th>राशि</th></tr></thead><tbody>${[...pur.map(x=>({d:x.date,t:'खरीद',v:x.crop+' '+x.qty+' क्विं.',a:x.total})),...sal.map(x=>({d:x.date,t:'बिक्री',v:x.crop+' '+x.qty+' क्विं.',a:x.total})),...bills.map(x=>({d:x.date,t:x.docType,v:x.billNo,a:x.total})),...acc.map(x=>({d:x.date,t:x.type,v:x.note||'',a:x.amount}))].sort((a,b)=>(a.d||'').localeCompare(b.d||'')).map(x=>`<tr><td>${fmtDate(x.d)}</td><td>${esc(x.t)}</td><td>${esc(x.v)}</td><td>${money(x.a)}</td></tr>`).join('')||'<tr><td colspan="4"><div class="empty">इस पार्टी का कोई रिकॉर्ड नहीं मिला।</div></td></tr>'}</tbody></table></div>`}
+
+/* ---------- Dashboard & Reports ---------- */
 function renderAll(){
 renderBuyers();renderFarmers();renderPurchases();renderSales();
 rows('dispatchRows',db.dispatch,['date','buyer','crop','qty','vehicle','driver'],'dispatch');
@@ -279,31 +519,40 @@ let pay=db.purchases.filter(x=>x.status!=='भुगतान पूरा').red
 let received=db.accounts.filter(x=>x.type==='प्राप्त भुगतान').reduce((a,x)=>a+x.amount,0);
 let paid=db.accounts.filter(x=>x.type==='किसान भुगतान').reduce((a,x)=>a+x.amount,0);
 let expense=db.accounts.filter(x=>x.type.includes('खर्च')).reduce((a,x)=>a+x.amount,0);
-$('totalPurchase').textContent=money(p);$('totalSales').textContent=money(s);$('totalStock').textContent=qty.toFixed(2)+' क्विं.';$('margin').textContent=money(s-p);
+const td=todayStr();
+$('todayPurchase').textContent=money(db.purchases.filter(x=>x.date===td).reduce((a,x)=>a+x.total,0));
+$('todaySales').textContent=money(db.sales.filter(x=>x.date===td).reduce((a,x)=>a+x.total,0));
+$('totalStock').textContent=qty.toFixed(2)+' क्विं.';$('margin').textContent=money(s-p);
 $('receivable').textContent=money(recv);$('payable').textContent=money(pay);
-$('totalReceived').textContent=money(received);$('totalExpense').textContent=money(expense);
+$('totalReceived').textContent=money(received);$('totalBills').textContent=db.bills.filter(b=>b.status!=='Cancelled').length;
 $('accReceived').textContent=money(received);$('accPaid').textContent=money(paid);$('accExpense').textContent=money(expense);$('accNet').textContent=money(received-paid-expense);
 $('recent').innerHTML=[...db.sales.slice(-3).map(x=>'बिक्री: '+esc(x.buyer)+' · '+esc(x.crop)+' · '+money(x.total)),...db.purchases.slice(-3).map(x=>'खरीद: '+esc(x.farmer)+' · '+esc(x.crop)+' · '+money(x.total))].slice(-5).join('<br>')||'अभी कोई रिकॉर्ड नहीं है।';
+$('recentBills').innerHTML=db.bills.length?db.bills.slice(-5).reverse().map(b=>`${esc(b.billNo)} · ${esc(b.buyer.name)} · ${money(b.total)} <span class="pill">${billStatus(b)}</span>`).join('<br>'):'अभी कोई बिल नहीं है। नया बिल बनाएँ।';
 $('stockRows').innerHTML=Object.entries(stock).map(([k,v])=>`<tr><td>${k}</td><td>${(db.purchases.filter(x=>x.crop===k).reduce((a,x)=>a+x.qty,0)).toFixed(2)}</td><td>${(db.sales.filter(x=>x.crop===k).reduce((a,x)=>a+x.qty,0)).toFixed(2)}</td><td><b>${v.toFixed(2)}</b></td></tr>`).join('');
 $('stockCards').innerHTML=Object.entries(stock).map(([k,v])=>`<div class="card${v<0?' warn':''}"><small>${k} स्टॉक</small><strong>${v.toFixed(2)} क्विं.</strong></div>`).join('');
 let neg=Object.entries(stock).filter(([k,v])=>v<0);
-$('stockAlert').innerHTML=neg.length?`<div class="notice" style="background:#fdecec;border-color:#efcccc;color:#a22">⚠️ स्टॉक अलर्ट: ${neg.map(([k,v])=>k+' ('+v.toFixed(2)+' क्विं.)').join(', ')} — बिक्री से अधिक स्टॉक कम हो गया है। रिकॉर्ड जाँचें।</div>`:'';
+$('stockAlert').innerHTML=neg.length?`<div class="notice" style="background:#fdecec;border-color:#efcccc;color:#a22">⚠️ स्टॉक अलर्ट: ${neg.map(([k,v])=>k+' ('+v.toFixed(2)+' क्विं.)').join(', ')} — रिकॉर्ड जाँचें।</div>`:'';
 $('rPurchase').textContent=db.purchases.length;$('rSales').textContent=db.sales.length;$('rBuyers').textContent=db.buyers.length;$('rFarmers').textContent=db.farmers.length;
-renderCompareHistory();
+$('buyerList').innerHTML=db.buyers.map(b=>`<option value="${esc(b.name)}">`).join('');
+renderCompareHistory();renderBillHistory();
 }
-function stockByCrop(){let o={धान:0,गेहूँ:0,चावल:0};db.purchases.forEach(x=>o[x.crop]=(o[x.crop]||0)+x.qty);db.sales.forEach(x=>o[x.crop]=(o[x.crop]||0)-x.qty);return o}
-function calcCompare(){let body=$('compareRows');if(!body.dataset.ready){body.innerHTML=Array.from({length:5},(_,i)=>`<tr><td><input placeholder="मिल ${i+1}" class="cn"></td><td><input type="number" class="cr" value="${[2250,2230,2210,2200,2180][i]}" oninput="calcCompare()"></td><td><input type="number" class="cd" value="0" oninput="calcCompare()"></td><td><input type="number" class="cf" value="20" oninput="calcCompare()"></td><td class="net">—</td><td class="profit">—</td></tr>`).join('');body.dataset.ready='1'}let best=-Infinity;[...body.rows].forEach(row=>{let rate=Number(row.querySelector('.cr').value)||0,cut=Number(row.querySelector('.cd').value)||0,freight=Number(row.querySelector('.cf').value)||0,net=rate*(1-cut/100)-freight,profit=net-num('cBuy')-num('cOther');row.querySelector('.net').textContent=net.toFixed(2);row.querySelector('.profit').textContent=profit.toFixed(2);row.style.background=profit>best?'#effaf3':'';best=Math.max(best,profit)})}
-function saveComparison(){let rows=[...$('compareRows').rows].map(r=>({mill:r.querySelector('.cn').value||'—',rate:Number(r.querySelector('.cr').value)||0,cut:Number(r.querySelector('.cd').value)||0,freight:Number(r.querySelector('.cf').value)||0,net:r.querySelector('.net').textContent,profit:r.querySelector('.profit').textContent}));db.comparisons.push({date:new Date().toISOString().slice(0,10),buy:num('cBuy'),qty:num('cQty'),other:num('cOther'),rows});save();toast('तुलना सेव हो गई')}
-function renderCompareHistory(){let el=$('compareHistory');if(!el)return;el.innerHTML=db.comparisons.length?'<h3 style="margin-top:18px">सेव की गई तुलनाएँ</h3>'+db.comparisons.slice(-5).reverse().map((c,i)=>`<div class="notice">${fmtDate(c.date)} · लागत ₹${c.buy}/क्विं. · मात्रा ${c.qty} क्विं. — ${c.rows.map(r=>esc(r.mill)+': नेट ₹'+esc(r.net)).join(' | ')}</div>`).join(''):''}
-function numWords(n){if(n===0)return 'Zero';const a=['','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen','Eighteen','Nineteen'],b=['','','Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety'];function two(x){return x<20?a[x]:b[Math.floor(x/10)]+(x%10?' '+a[x%10]:'')}function three(x){return (x>=100?a[Math.floor(x/100)]+' Hundred'+(x%100?' ':''):'')+(x%100?two(x%100):'')}let s='';if(n>=10000000)s+=three(Math.floor(n/10000000))+' Crore ';n%=10000000;if(n>=100000)s+=two(Math.floor(n/100000))+' Lakh ';n%=100000;if(n>=1000)s+=two(Math.floor(n/1000))+' Thousand ';n%=1000;if(n>0)s+=three(n);return s.trim()}
-function previewBill(){let qty=num('billQty'),rate=num('billRate'),total=qty*rate+num('billExtra');let phone=db.settings.phone||DEFAULT_PHONE;let firm=val('billFirm')||db.settings.firm||'VIJAY KUMAR TRADERS';let addr=db.settings.address||'';$('billPreview').innerHTML=`<h2>${esc(firm)}</h2><p style="text-align:center">बिल / रसीद</p><p style="text-align:center">📞 संपर्क: ${esc(phone)}${addr?' · '+esc(addr):''}</p><div class="bill-meta"><span>बिल नंबर: <b>${esc(val('billNo'))}</b></span><span>तारीख: ${fmtDate(val('billDate'))}</span></div><p>पार्टी: <b>${esc(val('billParty'))}</b></p><p>विवरण: ${esc(val('billItem'))}　 मात्रा: ${qty} क्विंटल　 दर: ${money(rate)}</p><p>अन्य राशि: ${money(num('billExtra'))}</p><p>राशि शब्दों में: <b>${numWords(Math.round(total))} Rupees Only</b></p><div class="bill-total">कुल राशि: ${money(total)}</div><p>नोट: ${esc(val('billNote'))}</p><br><p style="text-align:right">हस्ताक्षर: __________________</p>`;toast('बिल तैयार हो गया')}
 function exportCSV(which){let data=db[which]||[];if(!data.length)return toast('डाउनलोड करने के लिए रिकॉर्ड नहीं हैं');let keys=Object.keys(data[0]),csv=[keys.join(','),...data.map(o=>keys.map(k=>'"'+String(o[k]??'').replace(/"/g,'""')+'"').join(','))].join('\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));a.download=which+'_report.csv';a.click();URL.revokeObjectURL(a.href);toast('CSV डाउनलोड हो गया')}
+
+/* ---------- Settings / Logo / Backup ---------- */
+function uploadLogo(e){const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{db.settings.logo=rd.result;save();renderBrand();previewBill();toast('लोगो सेव हो गया')};rd.readAsDataURL(f)}
+function renderBrand(){const el=$('brandLogo');if(db.settings.logo){el.innerHTML=`<img class="logo" src="${db.settings.logo}" alt="logo">`}else{el.innerHTML=`<div class="logo-fallback">🌾</div>`}}
+function saveSettings(){db.settings={firm:val('setFirm'),address:val('setAddress'),phone:val('setPhone')||DEFAULT_PHONE,gstin:val('setGstin'),bank:val('setBank'),sign:val('setSign'),stamp:val('setStamp'),logo:db.settings.logo||''};save();loadSettings();renderBrand();toast('सेटिंग सेव हो गई')}
+function loadSettings(){$('setFirm').value=db.settings.firm||'Vijay Kumar Traders';$('setAddress').value=db.settings.address||'';$('setPhone').value=db.settings.phone||DEFAULT_PHONE;$('setGstin').value=db.settings.gstin||'';$('setBank').value=db.settings.bank||'';$('setSign').value=db.settings.sign||'';$('setStamp').value=db.settings.stamp||'';$('sFirm').value=db.settings.firm||'Vijay Kumar Traders';$('sAddress').value=db.settings.address||'';$('sPhone').value=db.settings.phone||DEFAULT_PHONE;$('sGstin').value=db.settings.gstin||'';$('sBank').value=db.settings.bank||'';$('sSign').value=db.settings.sign||'';$('sStamp').value=db.settings.stamp||''}
 function backup(){let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(db,null,2)],{type:'application/json'}));a.download='Vijay_Kumar_Traders_Backup.json';a.click();URL.revokeObjectURL(a.href);toast('बैकअप डाउनलोड हो गया')}
-function restoreBackup(e){let f=e.target.files[0];if(!f)return;let rd=new FileReader();rd.onload=()=>{try{db=JSON.parse(rd.result);db.buyers=db.buyers||[];db.farmers=db.farmers||[];db.purchases=db.purchases||[];db.sales=db.sales||[];db.dispatch=db.dispatch||[];db.register=db.register||[];db.accounts=db.accounts||[];db.comparisons=db.comparisons||[];db.settings=db.settings||{};if(!db.settings.phone)db.settings.phone=DEFAULT_PHONE;save();loadSettings();toast('बैकअप Restore हो गया')}catch(_){toast('यह सही JSON बैकअप नहीं है')}};rd.readAsText(f)}
-function saveSettings(){db.settings={firm:val('setFirm'),address:val('setAddress'),phone:val('setPhone')||DEFAULT_PHONE};save();loadSettings();toast('सेटिंग सेव हो गई')}
-function loadSettings(){$('setFirm').value=db.settings.firm||'Vijay Kumar Traders';$('setAddress').value=db.settings.address||'';$('setPhone').value=db.settings.phone||DEFAULT_PHONE;$('billFirm').value=(db.settings.firm||'VIJAY KUMAR TRADERS').toUpperCase()}
+function restoreBackup(e){let f=e.target.files[0];if(!f)return;let rd=new FileReader();rd.onload=()=>{try{db=JSON.parse(rd.result);['buyers','farmers','purchases','sales','dispatch','register','accounts','comparisons','bills'].forEach(k=>db[k]=db[k]||[]);db.settings=db.settings||{};if(!db.settings.phone)db.settings.phone=DEFAULT_PHONE;save();loadSettings();renderBrand();toast('बैकअप Restore हो गया')}catch(_){toast('यह सही JSON बैकअप नहीं है')}};rd.readAsText(f)}
 function clearData(){if(confirm('क्या आप इस ब्राउज़र का पूरा लोकल डेटा मिटाना चाहते हैं? पहले बैकअप डाउनलोड कर लें।')){localStorage.removeItem(KEY);location.reload()}}
-['pDate','sDate','billDate','dDate','rDate','aDate'].forEach(id=>$(id).value=new Date().toISOString().slice(0,10));
-loadSettings();calcCompare();renderAll();
+
+/* ---------- Init ---------- */
+['pDate','sDate','bDate','dDate','rDate','aDate','docDate'].forEach(id=>{const el=$(id);if(el)el.value=todayStr()});
+$('bFy').value=fyFromDate(todayStr());
+applyTheme();applyLang();loadSettings();renderBrand();
+$('itemRows').innerHTML='';addItemRow({name:'धान',qty:'',rate:'',discount:0});
+$('bNo').value=nextBillNo();
+calcCompare();renderAll();previewBill();
 </script>
 </body></html>
